@@ -97,13 +97,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
-    }
-    nav.scrolled {
-      background: rgba(8, 4, 24, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+      transition: none;
     }
 
     .nav-logo-text {
@@ -112,8 +106,10 @@
       font-size: 22px;
       color: white;
       letter-spacing: -0.5px;
+      transition: color 0.4s;
     }
     .nav-logo-text span { color: var(--orange); }
+    nav.on-light .nav-logo-text { color: var(--violet); }
 
     .nav-cta {
       display: inline-flex;
@@ -134,10 +130,11 @@
 
     /* ─── HERO SCROLL-PIN ────────────────────────────────────────── */
     #hero-scroll {
-      height: 180vh;
+      height: 420vh;
       background: var(--violet-deep);
       position: relative;
     }
+
 
     .hero-sticky {
       position: sticky;
@@ -145,6 +142,14 @@
       height: 100vh;
       overflow: hidden;
       background: var(--violet-deep);
+    }
+
+    /* inner wrapper — this is what slides up during the ramp,
+       not the sticky container itself (avoids visible edge artifacts) */
+    .hero-inner {
+      position: absolute;
+      inset: 0;
+      will-change: transform;
     }
 
     /* grid texture */
@@ -202,6 +207,29 @@
       color: white;
     }
     .hero-mega-title .accent { color: var(--orange); }
+
+    /* ── PLAYO Logo Reveal ── */
+    .hero-logo-reveal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 3;
+      opacity: 0;
+      will-change: opacity;
+      pointer-events: none;
+    }
+
+    .hero-logo-big {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(64px, 9vw, 120px);
+      color: white;
+      letter-spacing: -4px;
+      line-height: 1;
+    }
+    .hero-logo-big .accent { color: var(--orange); }
 
     /* ── iPhone Mockup ── */
     .hero-phone-anchor {
@@ -679,6 +707,16 @@
     .footer-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.06); }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
 
+    /* ─── Logo Kerning ───────────────────────────────────────── */
+    .lk-L { margin-right: 0.05em; }
+    .lk-A { margin-right: -0.10em; }
+    .nav-logo-text .lk-L,
+    .nav-logo-text .lk-A { color: white; transition: color 0.4s; }
+    nav.on-light .nav-logo-text .lk-L,
+    nav.on-light .nav-logo-text .lk-A { color: var(--violet); }
+    .footer-logo .lk-L,
+    .footer-logo .lk-A { color: white; }
+
     .swiss-badge {
       display: inline-flex;
       align-items: center;
@@ -723,34 +761,41 @@
 
   <!-- ── NAV ─────────────────────────────────────────────────────── -->
   <nav id="navbar">
-    <span class="nav-logo-text">PLAY<span>O</span></span>
+    <span class="nav-logo-text">P<span class="lk-L">L</span><span class="lk-A">A</span>Y<span style="color:var(--orange)">O</span></span>
     <a href="#cta" class="nav-cta">App herunterladen</a>
   </nav>
 
   <!-- ── HERO SCROLL-PIN ──────────────────────────────────────────── -->
   <div id="hero-scroll">
     <div class="hero-sticky" id="heroSticky">
+      <div class="hero-inner" id="heroInner">
 
-      <!-- Background -->
-      <div class="hero-blob hero-blob-1"></div>
-      <div class="hero-blob hero-blob-2"></div>
+        <!-- Background -->
+        <div class="hero-blob hero-blob-1"></div>
+        <div class="hero-blob hero-blob-2"></div>
 
-      <!-- Big headline — fades as phone rises -->
-      <div class="hero-headline" id="heroHL">
-        <h1 class="hero-mega-title">
-          Spieltermine <span class="accent">einfach</span> koordinieren.
-        </h1>
-      </div>
-
-      <!-- Phone — starts partially visible at bottom, rises and exits top -->
-      <div class="hero-phone-anchor" id="heroPhone">
-        <div class="phone-glow"></div>
-        <div class="iphone-frame-wrap">
-          <img class="hero-screen-img" src="assets/screenshots/login.png" alt="PLAYO App" />
-          <img class="iphone-frame" src="assets/iphone-frame.avif" alt="" aria-hidden="true" />
+        <!-- Big headline — drifts down and fades as phone rises -->
+        <div class="hero-headline" id="heroHL">
+          <h1 class="hero-mega-title">
+            Spieltermine <span class="accent">einfach</span> koordinieren.
+          </h1>
         </div>
-      </div>
 
+        <!-- PLAYO logo — crossfades in as headline fades out -->
+        <div class="hero-logo-reveal" id="heroLogoReveal">
+          <span class="hero-logo-big">P<span class="lk-L">L</span><span class="lk-A">A</span>Y<span class="accent">O</span></span>
+        </div>
+
+        <!-- Phone — starts partially visible at bottom, rises and exits top -->
+        <div class="hero-phone-anchor" id="heroPhone">
+          <div class="phone-glow"></div>
+          <div class="iphone-frame-wrap">
+            <img class="hero-screen-img" src="assets/screenshots/login.png" alt="PLAYO App" />
+            <img class="iphone-frame" src="assets/iphone-frame.avif" alt="" aria-hidden="true" />
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -934,7 +979,7 @@
   <footer>
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-logo">PLAY<span>O</span></div>
+        <div class="footer-logo">P<span class="lk-L">L</span><span class="lk-A">A</span>Y<span style="color:var(--orange)">O</span></div>
         <p class="footer-tagline">Spieltermine einfach koordinieren.</p>
         <span class="swiss-badge">🇨🇭 Made in Switzerland</span>
         <ul class="footer-links">
@@ -951,11 +996,28 @@
 
   <!-- ── SCRIPTS ──────────────────────────────────────────────────── -->
   <script>
-    // ── Sticky nav ─────────────────────────────────────────────────
+    // ── Sticky nav — transparent on dark sections, frosted on light ─
     const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
+    const darkSectionIds = ['hero-scroll', 'showcase'];
+    let darkRanges = [];
+
+    function calcDarkRanges() {
+      darkRanges = darkSectionIds.map(id => {
+        const el = document.getElementById(id);
+        return { top: el.offsetTop, bottom: el.offsetTop + el.offsetHeight };
+      });
+    }
+
+    function updateNavStyle() {
+      const y = window.scrollY;
+      const isDark = darkRanges.some(r => y >= r.top && y < r.bottom);
+      navbar.classList.toggle('on-light', !isDark);
+    }
+
+    calcDarkRanges();
+    window.addEventListener('scroll', updateNavStyle, { passive: true });
+    window.addEventListener('resize', () => { calcDarkRanges(); updateNavStyle(); });
+    updateNavStyle();
 
     // ── Easing helpers ─────────────────────────────────────────────
     function easeInOutCubic(t) {
@@ -965,41 +1027,60 @@
     function progress(val, start, end) { return clamp((val - start) / (end - start), 0, 1); }
 
     // ── Hero scroll-pin animation ───────────────────────────────────
-    const heroScroll = document.getElementById('hero-scroll');
-    const heroHL     = document.getElementById('heroHL');
-    const heroPhone  = document.getElementById('heroPhone');
+    const heroScroll      = document.getElementById('hero-scroll');
+    const heroInner       = document.getElementById('heroInner');
+    const heroHL          = document.getElementById('heroHL');
+    const heroPhone       = document.getElementById('heroPhone');
+    const heroLogoReveal  = document.getElementById('heroLogoReveal');
 
-    function updateHero() {
+    // ── Smoothed progress (lerp) ─────────────────────────────────────
+    // _pRaw  = actual scroll position (0–1)
+    // _p     = smoothed display value that follows _pRaw with inertia
+    // factor = how quickly it catches up (0.10 = gentle/cinematic)
+    let _pRaw = 0;
+    let _p    = 0;
+
+    function getScrollP() {
       const scrolled   = window.scrollY;
       const sectionTop = heroScroll.offsetTop;
       const sectionH   = heroScroll.offsetHeight;
       const vh         = window.innerHeight;
-
-      // p = 0…1 over the sticky scroll range
-      const p = clamp((scrolled - sectionTop) / (sectionH - vh), 0, 1);
-
-      // ── Phone: LINEAR (no easing) so it tracks the finger 1:1 ──
-      // At p=0: translateY = +60vh  (~40% of phone visible from bottom)
-      // At p=1: translateY = -100vh (just fully exited top)
-      // Sticky releases exactly at p=1 → next section slides in immediately
-      const phoneY = 60 - 160 * p;
-      heroPhone.style.transform = `translateY(${phoneY}vh)`;
-
-      // ── Headline: drifts downward linearly toward phone, fades only near end ──
-      const hlShift = p * 44;                                    // 0 → 44vh downward
-      const hlFade  = easeInOutCubic(progress(p, 0.74, 0.96));  // fades late
-      heroHL.style.opacity   = 1 - hlFade;
-      heroHL.style.transform = `translateX(-50%) translateY(${hlShift}vh)`;
+      return clamp((scrolled - sectionTop) / (sectionH - vh), 0, 1);
     }
 
-    // RAF-throttled for buttery smoothness
-    let _heroRAF = null;
-    window.addEventListener('scroll', () => {
-      if (!_heroRAF) {
-        _heroRAF = requestAnimationFrame(() => { updateHero(); _heroRAF = null; });
-      }
-    }, { passive: true });
-    updateHero();
+    function applyHero(p) {
+      // a = animation progress, completes at p=0.85
+      // the remaining 15% of scroll range = logo stand time before sticky releases
+      const a = Math.min(p / 0.85, 1.0);
+
+      // Phone: linear travel 60vh → -100vh
+      heroPhone.style.transform = `translateY(${60 - 160 * a}vh)`;
+
+      // Headline: drifts down, fades late
+      const hlFade = easeInOutCubic(progress(a, 0.74, 0.96));
+      heroHL.style.opacity   = 1 - hlFade;
+      heroHL.style.transform = `translateX(-50%) translateY(${a * 44}vh)`;
+
+      // PLAYO logo: crossfade with headline, soft ease-in
+      const logoT = progress(a, 0.80, 1.0);
+      heroLogoReveal.style.opacity = logoT * logoT;
+
+      // Ramp: during logo stand (p=0.85→1.0), drift the inner content upward.
+      // heroSticky stays locked — only the inner wrapper moves, so no edge/strip artifacts.
+      const standP = easeInOutCubic(progress(p, 0.85, 1.0));
+      heroInner.style.transform = `translateY(${-standP * 25}vh)`;
+    }
+
+    function heroLoop() {
+      _pRaw = getScrollP();
+      _p   += (_pRaw - _p) * 0.08;
+      // snap to target when close enough to avoid endless micro-updates
+      if (Math.abs(_pRaw - _p) < 0.0003) _p = _pRaw;
+      applyHero(_p);
+      requestAnimationFrame(heroLoop);
+    }
+
+    requestAnimationFrame(heroLoop);
 
     // ── Section scroll reveal ───────────────────────────────────────
     const reveals = document.querySelectorAll('.reveal');
