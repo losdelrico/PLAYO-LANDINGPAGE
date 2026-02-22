@@ -109,7 +109,7 @@
       transition: color 0.4s;
     }
     .nav-logo-text span { color: var(--orange); }
-    nav.on-light .nav-logo-text { color: var(--violet); }
+    nav.on-light .nav-logo-text { color: var(--gray-900); }
 
     .nav-cta {
       display: inline-flex;
@@ -273,6 +273,7 @@
       object-position: top;
       display: block;
       z-index: 1;
+      border-radius: 44px;
     }
 
     /* Frame image overlay — transparent screen area, opaque border */
@@ -421,53 +422,166 @@
     }
 
     /* ─── HOW IT WORKS ──────────────────────────────────────────── */
-    #how { background: var(--white); }
+    #how {
+      background:
+        radial-gradient(ellipse 55% 45% at 8% 30%, rgba(124,58,237,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 92% 70%, rgba(249,115,22,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 35% at 50% 10%, rgba(124,58,237,0.055) 0%, transparent 65%),
+        white;
+      padding-top: 40px;
+      position: relative;
+    }
 
+    .steps-path { position: relative; }
+
+    /* Horizontal connecting track */
+    .steps-track {
+      display: flex;
+      align-items: center;
+      padding: 0 calc(100% / 6);
+      margin-bottom: 28px;
+    }
+    .track-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--gray-200);
+      border: 2px solid white;
+      flex-shrink: 0;
+      transition:
+        background 0.4s,
+        transform 0.55s cubic-bezier(.34,1.56,.64,1),
+        box-shadow 0.4s;
+    }
+    .track-dot.active {
+      background: var(--violet);
+      transform: scale(1.5);
+      box-shadow: 0 0 0 5px rgba(124,58,237,0.18);
+    }
+    .track-line {
+      flex: 1;
+      height: 2px;
+      background: var(--gray-200);
+      position: relative;
+      overflow: hidden;
+    }
+    .track-line-fill {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--violet);
+    }
+
+    /* Step cards — dark on light: the key contrast moment */
     .steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
+      gap: 24px;
     }
-
     .step {
-      text-align: center;
-      padding: 40px 28px;
+      background:
+        radial-gradient(ellipse 100% 70% at 110% -10%, rgba(249,115,22,0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 90% 80% at -10% 110%, rgba(139,92,246,0.40) 0%, transparent 60%),
+        var(--violet-deep);
+      border: 1px solid rgba(255,255,255,0.06);
       border-radius: var(--radius-xl);
-      background: var(--gray-100);
-      transition: transform 0.3s, box-shadow 0.3s;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 0.65s cubic-bezier(.22,1,.36,1),
+        transform 0.65s cubic-bezier(.22,1,.36,1),
+        box-shadow 0.4s;
     }
-    .step:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-card);
+    /* Grid texture inside card — mirrors the hero */
+    .step::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Keep all card content above the grid pseudo-element */
+    .step > * { position: relative; z-index: 1; }
+    .step.active {
+      opacity: 1;
+      transform: none;
+      box-shadow: 0 16px 48px rgba(13,8,32,0.30);
     }
 
-    .step-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 52px; height: 52px;
-      background: var(--violet);
-      color: white;
+    /* Large bold step number */
+    .step-num {
       font-family: var(--font-head);
       font-weight: 900;
-      font-size: 20px;
-      border-radius: 50%;
-      margin: 0 auto 20px;
-      box-shadow: 0 8px 20px rgba(124,58,237,0.35);
+      font-size: 42px;
+      color: white;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 8px;
+    }
+    .step-rule {
+      width: 28px;
+      height: 2px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 1px;
+      margin-bottom: 20px;
     }
 
-    .step-icon { font-size: 36px; margin-bottom: 14px; display: block; }
+    /* SVG icon */
+    .step-icon-wrap {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--violet);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      color: white;
+    }
+    .step-icon-wrap svg { width: 20px; height: 20px; }
+
     .step-title {
       font-family: var(--font-head);
       font-weight: 800;
       font-size: 18px;
-      color: var(--gray-900);
+      color: white;
       margin-bottom: 10px;
+      line-height: 1.25;
     }
-    .step-text { font-size: 14px; color: var(--gray-500); line-height: 1.65; }
+    .step-text { font-size: 14px; color: rgba(255,255,255,0.72); line-height: 1.7; }
+
+    /* Payoff + vertical line bridging into next section */
+    .steps-payoff {
+      text-align: center;
+      margin-top: 52px;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--gray-500);
+      font-style: italic;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    .steps-payoff.visible { opacity: 1; transform: none; }
+    .steps-payoff::after {
+      content: '';
+      display: block;
+      width: 2px;
+      height: 72px;
+      background: linear-gradient(to bottom, rgba(124,58,237,0.35), transparent);
+      margin: 36px auto 0;
+      border-radius: 1px;
+    }
 
     /* ─── FEATURES ──────────────────────────────────────────────── */
-    #features { background: var(--violet-soft); }
+    #features { background: var(--violet-soft); padding-top: 60px; }
 
     .features-grid {
       display: grid;
@@ -713,7 +827,7 @@
     .nav-logo-text .lk-L,
     .nav-logo-text .lk-A { color: white; transition: color 0.4s; }
     nav.on-light .nav-logo-text .lk-L,
-    nav.on-light .nav-logo-text .lk-A { color: var(--violet); }
+    nav.on-light .nav-logo-text .lk-A { color: var(--gray-900); }
     .footer-logo .lk-L,
     .footer-logo .lk-A { color: white; }
 
@@ -734,6 +848,8 @@
       .hero-mega-title { letter-spacing: -2px; }
 
       .steps { grid-template-columns: 1fr; gap: 20px; }
+      .steps-track { display: none; }
+      .step { opacity: 1; transform: none; }
       .features-grid { grid-template-columns: 1fr; }
       .forwhom-grid { grid-template-columns: repeat(2, 1fr); }
 
@@ -803,30 +919,69 @@
   <section id="how">
     <div class="container">
       <div class="section-head reveal">
-        <span class="badge">So einfach geht's</span>
-        <h2 class="section-title">In 3 Schritten loslegen</h2>
-        <p class="section-subtitle">Von der Registrierung bis zum ersten koordinierten Spieltermin — schnell, unkompliziert und ohne Overhead.</p>
+        <h2 class="section-title">In 3 Schritten zum<br>ersten Spieltermin</h2>
+        <p class="section-subtitle">Keine langen Erklärungen. App laden, Eltern verbinden, loslegen.</p>
       </div>
-      <div class="steps">
-        <div class="step reveal reveal-delay-1">
-          <div class="step-number">1</div>
-          <span class="step-icon">👶</span>
-          <div class="step-title">Kinder eintragen</div>
-          <p class="step-text">Erstelle ein Profil für dein Kind — mit Name, Alter und einem Avatar. Dauert weniger als eine Minute.</p>
+
+      <div class="steps-path" id="stepsPath">
+
+        <!-- Connecting track above the cards -->
+        <div class="steps-track">
+          <div class="track-dot" id="dot1"></div>
+          <div class="track-line"><div class="track-line-fill" id="fill1"></div></div>
+          <div class="track-dot" id="dot2"></div>
+          <div class="track-line"><div class="track-line-fill" id="fill2"></div></div>
+          <div class="track-dot" id="dot3"></div>
         </div>
-        <div class="step reveal reveal-delay-2">
-          <div class="step-number">2</div>
-          <span class="step-icon">🤝</span>
-          <div class="step-title">Eltern verbinden</div>
-          <p class="step-text">Teile deinen persönlichen Code mit anderen Eltern. Sobald ihr verbunden seid, seht ihr gegenseitig die Verfügbarkeit.</p>
-        </div>
-        <div class="step reveal reveal-delay-3">
-          <div class="step-number">3</div>
-          <span class="step-icon">📅</span>
-          <div class="step-title">Verfügbarkeit setzen</div>
-          <p class="step-text">Wann hat dein Kind Zeit? Setze einen Status für heute, morgen oder wiederkehrend — in wenigen Sekunden.</p>
+
+        <div class="steps">
+
+          <div class="step" id="step1">
+            <div class="step-num">01</div>
+            <div class="step-rule"></div>
+            <div class="step-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2.5"/>
+                <line x1="12" y1="7" x2="12" y2="14"/>
+                <polyline points="9,11 12,14 15,11"/>
+                <line x1="9" y1="18" x2="15" y2="18"/>
+              </svg>
+            </div>
+            <div class="step-title">App laden & einrichten</div>
+            <p class="step-text">PLAYO kostenlos im App Store oder Google Play laden. Konto anlegen und ein Profil erstellen — in unter 2 Minuten startklar.</p>
+          </div>
+
+          <div class="step" id="step2">
+            <div class="step-num">02</div>
+            <div class="step-rule"></div>
+            <div class="step-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+            </div>
+            <div class="step-title">Per K-Code verbinden</div>
+            <p class="step-text">Jede Person erhält einen persönlichen K-Code. Teile ihn mit wem du vertraust — aus Schule, Quartier oder Verein. Nur diese sehen deine Kinder.</p>
+          </div>
+
+          <div class="step" id="step3">
+            <div class="step-num">03</div>
+            <div class="step-rule"></div>
+            <div class="step-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <div class="step-title">Status setzen. Fertig.</div>
+            <p class="step-text">Ein Tap auf dem Dashboard: «Heute verfügbar.» Alle verbundenen Kontakte sehen es sofort — kein Chat, kein Hin und Her.</p>
+          </div>
+
         </div>
       </div>
+
+      <p class="steps-payoff" id="stepsPayoff">
+        Statt 12 WhatsApp-Nachrichten — ein einziger Tap.
+      </p>
     </div>
   </section>
 
@@ -834,9 +989,8 @@
   <section id="features">
     <div class="container">
       <div class="section-head reveal">
-        <span class="badge">Was PLAYO kann</span>
-        <h2 class="section-title">Alles, was Familien brauchen</h2>
-        <p class="section-subtitle">Kein überladenes Tool — nur die Funktionen, die wirklich zählen.</p>
+        <h2 class="section-title">Weniger Chaos. Mehr Spielzeit.</h2>
+        <p class="section-subtitle">Gebaut für den Alltag mit Kindern — ohne den Overhead.</p>
       </div>
       <div class="features-grid">
         <div class="feature-card featured reveal reveal-delay-1">
@@ -867,9 +1021,8 @@
   <section id="forwhom">
     <div class="container">
       <div class="section-head reveal">
-        <span class="badge">Für wen?</span>
-        <h2 class="section-title">PLAYO ist für jede Familie</h2>
-        <p class="section-subtitle">Ob klassische Familie, Patchworkfamilie oder Alleinerziehende — PLAYO passt sich eurer Lebenssituation an.</p>
+        <h2 class="section-title">Weil Kinder einfach spielen sollen.</h2>
+        <p class="section-subtitle">Ob Eltern, Grosseltern, Tagesmutter oder Bezugsperson — PLAYO passt sich an, wer auch immer die Kinder begleitet.</p>
       </div>
       <div class="forwhom-grid">
         <div class="forwhom-card reveal reveal-delay-1">
@@ -915,7 +1068,7 @@
           </div>
         </div>
         <div class="showcase-content reveal reveal-delay-2">
-          <span class="badge badge-dark" style="margin-bottom:16px;display:inline-flex;">🛡️ Vertrauen &amp; Datenschutz</span>
+          <span class="badge badge-dark" style="margin-bottom:16px;display:inline-flex;">Vertrauen &amp; Datenschutz</span>
           <h2 class="section-title">Eure Daten gehören euch. Punkt.</h2>
           <p class="section-subtitle">PLAYO wurde von Eltern für Eltern entwickelt — mit höchsten Ansprüchen an Datenschutz und Sicherheit.</p>
           <div class="trust-points">
@@ -957,7 +1110,6 @@
   <section id="cta">
     <div class="container">
       <div class="cta-inner reveal">
-        <span class="badge" style="margin-bottom:20px;">Kostenlos starten</span>
         <h2 class="cta-title">Bereit für stressfreie<br>Spieltermine?</h2>
         <p class="cta-subtitle">PLAYO ist kostenlos verfügbar. Lade die App herunter und verbinde dich noch heute mit anderen Familien.</p>
         <div class="store-buttons">
@@ -1094,6 +1246,62 @@
     }, { threshold: 0.12 });
 
     reveals.forEach(el => observer.observe(el));
+
+    // ── How it works — sequential path activation ───────────────────
+    const stepsPath = document.getElementById('stepsPath');
+    const step1El   = document.getElementById('step1');
+    const step2El   = document.getElementById('step2');
+    const step3El   = document.getElementById('step3');
+    const payoffEl  = document.getElementById('stepsPayoff');
+
+    let stepsTriggered = false;
+
+    function runStepsAnimation() {
+      if (stepsTriggered) return;
+      stepsTriggered = true;
+
+      const dot1El  = document.getElementById('dot1');
+      const dot2El  = document.getElementById('dot2');
+      const dot3El  = document.getElementById('dot3');
+      const fill1El = document.getElementById('fill1');
+      const fill2El = document.getElementById('fill2');
+
+      // Dot 1 + Card 1 fire immediately
+      dot1El.classList.add('active');
+      step1El.classList.add('active');
+
+      // Line 1 draws → Dot 2 + Card 2 activate
+      setTimeout(() => {
+        fill1El.style.transition = 'width 0.85s cubic-bezier(.4,0,.2,1)';
+        fill1El.style.width = '100%';
+      }, 450);
+      setTimeout(() => {
+        dot2El.classList.add('active');
+        step2El.classList.add('active');
+      }, 1150);
+
+      // Line 2 draws → Dot 3 + Card 3 activate
+      setTimeout(() => {
+        fill2El.style.transition = 'width 0.85s cubic-bezier(.4,0,.2,1)';
+        fill2El.style.width = '100%';
+      }, 1400);
+      setTimeout(() => {
+        dot3El.classList.add('active');
+        step3El.classList.add('active');
+      }, 2100);
+
+      // Payoff + vertical connector appear last
+      setTimeout(() => { payoffEl.classList.add('visible'); }, 2700);
+    }
+
+    const stepsObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        runStepsAnimation();
+        stepsObserver.disconnect();
+      }
+    }, { threshold: 0.25 });
+
+    if (stepsPath) stepsObserver.observe(stepsPath);
   </script>
 
 </body>
