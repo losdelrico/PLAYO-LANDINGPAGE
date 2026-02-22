@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
+  <!-- Phosphor Icons – duotone -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
   <style>
     /* ─── Reset & Base ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -648,6 +651,9 @@
       pointer-events: none;
     }
 
+    /* Mobile-only dots: auf Desktop versteckt */
+    .mob-feat-dots { display: none; }
+
     /* Right: scrollable feature items */
     .features-scroll-col {
       flex: 1;
@@ -669,8 +675,8 @@
     .feature-item.active { opacity: 1; transform: none; }
 
     .feature-item-icon {
-      width: 48px; height: 48px;
-      border-radius: 14px;
+      width: 56px; height: 56px;
+      border-radius: 16px;
       background: var(--violet-soft);
       display: flex;
       align-items: center;
@@ -679,6 +685,46 @@
       color: var(--violet);
     }
     .feature-item-icon svg { width: 22px; height: 22px; }
+    .feature-item-icon i { font-size: 28px; line-height: 1; display: flex; }
+
+    /* ─── For Whom icon container ───────────────────────────────── */
+    .forwhom-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: rgba(124, 58, 237, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: var(--violet);
+    }
+    .forwhom-icon i { font-size: 28px; line-height: 1; display: flex; }
+
+    /* ─── Trust icon (Phosphor, violett) ───────────────────────── */
+    .trust-icon i { font-size: 22px; color: #A78BFA; line-height: 1; display: flex; }
+
+    /* Swiss flag inline im Titel */
+    .trust-title-flag {
+      display: inline-block;
+      width: 13px; height: 13px;
+      border-radius: 2px;
+      overflow: hidden;
+      vertical-align: middle;
+      margin-left: 5px;
+      position: relative;
+      top: -1px;
+      flex-shrink: 0;
+    }
+
+    /* Swiss flag im Footer-Badge */
+    .swiss-badge .flag-ch {
+      display: inline-block;
+      flex-shrink: 0;
+      width: 15px; height: 15px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
 
     .feature-item-title {
       font-family: var(--font-head);
@@ -697,9 +743,122 @@
     }
 
     @media (max-width: 768px) {
-      .features-sticky-wrap { flex-direction: column; gap: 40px; padding: 0 20px; }
-      .features-phone-col { position: relative; top: auto; margin: 0 auto; }
-      .feature-item { min-height: auto; opacity: 1; padding: 32px 0; }
+      /* Section: Scroll-Raum für 4 Items */
+      #features {
+        padding: 0;
+        height: 260vh;
+      }
+
+      /* Gesamtes Layout: Spalte — Text oben, Handy unten */
+      .features-sticky-wrap {
+        position: sticky;
+        top: 68px;
+        height: calc(100vh - 68px);
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 8px;
+        padding: 20px 32px 12px;
+        max-width: none;
+        margin: 0;
+      }
+
+      /* Text-Spalte: oben, volle Breite */
+      .features-scroll-col {
+        flex: 0 0 auto;
+        order: 1;
+        position: relative;
+        padding: 0;
+        height: 165px;
+      }
+
+      /* Phone: unten, zentriert, füllt verbleibenden Platz */
+      .features-phone-col {
+        flex: 1;
+        min-height: 0;
+        order: 2;
+        position: relative;
+        top: auto;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s cubic-bezier(.22,1,.36,1),
+                    transform 0.6s cubic-bezier(.22,1,.36,1);
+      }
+      .features-phone-col.phone-visible,
+      .features-phone-col.phone-settled {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .features-phone-frame {
+        height: min(460px, 95%);
+        width: auto;
+        aspect-ratio: 170 / 346;
+        filter: drop-shadow(0 8px 24px rgba(0,0,0,0.20))
+                drop-shadow(0 4px 12px rgba(124,58,237,0.15));
+      }
+      .feature-screen-img { border-radius: 16px; }
+
+      /* Items: übereinander gestapelt — oben ausgerichtet */
+      .feature-item {
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        transform: none;
+        min-height: 0;
+        opacity: 0;
+        padding: 0;
+        justify-content: flex-start;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+      }
+      .feature-item.mob-visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Fortschritts-Punkte */
+      .mob-feat-dots {
+        display: flex;
+        order: 3;
+        flex: 0 0 auto;
+        align-self: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 2px 0;
+      }
+      .mob-feat-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(124,58,237,0.2);
+        transition: background 0.4s ease, transform 0.4s ease;
+      }
+      .mob-feat-dot.active {
+        background: #7C3AED;
+        transform: scale(1.5);
+      }
+
+      .feature-item-icon {
+        width: 44px; height: 44px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+      }
+      .feature-item-icon svg { width: 20px; height: 20px; }
+      .feature-item-title {
+        font-size: clamp(22px, 6vw, 28px);
+        letter-spacing: -0.5px;
+        margin-bottom: 10px;
+      }
+      .feature-item-text {
+        font-size: 15px;
+        line-height: 1.6;
+        max-width: none;
+      }
     }
 
     /* ─── FOR WHOM ──────────────────────────────────────────────── */
@@ -720,7 +879,7 @@
     }
     .forwhom-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); }
 
-    .forwhom-emoji { font-size: 42px; display: block; margin-bottom: 16px; }
+    /* .forwhom-emoji replaced by .forwhom-icon */
     .forwhom-title {
       font-family: var(--font-head);
       font-weight: 800;
@@ -790,23 +949,23 @@
       opacity: 0.8;
     }
 
+    .showcase-content { padding: 0 8px; }
     .showcase-content .section-title  { color: white; text-align: left; }
     .showcase-content .section-subtitle { color: rgba(255,255,255,0.55); text-align: left; margin: 0 0 40px; }
 
-    .trust-points { display: flex; flex-direction: column; gap: 16px; }
+    .trust-points { display: flex; flex-direction: column; gap: 20px; }
 
-    .trust-point { display: flex; align-items: flex-start; gap: 14px; }
+    .trust-point { display: flex; align-items: center; gap: 16px; }
 
     .trust-icon {
-      width: 40px; height: 40px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.08);
+      width: 44px; height: 44px;
+      border-radius: 16px;
+      background: rgba(124, 58, 237, 0.22);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
       flex-shrink: 0;
-      border: 1px solid rgba(255,255,255,0.10);
+      border: 1px solid rgba(124, 58, 237, 0.35);
     }
 
     .trust-point-title {
@@ -926,10 +1085,11 @@
       .features-grid { grid-template-columns: 1fr; }
       .forwhom-grid { grid-template-columns: repeat(2, 1fr); }
 
-      .showcase-inner { grid-template-columns: 1fr; text-align: center; gap: 48px; }
+      .showcase-inner { grid-template-columns: 1fr; gap: 48px; }
+      .showcase-content { padding: 0 4px; }
       .showcase-content .section-title,
-      .showcase-content .section-subtitle { text-align: center; }
-      .showcase-content .section-subtitle { margin: 0 auto 40px; }
+      .showcase-content .section-subtitle { text-align: left; }
+      .showcase-content .section-subtitle { margin: 0 0 40px; }
       .showcase-phones { order: 2; }
 
       .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
@@ -1059,44 +1219,40 @@
       <div class="features-scroll-col">
         <div class="feature-item" data-screen="0">
           <div class="feature-item-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-            </svg>
+            <i class="ph-duotone ph-wifi-high"></i>
           </div>
           <div class="feature-item-title">Echtzeit-Verfügbarkeit</div>
           <p class="feature-item-text">Sieh sofort auf dem Dashboard, welche Kinder deiner Kontakte gerade verfügbar sind — ohne Nachfragen, ohne Wartezeit.</p>
         </div>
         <div class="feature-item" data-screen="1">
           <div class="feature-item-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-            </svg>
+            <i class="ph-duotone ph-key"></i>
           </div>
           <div class="feature-item-title">Verbindung per K-Code</div>
           <p class="feature-item-text">Kein Social-Media-Profil nötig. Teile deinen persönlichen K-Code und verbindet euch — sicher und direkt.</p>
         </div>
         <div class="feature-item" data-screen="2">
           <div class="feature-item-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
+            <i class="ph-duotone ph-user-plus"></i>
           </div>
           <div class="feature-item-title">Bezugspersonen einbinden</div>
           <p class="feature-item-text">Co-Elternteile, Grosseltern oder Tagesmütter können über den B-Code hinzugefügt werden und Kinder gemeinsam begleiten.</p>
         </div>
         <div class="feature-item" data-screen="3">
           <div class="feature-item-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
+            <i class="ph-duotone ph-lock-simple"></i>
           </div>
           <div class="feature-item-title">Privatsphäre by Design</div>
           <p class="feature-item-text">Nur Personen, die du selbst verbindest, sehen deine Kinder. Keine Algorithmen, keine Datenweitergabe, kein Social Feed.</p>
         </div>
+      </div>
+
+      <!-- Mobile Fortschritts-Punkte (JS-gesteuert) -->
+      <div class="mob-feat-dots" aria-hidden="true">
+        <span class="mob-feat-dot"></span>
+        <span class="mob-feat-dot"></span>
+        <span class="mob-feat-dot"></span>
+        <span class="mob-feat-dot"></span>
       </div>
 
     </div>
@@ -1111,22 +1267,22 @@
       </div>
       <div class="forwhom-grid">
         <div class="forwhom-card reveal reveal-delay-1">
-          <span class="forwhom-emoji">👩‍👧‍👦</span>
+          <div class="forwhom-icon"><i class="ph-duotone ph-users"></i></div>
           <div class="forwhom-title">Berufstätige Eltern</div>
           <p class="forwhom-text">Keine Zeit für lange Koordinations-Chats. PLAYO zeigt auf einen Blick, wann Spielen möglich ist.</p>
         </div>
         <div class="forwhom-card reveal reveal-delay-2">
-          <span class="forwhom-emoji">💞</span>
+          <div class="forwhom-icon"><i class="ph-duotone ph-users-three"></i></div>
           <div class="forwhom-title">Patchworkfamilien</div>
           <p class="forwhom-text">Beide Elternteile haben Zugriff. Bezugspersonen können gezielt für bestimmte Kinder berechtigt werden.</p>
         </div>
         <div class="forwhom-card reveal reveal-delay-3">
-          <span class="forwhom-emoji">👴👵</span>
+          <div class="forwhom-icon"><i class="ph-duotone ph-hand-heart"></i></div>
           <div class="forwhom-title">Grosseltern & Betreuung</div>
           <p class="forwhom-text">Tagesmütter, Grosseltern und andere Bezugspersonen können einfach eingebunden werden.</p>
         </div>
         <div class="forwhom-card reveal reveal-delay-4">
-          <span class="forwhom-emoji">🏘️</span>
+          <div class="forwhom-icon"><i class="ph-duotone ph-buildings"></i></div>
           <div class="forwhom-title">Nachbarschaft & Klasse</div>
           <p class="forwhom-text">Verbinde dich mit Eltern aus der Schulklasse oder dem Quartier — und sieh, wer wann verfügbar ist.</p>
         </div>
@@ -1158,28 +1314,35 @@
           <p class="section-subtitle">PLAYO wurde von Eltern für Eltern entwickelt — mit höchsten Ansprüchen an Datenschutz und Sicherheit.</p>
           <div class="trust-points">
             <div class="trust-point">
-              <div class="trust-icon">🇨🇭</div>
+              <div class="trust-icon"><i class="ph-duotone ph-shield-check"></i></div>
               <div>
-                <div class="trust-point-title">Entwickelt in der Schweiz</div>
+                <div class="trust-point-title">
+                  Entwickelt in der Schweiz
+                  <svg class="trust-title-flag" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                    <rect width="32" height="32" fill="#FF0000"/>
+                    <rect x="6" y="13" width="20" height="6" fill="white"/>
+                    <rect x="13" y="6" width="6" height="20" fill="white"/>
+                  </svg>
+                </div>
                 <p class="trust-point-text">Schweizer Werte: Präzision, Diskretion und Qualität — auch digital.</p>
               </div>
             </div>
             <div class="trust-point">
-              <div class="trust-icon">🚫</div>
+              <div class="trust-icon"><i class="ph-duotone ph-prohibit"></i></div>
               <div>
                 <div class="trust-point-title">Keine Werbung, nie</div>
                 <p class="trust-point-text">Wir verkaufen keine Daten und schalten keine Werbung. PLAYO ist und bleibt werbefrei.</p>
               </div>
             </div>
             <div class="trust-point">
-              <div class="trust-icon">👁️</div>
+              <div class="trust-icon"><i class="ph-duotone ph-eye"></i></div>
               <div>
                 <div class="trust-point-title">Nur deine Kontakte sehen dich</div>
                 <p class="trust-point-text">Du entscheidest, wer deine Kinder sieht. Kein offenes Profil, kein öffentlicher Feed.</p>
               </div>
             </div>
             <div class="trust-point">
-              <div class="trust-icon">🗑️</div>
+              <div class="trust-icon"><i class="ph-duotone ph-trash"></i></div>
               <div>
                 <div class="trust-point-title">Volle Kontrolle</div>
                 <p class="trust-point-text">Konto und alle Daten können jederzeit vollständig gelöscht werden.</p>
@@ -1218,7 +1381,14 @@
       <div class="footer-inner">
         <div class="footer-logo">P<span class="lk-L">L</span><span class="lk-A">A</span>Y<span style="color:var(--orange)">O</span></div>
         <p class="footer-tagline">Spieltermine einfach koordinieren.</p>
-        <span class="swiss-badge">🇨🇭 Made in Switzerland</span>
+        <span class="swiss-badge">
+          <svg class="flag-ch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+            <rect width="32" height="32" fill="#FF0000"/>
+            <rect x="6" y="13" width="20" height="6" fill="white"/>
+            <rect x="13" y="6" width="6" height="20" fill="white"/>
+          </svg>
+          Made in Switzerland
+        </span>
         <ul class="footer-links">
           <li><a href="#">Datenschutz</a></li>
           <li><a href="#">Impressum</a></li>
@@ -1394,35 +1564,52 @@
     const featureItems   = document.querySelectorAll('.feature-item');
     const featureScreens = document.querySelectorAll('.feature-screen-img');
     const featPhoneCol   = document.querySelector('.features-phone-col');
-    let featEntranceDone = false;
+    // Live-Abfrage: funktioniert auch nach Resize / DevTools-Wechsel
+    const mq             = window.matchMedia('(max-width: 768px)');
+    let   featEntranceDone = false;
 
-    // 1. Phone entrance — fires once when section scrolls into view
-    const featEntranceObserver = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting || featEntranceDone) return;
-      featEntranceDone = true;
-      // Phase 1: phone slides up, stays centered
-      featPhoneCol.classList.add('phone-visible');
-      featEntranceObserver.disconnect();
+    // ── Mobile: scroll-progress-basiertes Einblenden ────────────────
+    // Berechnet anhand der Scrollposition, welches Item sichtbar sein soll
+    const featSection = document.getElementById('features');
+    const mobDots     = document.querySelectorAll('.mob-feat-dot');
+    let lastMobIdx = -1;
 
-      // Phase 2: phone springs left once it's fully in (900ms = entrance duration)
-      setTimeout(() => {
-        featPhoneCol.classList.add('phone-settled');
-      }, 900);
+    function updateMobileFeature() {
+      if (!mq.matches || !featSection) return;
+      const rect      = featSection.getBoundingClientRect();
+      const maxScroll = featSection.offsetHeight - window.innerHeight;
+      if (maxScroll <= 0) return;
+      const progress  = Math.max(0, Math.min(1, -rect.top / maxScroll));
+      const activeIdx = Math.min(
+        Math.floor(progress * featureItems.length),
+        featureItems.length - 1
+      );
+      if (activeIdx === lastMobIdx) return;
+      lastMobIdx = activeIdx;
+      // Text-Items
+      featureItems.forEach((el, i) => {
+        el.classList.toggle('mob-visible', i === activeIdx);
+      });
+      // Phone-Screen
+      featureScreens.forEach(el => el.classList.remove('active'));
+      const activeItem = featureItems[activeIdx];
+      const s = document.getElementById(`fscreen-${activeItem.dataset.screen}`);
+      if (s) s.classList.add('active');
+      // Fortschritts-Punkte
+      mobDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === activeIdx);
+      });
+    }
 
-      // Phase 3: first text fades in after phone has settled
-      setTimeout(() => {
-        featureItems[0].classList.add('active');
-        const firstScreen = document.getElementById('fscreen-0');
-        if (firstScreen) firstScreen.classList.add('active');
-        featureItems.forEach(el => featScrollObserver.observe(el));
-      }, 1650);
-    }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
+    window.addEventListener('scroll', updateMobileFeature, { passive: true });
+    updateMobileFeature();
 
-    // 2. Scroll observer — switches active item as user scrolls
+    // ── Desktop: Scrollytelling active/seen ─────────────────────────
+    // Läuft immer, gibt aber bei Mobile sofort auf
     const featScrollObserver = new IntersectionObserver((entries) => {
+      if (mq.matches) return;
       entries.forEach(entry => {
         if (!entry.isIntersecting) {
-          // Mark as seen (dimmed) when scrolled past
           if (entry.boundingClientRect.top < 0) {
             entry.target.classList.remove('active');
             entry.target.classList.add('seen');
@@ -1430,17 +1617,34 @@
           return;
         }
         const idx = entry.target.dataset.screen;
-        featureItems.forEach(el => {
-          el.classList.remove('active');
-          el.classList.add('seen');
-        });
+        featureItems.forEach(el => { el.classList.remove('active'); el.classList.add('seen'); });
         featureScreens.forEach(el => el.classList.remove('active'));
         entry.target.classList.add('active');
         entry.target.classList.remove('seen');
-        const screen = document.getElementById(`fscreen-${idx}`);
-        if (screen) screen.classList.add('active');
+        const s = document.getElementById(`fscreen-${idx}`);
+        if (s) s.classList.add('active');
       });
     }, { threshold: 0.55 });
+
+    // ── Phone-Einfahrt (für beide) ───────────────────────────────────
+    const featEntranceObserver = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting || featEntranceDone) return;
+      featEntranceDone = true;
+      featPhoneCol.classList.add('phone-visible');
+      featEntranceObserver.disconnect();
+
+      setTimeout(() => featPhoneCol.classList.add('phone-settled'), 900);
+
+      // Desktop: Text-Items erst nach Einfahrt starten
+      setTimeout(() => {
+        if (!mq.matches) {
+          featureItems[0].classList.add('active');
+          const firstScreen = document.getElementById('fscreen-0');
+          if (firstScreen) firstScreen.classList.add('active');
+          featureItems.forEach(el => featScrollObserver.observe(el));
+        }
+      }, 1650);
+    }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
 
     if (document.getElementById('features')) {
       featEntranceObserver.observe(document.getElementById('features'));
