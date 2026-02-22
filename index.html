@@ -689,17 +689,18 @@
 
     /* ─── For Whom icon container ───────────────────────────────── */
     .forwhom-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      background: rgba(124, 58, 237, 0.08);
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 16px;
-      color: var(--violet);
+      margin: 0 0 20px;
+      color: #C4B5FD;
     }
-    .forwhom-icon i { font-size: 28px; line-height: 1; display: flex; }
+    .forwhom-icon i { font-size: 32px; line-height: 1; display: flex; }
 
     /* ─── Trust icon (Phosphor, violett) ───────────────────────── */
     .trust-icon i { font-size: 22px; color: #A78BFA; line-height: 1; display: flex; }
@@ -862,32 +863,102 @@
     }
 
     /* ─── FOR WHOM ──────────────────────────────────────────────── */
-    #forwhom { background: var(--white); }
+    #forwhom { background: var(--gray-100); }
 
     .forwhom-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    @keyframes iconBounce {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(1.28); }
+      58%  { transform: scale(0.92); }
+      78%  { transform: scale(1.10); }
+      100% { transform: scale(1); }
     }
 
     .forwhom-card {
-      background: var(--gray-100);
-      border-radius: var(--radius-xl);
-      padding: 32px 24px;
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-2xl);
+      padding: 40px 36px;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,0.06);
+      opacity: 0;
+      transform: translateY(28px) scale(0.95);
+      transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1), box-shadow 0.3s;
     }
-    .forwhom-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); }
 
-    /* .forwhom-emoji replaced by .forwhom-icon */
+    /* Grid-Textur (wie Step-Cards) */
+    .forwhom-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .forwhom-card > * { position: relative; z-index: 1; }
+
+    /* Dunkle Basis + je Karte eigene Gradient-Richtung (≠ Step-Cards) */
+    .forwhom-card:nth-child(1) {
+      background:
+        radial-gradient(ellipse 95% 70% at -10% 110%,  rgba(249,115,22,0.26) 0%, transparent 60%),
+        radial-gradient(ellipse 85% 75% at 110% -10%,  rgba(139,92,246,0.38) 0%, transparent 60%),
+        var(--violet-mid);
+    }
+    .forwhom-card:nth-child(2) {
+      background:
+        radial-gradient(ellipse 95% 70% at 110% 110%,  rgba(249,115,22,0.24) 0%, transparent 60%),
+        radial-gradient(ellipse 85% 75% at -10% -10%,  rgba(139,92,246,0.36) 0%, transparent 60%),
+        var(--violet-mid);
+    }
+    .forwhom-card:nth-child(3) {
+      background:
+        radial-gradient(ellipse 95% 70% at -10% -10%,  rgba(249,115,22,0.24) 0%, transparent 60%),
+        radial-gradient(ellipse 85% 75% at 110% 110%,  rgba(139,92,246,0.38) 0%, transparent 60%),
+        var(--violet-mid);
+    }
+    .forwhom-card:nth-child(4) {
+      background:
+        radial-gradient(ellipse 95% 70% at 110% -10%,  rgba(249,115,22,0.26) 0%, transparent 60%),
+        radial-gradient(ellipse 85% 75% at -10% 110%,  rgba(139,92,246,0.36) 0%, transparent 60%),
+        var(--violet-mid);
+    }
+
+    .forwhom-card.fw-visible { opacity: 1; transform: none; }
+    .forwhom-card.fw-visible:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 56px rgba(0,0,0,0.35), 0 8px 24px rgba(124,58,237,0.25);
+    }
+    .forwhom-card.fw-visible:hover .forwhom-icon {
+      animation: iconBounce 0.55s cubic-bezier(.34,1.56,.64,1) forwards;
+    }
+
     .forwhom-title {
       font-family: var(--font-head);
       font-weight: 800;
-      font-size: 16px;
-      color: var(--gray-900);
-      margin-bottom: 8px;
+      font-size: 18px;
+      color: white;
+      margin-bottom: 10px;
     }
-    .forwhom-text { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+    .forwhom-text { font-size: 14px; color: rgba(255,255,255,0.80); line-height: 1.65; }
+    .forwhom-scene {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+      font-style: italic;
+    }
 
     /* ─── SHOWCASE ──────────────────────────────────────────────── */
     #showcase {
@@ -939,7 +1010,7 @@
       position: relative;
     }
 
-    .showcase-phone-1 { animation: phoneFloat 5s ease-in-out infinite; }
+    .showcase-phone-1 { animation: phoneFloat 5s ease-in-out infinite; position: relative; z-index: 1; }
     .showcase-phone-2 {
       animation: phoneFloat 5.5s ease-in-out infinite;
       animation-delay: 0.6s;
@@ -948,6 +1019,47 @@
       z-index: 0;
       opacity: 0.8;
     }
+
+    /* iPhone-Frame system für Showcase (spiegelt Hero/Features) */
+    .showcase-frame-lg {
+      position: relative;
+      width: 248px;
+      height: 505px;
+      filter:
+        drop-shadow(0 40px 80px rgba(0,0,0,0.75))
+        drop-shadow(0 16px 40px rgba(124,58,237,0.30));
+    }
+    .showcase-frame-sm {
+      position: relative;
+      width: 185px;
+      height: 377px;
+      filter:
+        drop-shadow(0 28px 56px rgba(0,0,0,0.65))
+        drop-shadow(0 10px 28px rgba(124,58,237,0.22));
+    }
+    .showcase-screen-img {
+      position: absolute;
+      left: 5.22%; top: 2.15%;
+      width: 89.56%; height: 95.70%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .showcase-frame-lg .showcase-screen-img { border-radius: 25px; z-index: 1; }
+    .showcase-frame-sm .showcase-screen-img { border-radius: 19px; z-index: 1; }
+
+    /* Opaker Hintergrund hinter dem Screen — verhindert Durchscheinen */
+    .showcase-frame-lg::before,
+    .showcase-frame-sm::before {
+      content: '';
+      position: absolute;
+      left: 5.22%; top: 2.15%;
+      width: 89.56%; height: 95.70%;
+      background: #0D0820;
+      z-index: 0;
+    }
+    .showcase-frame-lg::before { border-radius: 25px; }
+    .showcase-frame-sm::before { border-radius: 19px; }
 
     .showcase-content { padding: 0 8px; }
     .showcase-content .section-title  { color: white; text-align: left; }
@@ -978,9 +1090,20 @@
     .trust-point-text { font-size: 13px; color: rgba(255,255,255,0.50); line-height: 1.55; }
 
     /* ─── CTA ───────────────────────────────────────────────────── */
-    #cta { background: var(--white); text-align: center; padding: 120px 0; }
+    #cta { background: var(--gray-100); text-align: center; padding: 100px 0; }
 
-    .cta-inner { max-width: 600px; margin: 0 auto; }
+    .cta-card {
+      max-width: 740px;
+      margin: 0 auto;
+      background:
+        radial-gradient(ellipse 80% 55% at 108% 115%, rgba(249,115,22,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 80% 55% at -8% -15%, rgba(124,58,237,0.18) 0%, transparent 55%),
+        white;
+      border-radius: 40px;
+      padding: 64px 64px;
+      border: 1px solid rgba(124,58,237,0.10);
+      box-shadow: 0 8px 48px rgba(124,58,237,0.10), 0 1px 3px rgba(0,0,0,0.04);
+    }
 
     .cta-title {
       font-family: var(--font-head);
@@ -991,31 +1114,39 @@
       color: var(--gray-900);
       margin-bottom: 18px;
     }
-    .cta-subtitle { font-size: 17px; color: var(--gray-500); line-height: 1.65; margin-bottom: 44px; }
+    .cta-subtitle { font-size: 17px; color: var(--gray-500); line-height: 1.65; margin-bottom: 40px; }
 
-    .store-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    /* ─── Store Badges ──────────────────────────────────────────── */
+    .store-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-    .store-btn {
+    .store-badge {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      background: var(--gray-900);
+      gap: 10px;
+      background: #000;
       color: white;
-      padding: 14px 24px;
-      border-radius: 16px;
+      padding: 10px 22px;
+      border-radius: 14px;
       font-family: var(--font-body);
-      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-      min-width: 180px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid rgba(255,255,255,0.08);
     }
-    .store-btn:hover {
-      background: var(--violet);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(124,58,237,0.35);
+    .store-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.25);
     }
-    .store-btn-icon { font-size: 26px; }
-    .store-btn-label { font-size: 10px; color: rgba(255,255,255,0.6); }
-    .store-btn-name { font-size: 15px; font-weight: 600; margin-top: 1px; }
+    .store-badge svg { flex-shrink: 0; }
+    .store-badge-text { text-align: left; }
+    .store-badge-label { display: block; font-size: 10px; color: rgba(255,255,255,0.65); letter-spacing: 0.02em; }
+    .store-badge-name  { display: block; font-size: 17px; font-weight: 600; line-height: 1.2; color: white; }
+
     .cta-note { margin-top: 20px; font-size: 12px; color: var(--gray-500); }
+
+    @media (max-width: 600px) {
+      .cta-card { padding: 48px 28px; border-radius: 28px; }
+      .store-badges { flex-direction: column; align-items: center; }
+    }
 
     /* ─── FOOTER ────────────────────────────────────────────────── */
     footer { background: var(--gray-900); padding: 56px 0 40px; }
@@ -1083,7 +1214,7 @@
       .steps-track { display: none; }
       .step { opacity: 1; transform: none; }
       .features-grid { grid-template-columns: 1fr; }
-      .forwhom-grid { grid-template-columns: repeat(2, 1fr); }
+      .forwhom-grid { grid-template-columns: 1fr; max-width: 480px; }
 
       .showcase-inner { grid-template-columns: 1fr; gap: 48px; }
       .showcase-content { padding: 0 4px; }
@@ -1097,8 +1228,17 @@
 
     @media (max-width: 600px) {
       section { padding: 72px 0; }
-      .forwhom-grid { grid-template-columns: 1fr 1fr; }
+      .forwhom-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .forwhom-card { padding: 32px 28px; }
       .phone-frame { width: 210px; height: 454px; border-radius: 38px; }
+
+      .showcase-frame-lg { width: 140px; height: 285px; }
+      .showcase-frame-sm { width: 105px; height: 214px; }
+      .showcase-frame-lg .showcase-screen-img,
+      .showcase-frame-lg::before { border-radius: 14px; }
+      .showcase-frame-sm .showcase-screen-img,
+      .showcase-frame-sm::before { border-radius: 11px; }
+      .showcase-phone-2 { margin-top: 36px; margin-left: -18px; }
       .hero-mega-title { letter-spacing: -1.5px; }
       .iphone-frame-wrap { width: 280px; height: 570px; }
       .hero-phone-anchor { margin-left: -140px; margin-top: -285px; }
@@ -1219,7 +1359,7 @@
       <div class="features-scroll-col">
         <div class="feature-item" data-screen="0">
           <div class="feature-item-icon">
-            <i class="ph-duotone ph-wifi-high"></i>
+            <i class="ph-duotone ph-broadcast"></i>
           </div>
           <div class="feature-item-title">Echtzeit-Verfügbarkeit</div>
           <p class="feature-item-text">Sieh sofort auf dem Dashboard, welche Kinder deiner Kontakte gerade verfügbar sind — ohne Nachfragen, ohne Wartezeit.</p>
@@ -1266,26 +1406,35 @@
         <p class="section-subtitle">Ob Eltern, Grosseltern, Tagesmutter oder Bezugsperson — PLAYO passt sich an, wer auch immer die Kinder begleitet.</p>
       </div>
       <div class="forwhom-grid">
-        <div class="forwhom-card reveal reveal-delay-1">
+
+        <div class="forwhom-card">
           <div class="forwhom-icon"><i class="ph-duotone ph-users"></i></div>
           <div class="forwhom-title">Berufstätige Eltern</div>
-          <p class="forwhom-text">Keine Zeit für lange Koordinations-Chats. PLAYO zeigt auf einen Blick, wann Spielen möglich ist.</p>
+          <p class="forwhom-text">Keine Zeit für lange Koordinations-Chats. PLAYO zeigt auf einen Blick, wann Spielen möglich ist — ohne Hin und Her.</p>
+          <p class="forwhom-scene">18 Uhr, langer Tag — ein Tap und du weisst, ob Tim heute noch zu Mia darf.</p>
         </div>
-        <div class="forwhom-card reveal reveal-delay-2">
+
+        <div class="forwhom-card">
           <div class="forwhom-icon"><i class="ph-duotone ph-users-three"></i></div>
           <div class="forwhom-title">Patchworkfamilien</div>
           <p class="forwhom-text">Beide Elternteile haben Zugriff. Bezugspersonen können gezielt für bestimmte Kinder berechtigt werden.</p>
+          <p class="forwhom-scene">Papa hat die Kinder am Mittwoch — Mama sieht trotzdem, welche Spielkameraden verfügbar sind.</p>
         </div>
-        <div class="forwhom-card reveal reveal-delay-3">
+
+        <div class="forwhom-card">
           <div class="forwhom-icon"><i class="ph-duotone ph-hand-heart"></i></div>
           <div class="forwhom-title">Grosseltern & Betreuung</div>
-          <p class="forwhom-text">Tagesmütter, Grosseltern und andere Bezugspersonen können einfach eingebunden werden.</p>
+          <p class="forwhom-text">Tagesmütter, Grosseltern und Bezugspersonen werden einfach eingebunden — mit genau so viel Zugriff wie nötig.</p>
+          <p class="forwhom-scene">Oma begleitet Jonas — und sieht direkt, ob Kinder aus der Nachbarschaft draussen spielen.</p>
         </div>
-        <div class="forwhom-card reveal reveal-delay-4">
+
+        <div class="forwhom-card">
           <div class="forwhom-icon"><i class="ph-duotone ph-buildings"></i></div>
           <div class="forwhom-title">Nachbarschaft & Klasse</div>
-          <p class="forwhom-text">Verbinde dich mit Eltern aus der Schulklasse oder dem Quartier — und sieh, wer wann verfügbar ist.</p>
+          <p class="forwhom-text">Verbinde dich mit Eltern aus der Schulklasse oder dem Quartier — und sieh sofort, wer wann verfügbar ist.</p>
+          <p class="forwhom-scene">Sonniger Samstag — ein Blick genügt um zu sehen, wer aus der Klasse draussen ist.</p>
         </div>
+
       </div>
     </div>
   </section>
@@ -1298,13 +1447,15 @@
       <div class="showcase-inner">
         <div class="showcase-phones reveal">
           <div class="showcase-phone-1">
-            <div class="phone-frame">
-              <img class="phone-screen" src="assets/screenshots/dashboard.png" alt="PLAYO Dashboard" />
+            <div class="showcase-frame-lg">
+              <img class="showcase-screen-img" src="assets/screenshots/02-dashboard.png" alt="PLAYO Dashboard" />
+              <img class="iphone-frame" src="assets/iphone-frame.avif" alt="" aria-hidden="true" />
             </div>
           </div>
           <div class="showcase-phone-2">
-            <div class="phone-frame-sm" style="position:relative;">
-              <img class="phone-screen" src="assets/screenshots/dialog.png" alt="PLAYO Termine" style="width:100%;height:100%;object-fit:cover;object-position:top;" />
+            <div class="showcase-frame-sm">
+              <img class="showcase-screen-img" src="assets/screenshots/04-contacts.png" alt="PLAYO Kontakte" />
+              <img class="iphone-frame" src="assets/iphone-frame.avif" alt="" aria-hidden="true" />
             </div>
           </div>
         </div>
@@ -1357,18 +1508,36 @@
   <!-- ── CTA ──────────────────────────────────────────────────────── -->
   <section id="cta">
     <div class="container">
-      <div class="cta-inner reveal">
+      <div class="cta-card reveal">
         <h2 class="cta-title">Bereit für stressfreie<br>Spieltermine?</h2>
         <p class="cta-subtitle">PLAYO ist kostenlos verfügbar. Lade die App herunter und verbinde dich noch heute mit anderen Familien.</p>
-        <div class="store-buttons">
-          <a href="#" class="store-btn">
-            <span class="store-btn-icon">🍎</span>
-            <div><div class="store-btn-label">Laden im</div><div class="store-btn-name">App Store</div></div>
+        <div class="store-badges">
+
+          <!-- Apple App Store -->
+          <a href="#" class="store-badge">
+            <svg width="22" height="27" viewBox="0 0 22 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.23 14.36c-.03-3.1 2.53-4.6 2.65-4.67-1.45-2.12-3.7-2.41-4.5-2.44-1.9-.2-3.74 1.13-4.71 1.13-.98 0-2.48-1.1-4.08-1.07-2.08.03-4.02 1.22-5.09 3.08-2.19 3.8-.56 9.4 1.56 12.47 1.05 1.51 2.28 3.2 3.9 3.14 1.57-.06 2.16-1.01 4.06-1.01 1.88 0 2.43 1.01 4.08.98 1.69-.03 2.76-1.53 3.79-3.05 1.2-1.74 1.69-3.44 1.71-3.53-.04-.02-3.34-1.28-3.37-5.04zM15.1 4.9C15.96 3.86 16.54 2.44 16.38.97c-1.27.05-2.83.85-3.73 1.87-.82.94-1.53 2.4-1.34 3.82 1.41.11 2.86-.72 3.79-1.76z" fill="white"/>
+            </svg>
+            <div class="store-badge-text">
+              <span class="store-badge-label">Laden im</span>
+              <span class="store-badge-name">App Store</span>
+            </div>
           </a>
-          <a href="#" class="store-btn">
-            <span class="store-btn-icon">▶</span>
-            <div><div class="store-btn-label">Jetzt bei</div><div class="store-btn-name">Google Play</div></div>
+
+          <!-- Google Play -->
+          <a href="#" class="store-badge">
+            <svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0.432 0.346C0.162 0.633 0 1.073 0 1.643v20.714c0 .57.162 1.01.432 1.297l.068.066 11.604-11.604v-.274L0.5.28l-.068.066z" fill="#4FC3F7"/>
+              <path d="M15.968 15.98l-3.864-3.864v-.274l3.864-3.864.087.05 4.577 2.6c1.307.742 1.307 1.957 0 2.7l-4.577 2.6-.087.052z" fill="#FFCA28"/>
+              <path d="M16.055 15.928L12.104 11.98 0.432 23.654c.431.456 1.143.513 1.944.058l13.679-7.784" fill="#F44336"/>
+              <path d="M16.055 8.072L2.376.288C1.575-.167.863-.11.432.346l11.672 11.634 3.951-3.908z" fill="#4CAF50"/>
+            </svg>
+            <div class="store-badge-text">
+              <span class="store-badge-label">Jetzt bei</span>
+              <span class="store-badge-name">Google Play</span>
+            </div>
           </a>
+
         </div>
         <p class="cta-note">iOS &amp; Android · Kostenlos · Keine versteckten Kosten</p>
       </div>
@@ -1649,6 +1818,18 @@
     if (document.getElementById('features')) {
       featEntranceObserver.observe(document.getElementById('features'));
     }
+    // ── For Whom — gestaffelte Einfahrt mit Scale ───────────────────
+    const forwhomCards = document.querySelectorAll('.forwhom-card');
+    const forwhomObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const idx = Array.from(forwhomCards).indexOf(entry.target);
+        setTimeout(() => entry.target.classList.add('fw-visible'), idx * 130);
+        forwhomObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    forwhomCards.forEach(el => forwhomObs.observe(el));
+
   </script>
 
 </body>
