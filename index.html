@@ -589,61 +589,118 @@
       border-radius: 1px;
     }
 
-    /* ─── FEATURES ──────────────────────────────────────────────── */
-    #features { background: var(--violet-soft); padding-top: 60px; }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-
-    .feature-card {
+    /* ─── FEATURES — Scrollytelling ─────────────────────────────── */
+    #features {
       background: white;
-      border-radius: var(--radius-xl);
-      padding: 36px;
-      border: 1px solid var(--gray-200);
-      transition: transform 0.3s, box-shadow 0.3s;
+      padding: 32px 0 80px;
+    }
+
+    .features-sticky-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 100px;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 40px;
+      justify-content: center;
+    }
+
+    /* Left: sticky phone */
+    .features-phone-col {
+      flex: 0 0 320px;
+      position: sticky;
+      top: 64px;
+      opacity: 0;
+      transform: translateY(70px) translateX(280px);
+      transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1);
+    }
+    /* Phase 1: slides up, stays centered */
+    .features-phone-col.phone-visible {
+      opacity: 1;
+      transform: translateY(0) translateX(280px);
+    }
+    /* Phase 2: glides smoothly to the left */
+    .features-phone-col.phone-settled {
+      transform: translateX(0);
+      transition: transform 1.0s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .features-phone-frame {
       position: relative;
-      overflow: hidden;
+      width: 320px;
+      height: 652px;
+      filter: drop-shadow(0 32px 64px rgba(0,0,0,0.22)) drop-shadow(0 8px 24px rgba(124,58,237,0.18));
     }
-    .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); }
-
-    .feature-card.featured {
-      background: var(--violet);
-      border-color: transparent;
-    }
-    .feature-card.featured .feature-title { color: white; }
-    .feature-card.featured .feature-text  { color: rgba(255,255,255,0.75); }
-    .feature-card.featured::after {
-      content: '';
+    .feature-screen-img {
       position: absolute;
-      bottom: -40px; right: -40px;
-      width: 160px; height: 160px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 50%;
+      left: 5.22%; top: 2.15%;
+      width: 89.56%; height: 95.70%;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 28px;
+      transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+      opacity: 0;
+    }
+    .feature-screen-img.active { opacity: 1; }
+    .features-phone-frame .iphone-frame {
+      position: absolute;
+      inset: 0; width: 100%; height: 100%;
+      z-index: 2;
+      pointer-events: none;
     }
 
-    .feature-icon-wrap {
-      width: 52px; height: 52px;
-      border-radius: 16px;
+    /* Right: scrollable feature items */
+    .features-scroll-col {
+      flex: 1;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .feature-item {
+      min-height: 75vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 48px 0;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(.22,1,.36,1), transform 0.65s cubic-bezier(.22,1,.36,1);
+    }
+    .feature-item.seen { opacity: 0.28; transform: none; }
+    .feature-item.active { opacity: 1; transform: none; }
+
+    .feature-item-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: var(--violet-soft);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
       margin-bottom: 20px;
-      background: var(--violet-soft);
+      color: var(--violet);
     }
-    .feature-card.featured .feature-icon-wrap { background: rgba(255,255,255,0.15); }
+    .feature-item-icon svg { width: 22px; height: 22px; }
 
-    .feature-title {
+    .feature-item-title {
       font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 19px;
+      font-weight: 900;
+      font-size: clamp(28px, 3.5vw, 44px);
       color: var(--gray-900);
-      margin-bottom: 10px;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 20px;
     }
-    .feature-text { font-size: 14px; color: var(--gray-500); line-height: 1.7; }
+    .feature-item-text {
+      font-size: 18px;
+      color: var(--gray-500);
+      line-height: 1.75;
+      max-width: 440px;
+    }
+
+    @media (max-width: 768px) {
+      .features-sticky-wrap { flex-direction: column; gap: 40px; padding: 0 20px; }
+      .features-phone-col { position: relative; top: auto; margin: 0 auto; }
+      .feature-item { min-height: auto; opacity: 1; padding: 32px 0; }
+    }
 
     /* ─── FOR WHOM ──────────────────────────────────────────────── */
     #forwhom { background: var(--white); }
@@ -983,35 +1040,65 @@
     </div>
   </section>
 
-  <!-- ── FEATURES ─────────────────────────────────────────────────── -->
+  <!-- ── FEATURES — Scrollytelling ────────────────────────────────── -->
   <section id="features">
-    <div class="container">
-      <div class="section-head reveal">
-        <h2 class="section-title">Weniger Chaos. Mehr Spielzeit.</h2>
-        <p class="section-subtitle">Gebaut für den Alltag mit Kindern — ohne den Overhead.</p>
-      </div>
-      <div class="features-grid">
-        <div class="feature-card featured reveal reveal-delay-1">
-          <div class="feature-icon-wrap">⚡</div>
-          <div class="feature-title">Echtzeit-Verfügbarkeit</div>
-          <p class="feature-text">Sieh sofort auf dem Dashboard, welche Kinder deiner Kontakte gerade verfügbar sind — ohne Nachfragen, ohne Wartezeit.</p>
-        </div>
-        <div class="feature-card reveal reveal-delay-2">
-          <div class="feature-icon-wrap">🔗</div>
-          <div class="feature-title">Verbindung per Code</div>
-          <p class="feature-text">Kein Social-Media-Profil nötig. Teile einfach deinen persönlichen <strong>K-Code</strong> und verbindet euch — sicher und direkt.</p>
-        </div>
-        <div class="feature-card reveal reveal-delay-3">
-          <div class="feature-icon-wrap">👨‍👩‍👧</div>
-          <div class="feature-title">Bezugspersonen</div>
-          <p class="feature-text">Co-Elternteile, Grosseltern oder Tagesmütter können über den <strong>B-Code</strong> hinzugefügt werden und Kinder gemeinsam verwalten.</p>
-        </div>
-        <div class="feature-card reveal reveal-delay-4">
-          <div class="feature-icon-wrap">🔒</div>
-          <div class="feature-title">Privatsphäre by Design</div>
-          <p class="feature-text">Nur Personen, die du selbst verbindest, sehen deine Kinder. Keine Algorithmen, keine Datenweitergabe, kein Social Feed.</p>
+    <div class="features-sticky-wrap">
+
+      <!-- Left: sticky phone mockup -->
+      <div class="features-phone-col">
+        <div class="features-phone-frame">
+          <img class="feature-screen-img active" id="fscreen-0" src="assets/screenshots/02-dashboard.png" alt="Dashboard">
+          <img class="feature-screen-img" id="fscreen-1" src="assets/screenshots/04-contacts.png" alt="Kontakte">
+          <img class="feature-screen-img" id="fscreen-2" src="assets/screenshots/05-profile.png" alt="Profil">
+          <img class="feature-screen-img" id="fscreen-3" src="assets/screenshots/02-dashboard.png" alt="Datenschutz">
+          <img class="iphone-frame" src="assets/iphone-frame.avif" alt="">
         </div>
       </div>
+
+      <!-- Right: scrollable features -->
+      <div class="features-scroll-col">
+        <div class="feature-item" data-screen="0">
+          <div class="feature-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </div>
+          <div class="feature-item-title">Echtzeit-Verfügbarkeit</div>
+          <p class="feature-item-text">Sieh sofort auf dem Dashboard, welche Kinder deiner Kontakte gerade verfügbar sind — ohne Nachfragen, ohne Wartezeit.</p>
+        </div>
+        <div class="feature-item" data-screen="1">
+          <div class="feature-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+          </div>
+          <div class="feature-item-title">Verbindung per K-Code</div>
+          <p class="feature-item-text">Kein Social-Media-Profil nötig. Teile deinen persönlichen K-Code und verbindet euch — sicher und direkt.</p>
+        </div>
+        <div class="feature-item" data-screen="2">
+          <div class="feature-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="feature-item-title">Bezugspersonen einbinden</div>
+          <p class="feature-item-text">Co-Elternteile, Grosseltern oder Tagesmütter können über den B-Code hinzugefügt werden und Kinder gemeinsam begleiten.</p>
+        </div>
+        <div class="feature-item" data-screen="3">
+          <div class="feature-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="feature-item-title">Privatsphäre by Design</div>
+          <p class="feature-item-text">Nur Personen, die du selbst verbindest, sehen deine Kinder. Keine Algorithmen, keine Datenweitergabe, kein Social Feed.</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1302,6 +1389,62 @@
     }, { threshold: 0.25 });
 
     if (stepsPath) stepsObserver.observe(stepsPath);
+
+    // ── Features scrollytelling ─────────────────────────────────────
+    const featureItems   = document.querySelectorAll('.feature-item');
+    const featureScreens = document.querySelectorAll('.feature-screen-img');
+    const featPhoneCol   = document.querySelector('.features-phone-col');
+    let featEntranceDone = false;
+
+    // 1. Phone entrance — fires once when section scrolls into view
+    const featEntranceObserver = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting || featEntranceDone) return;
+      featEntranceDone = true;
+      // Phase 1: phone slides up, stays centered
+      featPhoneCol.classList.add('phone-visible');
+      featEntranceObserver.disconnect();
+
+      // Phase 2: phone springs left once it's fully in (900ms = entrance duration)
+      setTimeout(() => {
+        featPhoneCol.classList.add('phone-settled');
+      }, 900);
+
+      // Phase 3: first text fades in after phone has settled
+      setTimeout(() => {
+        featureItems[0].classList.add('active');
+        const firstScreen = document.getElementById('fscreen-0');
+        if (firstScreen) firstScreen.classList.add('active');
+        featureItems.forEach(el => featScrollObserver.observe(el));
+      }, 1650);
+    }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
+
+    // 2. Scroll observer — switches active item as user scrolls
+    const featScrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          // Mark as seen (dimmed) when scrolled past
+          if (entry.boundingClientRect.top < 0) {
+            entry.target.classList.remove('active');
+            entry.target.classList.add('seen');
+          }
+          return;
+        }
+        const idx = entry.target.dataset.screen;
+        featureItems.forEach(el => {
+          el.classList.remove('active');
+          el.classList.add('seen');
+        });
+        featureScreens.forEach(el => el.classList.remove('active'));
+        entry.target.classList.add('active');
+        entry.target.classList.remove('seen');
+        const screen = document.getElementById(`fscreen-${idx}`);
+        if (screen) screen.classList.add('active');
+      });
+    }, { threshold: 0.55 });
+
+    if (document.getElementById('features')) {
+      featEntranceObserver.observe(document.getElementById('features'));
+    }
   </script>
 
 </body>
