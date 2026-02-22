@@ -503,7 +503,7 @@
       background:
         radial-gradient(ellipse 100% 70% at 110% -10%, rgba(249,115,22,0.28) 0%, transparent 60%),
         radial-gradient(ellipse 90% 80% at -10% 110%, rgba(139,92,246,0.40) 0%, transparent 60%),
-        var(--violet-deep);
+        var(--violet-mid);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: var(--radius-xl);
       padding: 32px;
@@ -675,30 +675,31 @@
     .feature-item.active { opacity: 1; transform: none; }
 
     .feature-item-icon {
-      width: 56px; height: 56px;
+      width: 64px; height: 64px;
       border-radius: 16px;
       background: var(--violet-soft);
+      border: 1px solid rgba(124,58,237,0.16);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       color: var(--violet);
     }
-    .feature-item-icon svg { width: 22px; height: 22px; }
-    .feature-item-icon i { font-size: 28px; line-height: 1; display: flex; }
+    .feature-item-icon svg { width: 26px; height: 26px; }
+    .feature-item-icon i { font-size: 32px; line-height: 1; display: flex; }
 
     /* ─── For Whom icon container ───────────────────────────────── */
     .forwhom-icon {
       width: 64px;
       height: 64px;
       border-radius: 18px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(124,58,237,0.08);
+      border: 1px solid rgba(124,58,237,0.16);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 0 20px;
-      color: #C4B5FD;
+      color: var(--violet);
     }
     .forwhom-icon i { font-size: 32px; line-height: 1; display: flex; }
 
@@ -845,11 +846,11 @@
       }
 
       .feature-item-icon {
-        width: 44px; height: 44px;
-        border-radius: 12px;
-        margin-bottom: 12px;
+        width: 52px; height: 52px;
+        border-radius: 14px;
+        margin-bottom: 14px;
       }
-      .feature-item-icon svg { width: 20px; height: 20px; }
+      .feature-item-icon svg { width: 22px; height: 22px; }
       .feature-item-title {
         font-size: clamp(22px, 6vw, 28px);
         letter-spacing: -0.5px;
@@ -887,56 +888,57 @@
       border-radius: var(--radius-2xl);
       padding: 40px 36px;
       text-align: left;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(124,58,237,0.14);
+      box-shadow: 0 2px 16px rgba(124,58,237,0.08), 0 1px 4px rgba(0,0,0,0.04);
       opacity: 0;
       transform: translateY(28px) scale(0.95);
       transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1), box-shadow 0.3s;
     }
 
-    /* Grid-Textur (wie Step-Cards) */
+    /* Grid-Textur */
     .forwhom-card::before {
       content: '';
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
       background-size: 48px 48px;
       pointer-events: none;
       z-index: 0;
     }
     .forwhom-card > * { position: relative; z-index: 1; }
 
-    /* Dunkle Basis + je Karte eigene Gradient-Richtung (≠ Step-Cards) */
+    /* Helle Karten — Blob-Kleckse in Ecken, weisse Basis */
     .forwhom-card:nth-child(1) {
       background:
-        radial-gradient(ellipse 95% 70% at -10% 110%,  rgba(249,115,22,0.26) 0%, transparent 60%),
-        radial-gradient(ellipse 85% 75% at 110% -10%,  rgba(139,92,246,0.38) 0%, transparent 60%),
-        var(--violet-mid);
+        radial-gradient(ellipse 80% 60% at -5% 105%, rgba(249,115,22,0.13) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 65% at 105% -5%, rgba(124,58,237,0.12) 0%, transparent 55%),
+        white;
     }
     .forwhom-card:nth-child(2) {
       background:
-        radial-gradient(ellipse 95% 70% at 110% 110%,  rgba(249,115,22,0.24) 0%, transparent 60%),
-        radial-gradient(ellipse 85% 75% at -10% -10%,  rgba(139,92,246,0.36) 0%, transparent 60%),
-        var(--violet-mid);
+        radial-gradient(ellipse 80% 60% at 105% 105%, rgba(249,115,22,0.13) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 65% at -5%  -5%, rgba(124,58,237,0.12) 0%, transparent 55%),
+        white;
     }
     .forwhom-card:nth-child(3) {
       background:
-        radial-gradient(ellipse 95% 70% at -10% -10%,  rgba(249,115,22,0.24) 0%, transparent 60%),
-        radial-gradient(ellipse 85% 75% at 110% 110%,  rgba(139,92,246,0.38) 0%, transparent 60%),
-        var(--violet-mid);
+        radial-gradient(ellipse 80% 60% at -5%  -5%, rgba(249,115,22,0.13) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 65% at 105% 105%, rgba(124,58,237,0.12) 0%, transparent 55%),
+        white;
     }
     .forwhom-card:nth-child(4) {
       background:
-        radial-gradient(ellipse 95% 70% at 110% -10%,  rgba(249,115,22,0.26) 0%, transparent 60%),
-        radial-gradient(ellipse 85% 75% at -10% 110%,  rgba(139,92,246,0.36) 0%, transparent 60%),
-        var(--violet-mid);
+        radial-gradient(ellipse 80% 60% at 105% -5%, rgba(249,115,22,0.13) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 65% at -5%  105%, rgba(124,58,237,0.12) 0%, transparent 55%),
+        white;
     }
 
     .forwhom-card.fw-visible { opacity: 1; transform: none; }
     .forwhom-card.fw-visible:hover {
       transform: translateY(-6px);
-      box-shadow: 0 24px 56px rgba(0,0,0,0.35), 0 8px 24px rgba(124,58,237,0.25);
+      box-shadow: 0 12px 40px rgba(124,58,237,0.16), 0 4px 12px rgba(0,0,0,0.06);
     }
     .forwhom-card.fw-visible:hover .forwhom-icon {
       animation: iconBounce 0.55s cubic-bezier(.34,1.56,.64,1) forwards;
@@ -946,19 +948,10 @@
       font-family: var(--font-head);
       font-weight: 800;
       font-size: 18px;
-      color: white;
+      color: var(--gray-900);
       margin-bottom: 10px;
     }
-    .forwhom-text { font-size: 14px; color: rgba(255,255,255,0.80); line-height: 1.65; }
-    .forwhom-scene {
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(255,255,255,0.10);
-      font-size: 12px;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.6;
-      font-style: italic;
-    }
+    .forwhom-text { font-size: 14px; color: var(--gray-700); line-height: 1.65; }
 
     /* ─── SHOWCASE ──────────────────────────────────────────────── */
     #showcase {
@@ -1149,7 +1142,48 @@
     }
 
     /* ─── FOOTER ────────────────────────────────────────────────── */
-    footer { background: var(--gray-900); padding: 56px 0 40px; }
+    footer {
+      background: var(--gray-900);
+      padding: 56px 0 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grid-Textur */
+    footer .footer-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Violetter Blob links oben */
+    footer::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.35) 0%, transparent 70%);
+      filter: blur(80px);
+      top: -160px; left: -160px;
+      pointer-events: none;
+    }
+
+    /* Oranger Blob rechts unten */
+    footer::after {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.20) 0%, transparent 70%);
+      filter: blur(70px);
+      bottom: -120px; right: -120px;
+      pointer-events: none;
+    }
 
     .footer-inner {
       display: flex;
@@ -1157,6 +1191,8 @@
       align-items: center;
       gap: 24px;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
 
     .footer-logo {
@@ -1242,6 +1278,20 @@
       .hero-mega-title { letter-spacing: -1.5px; }
       .iphone-frame-wrap { width: 280px; height: 570px; }
       .hero-phone-anchor { margin-left: -140px; margin-top: -285px; }
+    }
+
+    /* ─── HERO MOBILE ────────────────────────────────────────────── */
+    /* Scroll-Länge stark reduzieren — 420vh ist auf Mobile zu viel  */
+    @media (max-width: 768px) {
+      #hero-scroll { height: 220vh; }
+      .hero-phone-anchor { top: 40%; }
+      #how { padding-top: 56px; }
+    }
+
+    /* Mittlere Phone-Grösse für grosse Phones / kleine Tablets */
+    @media (min-width: 601px) and (max-width: 768px) {
+      .iphone-frame-wrap { width: 310px; height: 631px; }
+      .hero-phone-anchor { margin-left: -155px; margin-top: -316px; }
     }
   </style>
 </head>
@@ -1411,28 +1461,24 @@
           <div class="forwhom-icon"><i class="ph-duotone ph-users"></i></div>
           <div class="forwhom-title">Berufstätige Eltern</div>
           <p class="forwhom-text">Keine Zeit für lange Koordinations-Chats. PLAYO zeigt auf einen Blick, wann Spielen möglich ist — ohne Hin und Her.</p>
-          <p class="forwhom-scene">18 Uhr, langer Tag — ein Tap und du weisst, ob Tim heute noch zu Mia darf.</p>
         </div>
 
         <div class="forwhom-card">
           <div class="forwhom-icon"><i class="ph-duotone ph-users-three"></i></div>
           <div class="forwhom-title">Patchworkfamilien</div>
           <p class="forwhom-text">Beide Elternteile haben Zugriff. Bezugspersonen können gezielt für bestimmte Kinder berechtigt werden.</p>
-          <p class="forwhom-scene">Papa hat die Kinder am Mittwoch — Mama sieht trotzdem, welche Spielkameraden verfügbar sind.</p>
         </div>
 
         <div class="forwhom-card">
           <div class="forwhom-icon"><i class="ph-duotone ph-hand-heart"></i></div>
           <div class="forwhom-title">Grosseltern & Betreuung</div>
           <p class="forwhom-text">Tagesmütter, Grosseltern und Bezugspersonen werden einfach eingebunden — mit genau so viel Zugriff wie nötig.</p>
-          <p class="forwhom-scene">Oma begleitet Jonas — und sieht direkt, ob Kinder aus der Nachbarschaft draussen spielen.</p>
         </div>
 
         <div class="forwhom-card">
           <div class="forwhom-icon"><i class="ph-duotone ph-buildings"></i></div>
           <div class="forwhom-title">Nachbarschaft & Klasse</div>
           <p class="forwhom-text">Verbinde dich mit Eltern aus der Schulklasse oder dem Quartier — und sieh sofort, wer wann verfügbar ist.</p>
-          <p class="forwhom-scene">Sonniger Samstag — ein Blick genügt um zu sehen, wer aus der Klasse draussen ist.</p>
         </div>
 
       </div>
@@ -1546,6 +1592,7 @@
 
   <!-- ── FOOTER ───────────────────────────────────────────────────── -->
   <footer>
+    <div class="footer-grid"></div>
     <div class="container">
       <div class="footer-inner">
         <div class="footer-logo">P<span class="lk-L">L</span><span class="lk-A">A</span>Y<span style="color:var(--orange)">O</span></div>
@@ -1628,14 +1675,15 @@
       // a = animation progress, completes at p=0.85
       // the remaining 15% of scroll range = logo stand time before sticky releases
       const a = Math.min(p / 0.85, 1.0);
+      const isMob = window.innerWidth <= 768;
 
-      // Phone: linear travel 60vh → -100vh
-      heroPhone.style.transform = `translateY(${60 - 160 * a}vh)`;
+      // Phone: auf Mobile weniger weit reisen (50vh → -85vh statt 60vh → -100vh)
+      heroPhone.style.transform = `translateY(${isMob ? 50 - 135 * a : 60 - 160 * a}vh)`;
 
-      // Headline: drifts down, fades late
+      // Headline: drifts down, fades late — auf Mobile kürzerer Drift
       const hlFade = easeInOutCubic(progress(a, 0.74, 0.96));
       heroHL.style.opacity   = 1 - hlFade;
-      heroHL.style.transform = `translateX(-50%) translateY(${a * 44}vh)`;
+      heroHL.style.transform = `translateX(-50%) translateY(${a * (isMob ? 28 : 44)}vh)`;
 
       // PLAYO logo: crossfade with headline, soft ease-in
       const logoT = progress(a, 0.80, 1.0);
@@ -1646,7 +1694,7 @@
       // Ramp: during logo stand (p=0.85→1.0), drift the inner content upward.
       // heroSticky stays locked — only the inner wrapper moves, so no edge/strip artifacts.
       const standP = easeInOutCubic(progress(p, 0.85, 1.0));
-      heroInner.style.transform = `translateY(${-standP * 25}vh)`;
+      heroInner.style.transform = `translateY(${-standP * (isMob ? 18 : 25)}vh)`;
     }
 
     function heroLoop() {
