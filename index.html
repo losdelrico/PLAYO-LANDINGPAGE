@@ -446,7 +446,7 @@
         radial-gradient(ellipse 50% 40% at 92% 70%, rgba(249,115,22,0.10) 0%, transparent 70%),
         radial-gradient(ellipse 40% 35% at 50% 10%, rgba(124,58,237,0.055) 0%, transparent 65%),
         white;
-      padding-top: 40px;
+      padding-top: 100px;
       position: relative;
     }
 
@@ -565,16 +565,20 @@
     .steps-payoff {
       text-align: center;
       margin-top: 52px;
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 17px;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 16px;
       color: var(--gray-500);
-      font-style: italic;
+      line-height: 1.7;
       opacity: 0;
       transform: translateY(14px);
       transition: opacity 0.6s, transform 0.6s;
     }
     .steps-payoff.visible { opacity: 1; transform: none; }
+    @media (max-width: 768px) { .desktop-br { display: none; } }
     .steps-payoff::after {
       content: '';
       display: block;
@@ -974,7 +978,7 @@
       </div>
 
       <p class="steps-payoff" id="stepsPayoff">
-        Statt 12 WhatsApp-Nachrichten — ein einziger Tap.
+        Keine «X» WhatsApp-Nachrichten. Kein Gruppen-Chat.<br class="desktop-br">Keine Sprachmitteilungen. Nur ein Tap — und deine Kontakte wissen ob dein Kind für ein Playdate verfügbar ist.
       </p>
     </div>
   </section>
