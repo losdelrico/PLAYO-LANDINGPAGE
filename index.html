@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PLAYO – Spieltermine einfach koordinieren</title>
-  <meta name="description" content="PLAYO verbindet Familien. Sieh sofort, wann Kinder im Umfeld spielen können – stressfrei, privat und kostenlos." />
+  <title>PLAYO – Wer kann heute spielen?</title>
+  <meta name="description" content="Sieh auf einen Blick, welche Kinder in deinem Umfeld verfügbar sind. PLAYO verbindet Eltern – privat, diskret, ohne Koordinations-Chaos." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -131,6 +131,45 @@
     }
     .nav-cta:hover { background: #6d28d9; transform: translateY(-1px); }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .lang-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .lang-wrap::after {
+      content: '▾';
+      font-size: 9px;
+      color: rgba(255,255,255,0.55);
+      pointer-events: none;
+      margin-left: 1px;
+      transition: color 0.4s;
+    }
+    nav.on-light .lang-wrap::after { color: var(--gray-400, #9ca3af); }
+
+    .lang-select {
+      background: transparent;
+      border: none;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      padding: 0 2px;
+      transition: color 0.4s;
+    }
+    .lang-select option { color: var(--gray-900); background: white; }
+    nav.on-light .lang-select { color: var(--gray-500); }
+
     /* ─── HERO SCROLL-PIN ────────────────────────────────────────── */
     #hero-scroll {
       height: 420vh;
@@ -147,7 +186,7 @@
       background: var(--violet-deep);
     }
 
-    /* inner wrapper — this is what slides up during the ramp,
+    /* inner wrapper – this is what slides up during the ramp,
        not the sticky container itself (avoids visible edge artifacts) */
     .hero-inner {
       position: absolute;
@@ -257,7 +296,7 @@
     .hero-phone-anchor {
       position: absolute;
       left: 50%;
-      top: 50%;
+      top: 46%;
       margin-left: -215px;
       margin-top:  -437px;
       z-index: 2;
@@ -284,7 +323,7 @@
         drop-shadow(0 20px 50px rgba(124,58,237,0.30));
     }
 
-    /* App screenshot — sits behind the frame overlay */
+    /* App screenshot – sits behind the frame overlay */
     .hero-screen-img {
       position: absolute;
       left: 5.22%;
@@ -295,10 +334,10 @@
       object-position: top;
       display: block;
       z-index: 1;
-      border-radius: 44px;
+      border-radius: 10px;
     }
 
-    /* Frame image overlay — transparent screen area, opaque border */
+    /* Frame image overlay – transparent screen area, opaque border */
     .iphone-frame {
       position: absolute;
       inset: 0;
@@ -445,11 +484,7 @@
 
     /* ─── HOW IT WORKS ──────────────────────────────────────────── */
     #how {
-      background:
-        radial-gradient(ellipse 55% 45% at 8% 30%, rgba(124,58,237,0.10) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 92% 70%, rgba(249,115,22,0.10) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 35% at 50% 10%, rgba(124,58,237,0.055) 0%, transparent 65%),
-        white;
+      background: white;
       padding-top: 100px;
       position: relative;
     }
@@ -494,7 +529,7 @@
       background: var(--violet);
     }
 
-    /* Step cards — dark on light: the key contrast moment */
+    /* Step cards – dark on light: the key contrast moment */
     .steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -517,7 +552,7 @@
         transform 0.65s cubic-bezier(.22,1,.36,1),
         box-shadow 0.4s;
     }
-    /* Grid texture inside card — mirrors the hero */
+    /* Grid texture inside card – mirrors the hero */
     .step::before {
       content: '';
       position: absolute;
@@ -593,7 +628,7 @@
       border-radius: 1px;
     }
 
-    /* ─── FEATURES — Scrollytelling ─────────────────────────────── */
+    /* ─── FEATURES – Scrollytelling ─────────────────────────────── */
     #features {
       background: white;
       padding: 32px 0 80px;
@@ -632,7 +667,19 @@
       position: relative;
       width: 320px;
       height: 652px;
-      filter: drop-shadow(0 32px 64px rgba(0,0,0,0.22)) drop-shadow(0 8px 24px rgba(124,58,237,0.18));
+    }
+    .features-phone-frame::after {
+      content: '';
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 65%;
+      height: 36px;
+      background: radial-gradient(ellipse, rgba(0,0,0,0.24) 0%, transparent 72%);
+      filter: blur(8px);
+      border-radius: 50%;
+      z-index: -1;
     }
     .feature-screen-img {
       position: absolute;
@@ -650,10 +697,14 @@
       inset: 0; width: 100%; height: 100%;
       z-index: 2;
       pointer-events: none;
+      filter: none;
     }
 
     /* Mobile-only dots: auf Desktop versteckt */
     .mob-feat-dots { display: none; }
+
+    /* Mobile Swipe-Carousel: auf Desktop versteckt */
+    .fmc-wrap { display: none; }
 
     /* Right: scrollable feature items */
     .features-scroll-col {
@@ -691,18 +742,18 @@
 
     /* ─── For Whom icon container ───────────────────────────────── */
     .forwhom-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 18px;
-      background: rgba(124,58,237,0.08);
-      border: 1px solid rgba(124,58,237,0.16);
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.20);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 0 20px;
-      color: var(--violet);
+      color: white;
     }
-    .forwhom-icon i { font-size: 32px; line-height: 1; display: flex; }
+    .forwhom-icon i { font-size: 28px; line-height: 1; display: flex; }
 
     /* ─── Trust icon (Phosphor, violett) ───────────────────────── */
     .trust-icon i { font-size: 22px; color: #A78BFA; line-height: 1; display: flex; }
@@ -746,126 +797,171 @@
     }
 
     @media (max-width: 768px) {
-      /* Section: Scroll-Raum für 4 Items */
-      #features {
-        padding: 0;
-        height: 260vh;
-      }
+      /* Desktop-Scrollytelling ausblenden */
+      .features-sticky-wrap { display: none !important; }
+      #features { height: auto; padding: 44px 0 48px; }
 
-      /* Gesamtes Layout: Spalte — Text oben, Handy unten */
-      .features-sticky-wrap {
-        position: sticky;
-        top: 68px;
-        height: calc(100vh - 68px);
-        flex-direction: column;
-        flex-wrap: nowrap;
-        align-items: stretch;
-        justify-content: flex-start;
-        gap: 8px;
-        padding: 20px 32px 12px;
-        max-width: none;
-        margin: 0;
-      }
+      /* ── Carousel ────────────────────────────────────────────────── */
+      .fmc-wrap { display: block; }
 
-      /* Text-Spalte: oben, volle Breite */
-      .features-scroll-col {
-        flex: 0 0 auto;
-        order: 1;
-        position: relative;
-        padding: 0;
-        height: 165px;
-      }
-
-      /* Phone: unten, zentriert, füllt verbleibenden Platz */
-      .features-phone-col {
-        flex: 1;
-        min-height: 0;
-        order: 2;
-        position: relative;
-        top: auto;
-        margin: 0;
+      .fmc-track {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s cubic-bezier(.22,1,.36,1),
-                    transform 0.6s cubic-bezier(.22,1,.36,1);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 16px;
+        padding: 4px 20px 48px;
+        scroll-padding-left: 20px;
       }
-      .features-phone-col.phone-visible,
-      .features-phone-col.phone-settled {
-        opacity: 1;
-        transform: translateY(0);
+      .fmc-track::-webkit-scrollbar { display: none; }
+
+      /* Karte: phone absolut positioniert, überlappt den weissen Bereich */
+      .fmc-slide {
+        flex: 0 0 calc(100vw - 56px);
+        scroll-snap-align: start;
+        background: #fff;
+        border-radius: 28px;
+        border: 1px solid rgba(124,58,237,0.12);
+        box-shadow: 0 8px 36px rgba(124,58,237,0.10), 0 2px 8px rgba(0,0,0,0.05);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
       }
 
-      .features-phone-frame {
-        height: min(460px, 95%);
-        width: auto;
-        aspect-ratio: 170 / 346;
-        filter: drop-shadow(0 8px 24px rgba(0,0,0,0.20))
-                drop-shadow(0 4px 12px rgba(124,58,237,0.15));
+      /* Nur Gradient-Hintergrund (kein Phone mehr hier) */
+      .fmc-top {
+        height: 195px;
+        background: linear-gradient(
+          to bottom,
+          rgba(124,58,237,0.10) 0%,
+          rgba(249,115,22,0.06) 55%,
+          transparent 100%);
+        flex-shrink: 0;
       }
-      .feature-screen-img { border-radius: 16px; }
 
-      /* Items: übereinander gestapelt — oben ausgerichtet */
-      .feature-item {
+      /* Phone: absolut, zentriert, überlappt ~80px in den weissen Bereich */
+      .fmc-phone {
         position: absolute;
-        top: 0; left: 0; right: 0;
-        transform: none;
-        min-height: 0;
-        opacity: 0;
-        padding: 0;
-        justify-content: flex-start;
-        pointer-events: none;
-        transition: opacity 0.5s ease;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 122px;
+        height: 249px;
+        z-index: 5;
+        filter: drop-shadow(0 18px 40px rgba(0,0,0,0.22))
+                drop-shadow(0 4px 12px rgba(124,58,237,0.18));
       }
-      .feature-item.mob-visible {
-        opacity: 1;
-        pointer-events: auto;
+      /* Weisser Hintergrund hinter Screen – verhindert Gradient-Bleed in Ecken */
+      .fmc-phone::before {
+        content: '';
+        position: absolute;
+        left: 5.22%; top: 2.15%;
+        width: 89.56%; height: 95.70%;
+        background: #fff;
+        border-radius: 6px;
+        z-index: 1;
+      }
+      .fmc-screen {
+        position: absolute;
+        left: 5.22%; top: 2.15%;
+        width: 89.56%; height: 95.70%;
+        object-fit: cover;
+        object-position: top;
+        border-radius: 6px;
+        z-index: 2;
+      }
+      .fmc-frame {
+        position: absolute;
+        inset: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 3;
+      }
+
+      /* Text-Bereich: padding-top schafft Platz unter dem überlappenden Phone */
+      .fmc-body {
+        padding: 106px 24px 28px;
+        position: relative;
+        z-index: 1;
+      }
+      .fmc-icon { display: none; }
+      .fmc-title {
+        font-family: var(--font-head);
+        font-weight: 900;
+        font-size: 22px;
+        color: var(--gray-900);
+        letter-spacing: -0.5px;
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+      .fmc-text {
+        font-size: 15px;
+        color: var(--gray-500);
+        line-height: 1.65;
       }
 
       /* Fortschritts-Punkte */
-      .mob-feat-dots {
+      .fmc-dots {
         display: flex;
-        order: 3;
-        flex: 0 0 auto;
-        align-self: center;
         justify-content: center;
         gap: 8px;
-        padding: 2px 0;
+        padding: 18px 0 6px;
       }
-      .mob-feat-dot {
-        width: 7px;
-        height: 7px;
+      .fmc-dot {
+        width: 7px; height: 7px;
         border-radius: 50%;
-        background: rgba(124,58,237,0.2);
+        background: rgba(124,58,237,0.20);
         transition: background 0.4s ease, transform 0.4s ease;
       }
-      .mob-feat-dot.active {
+      .fmc-dot.active {
         background: #7C3AED;
         transform: scale(1.5);
-      }
-
-      .feature-item-icon {
-        width: 52px; height: 52px;
-        border-radius: 14px;
-        margin-bottom: 14px;
-      }
-      .feature-item-icon svg { width: 22px; height: 22px; }
-      .feature-item-title {
-        font-size: clamp(22px, 6vw, 28px);
-        letter-spacing: -0.5px;
-        margin-bottom: 10px;
-      }
-      .feature-item-text {
-        font-size: 15px;
-        line-height: 1.6;
-        max-width: none;
       }
     }
 
     /* ─── FOR WHOM ──────────────────────────────────────────────── */
-    #forwhom { background: var(--gray-100); }
+    #forwhom { background: transparent; }
+
+    /* ─── O-Background Textur ───────────────────────────────────── */
+    /* overflow: visible (kein hidden/clip!) – sonst bricht position:sticky   */
+    /* Clipping der O-Zeichen erfolgt per clip-path direkt auf dem Layer      */
+    .o-bg {
+      position: relative;
+      background: #ffffff;
+    }
+    .o-bg-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(3px);
+      clip-path: inset(0);  /* Clipping ohne Scroll-Container */
+      overflow: hidden;     /* Fallback für ältere Browser    */
+    }
+    @keyframes floatO {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50%       { transform: translateY(-30px) scale(1.08); }
+    }
+
+    .o-bg-layer span {
+      position: absolute;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      line-height: 1;
+      user-select: none;
+      animation: floatO 8s ease-in-out infinite;
+    }
+    .o-bg-layer span:nth-child(2) { animation-duration: 9.5s;  animation-delay: -2s; }
+    .o-bg-layer span:nth-child(3) { animation-duration: 7s;    animation-delay: -4s; }
+    .o-bg-layer span:nth-child(4) { animation-duration: 11s;   animation-delay: -1s; }
+    .o-bg-layer span:nth-child(5) { animation-duration: 8.5s;  animation-delay: -5s; }
+    .o-bg-layer span:nth-child(6) { animation-duration: 10s;   animation-delay: -3s; }
+    .o-bg > *:not(.o-bg-layer) {
+      position: relative;
+      z-index: 1;
+    }
 
     .forwhom-grid {
       display: grid;
@@ -887,59 +983,44 @@
       position: relative;
       overflow: hidden;
       border-radius: var(--radius-2xl);
-      padding: 40px 36px;
+      padding: 36px 32px;
       text-align: left;
-      border: 1px solid rgba(124,58,237,0.14);
-      box-shadow: 0 2px 16px rgba(124,58,237,0.08), 0 1px 4px rgba(0,0,0,0.04);
+      background: linear-gradient(135deg, #7C3AED 0%, #4C1D95 100%);
+      box-shadow: 0 8px 32px rgba(124,58,237,0.35);
+      border: none;
       opacity: 0;
       transform: translateY(28px) scale(0.95);
       transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1), box-shadow 0.3s;
     }
 
-    /* Grid-Textur */
-    .forwhom-card::before {
-      content: '';
+    .forwhom-card > *:not(.forwhom-blobs) { position: relative; z-index: 1; }
+
+    .forwhom-blobs {
       position: absolute;
       inset: 0;
-      background-image:
-        linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
-      background-size: 48px 48px;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: 0;
     }
-    .forwhom-card > * { position: relative; z-index: 1; }
 
-    /* Helle Karten — Blob-Kleckse in Ecken, weisse Basis */
-    .forwhom-card:nth-child(1) {
-      background:
-        radial-gradient(ellipse 80% 60% at -5% 105%, rgba(249,115,22,0.13) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 65% at 105% -5%, rgba(124,58,237,0.12) 0%, transparent 55%),
-        white;
+    @keyframes floatBlobs {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-22px); }
     }
-    .forwhom-card:nth-child(2) {
-      background:
-        radial-gradient(ellipse 80% 60% at 105% 105%, rgba(249,115,22,0.13) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 65% at -5%  -5%, rgba(124,58,237,0.12) 0%, transparent 55%),
-        white;
+
+    .forwhom-blobs g {
+      animation: floatBlobs 7s ease-in-out infinite;
+      transform-origin: center center;
     }
-    .forwhom-card:nth-child(3) {
-      background:
-        radial-gradient(ellipse 80% 60% at -5%  -5%, rgba(249,115,22,0.13) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 65% at 105% 105%, rgba(124,58,237,0.12) 0%, transparent 55%),
-        white;
-    }
-    .forwhom-card:nth-child(4) {
-      background:
-        radial-gradient(ellipse 80% 60% at 105% -5%, rgba(249,115,22,0.13) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 65% at -5%  105%, rgba(124,58,237,0.12) 0%, transparent 55%),
-        white;
-    }
+    .forwhom-card:nth-child(2) .forwhom-blobs g { animation-delay: -1.8s; }
+    .forwhom-card:nth-child(3) .forwhom-blobs g { animation-delay: -3.5s; }
+    .forwhom-card:nth-child(4) .forwhom-blobs g { animation-delay: -5.2s; }
 
     .forwhom-card.fw-visible { opacity: 1; transform: none; }
     .forwhom-card.fw-visible:hover {
       transform: translateY(-6px);
-      box-shadow: 0 12px 40px rgba(124,58,237,0.16), 0 4px 12px rgba(0,0,0,0.06);
+      box-shadow: 0 16px 48px rgba(76,29,149,0.50);
     }
     .forwhom-card.fw-visible:hover .forwhom-icon {
       animation: iconBounce 0.55s cubic-bezier(.34,1.56,.64,1) forwards;
@@ -949,16 +1030,26 @@
       font-family: var(--font-head);
       font-weight: 800;
       font-size: 18px;
-      color: var(--gray-900);
+      color: white;
       margin-bottom: 10px;
     }
-    .forwhom-text { font-size: 14px; color: var(--gray-700); line-height: 1.65; }
+    .forwhom-text { font-size: 14px; color: rgba(255,255,255,0.70); line-height: 1.65; }
+
+    /* Mobile-only: progress dots für forwhom (auf Desktop versteckt) */
+    .fw-dots { display: none; }
 
     /* ─── SHOWCASE ──────────────────────────────────────────────── */
+    #showcase-scroll-wrap {
+      position: relative;
+    }
     #showcase {
       background: linear-gradient(160deg, var(--violet-deep) 0%, #1a0838 100%);
-      position: relative;
+      position: sticky;
+      top: 0;
+      height: 100vh;
       overflow: hidden;
+      display: flex;
+      align-items: center;
     }
 
     #showcase::before {
@@ -1039,10 +1130,10 @@
       object-position: top;
       display: block;
     }
-    .showcase-frame-lg .showcase-screen-img { border-radius: 25px; z-index: 1; }
-    .showcase-frame-sm .showcase-screen-img { border-radius: 19px; z-index: 1; }
+    .showcase-frame-lg .showcase-screen-img { border-radius: 8px; z-index: 1; }
+    .showcase-frame-sm .showcase-screen-img { border-radius: 6px; z-index: 1; }
 
-    /* Opaker Hintergrund hinter dem Screen — verhindert Durchscheinen */
+    /* Opaker Hintergrund hinter dem Screen – verhindert Durchscheinen */
     .showcase-frame-lg::before,
     .showcase-frame-sm::before {
       content: '';
@@ -1052,8 +1143,8 @@
       background: #0D0820;
       z-index: 0;
     }
-    .showcase-frame-lg::before { border-radius: 25px; }
-    .showcase-frame-sm::before { border-radius: 19px; }
+    .showcase-frame-lg::before { border-radius: 8px; }
+    .showcase-frame-sm::before { border-radius: 6px; }
 
     .showcase-content { padding: 0 8px; }
     .showcase-content .section-title  { color: white; text-align: left; }
@@ -1113,14 +1204,26 @@
         inset 0 -1px 0 rgba(124,58,237,0.06);
     }
 
-    .cta-title {
+    .cta-logo {
       font-family: var(--font-head);
       font-weight: 900;
-      font-size: clamp(32px, 5vw, 52px);
-      letter-spacing: -1.2px;
-      line-height: 1.1;
+      font-size: clamp(64px, 9vw, 120px);
+      letter-spacing: -4px;
+      line-height: 1;
       color: var(--gray-900);
-      margin-bottom: 18px;
+      margin-bottom: 8px;
+    }
+    .cta-logo .accent { color: var(--orange); }
+
+    .cta-title {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: clamp(11px, 2.8vw, 20px);
+      letter-spacing: 0.12em;
+      line-height: 1.4;
+      color: var(--gray-500);
+      margin-bottom: 32px;
+      text-transform: uppercase;
     }
     .cta-subtitle { font-size: 17px; color: var(--gray-500); line-height: 1.65; margin-bottom: 40px; }
 
@@ -1286,9 +1389,9 @@
       .showcase-frame-lg { width: 140px; height: 285px; }
       .showcase-frame-sm { width: 105px; height: 214px; }
       .showcase-frame-lg .showcase-screen-img,
-      .showcase-frame-lg::before { border-radius: 14px; }
+      .showcase-frame-lg::before { border-radius: 6px; }
       .showcase-frame-sm .showcase-screen-img,
-      .showcase-frame-sm::before { border-radius: 11px; }
+      .showcase-frame-sm::before { border-radius: 5px; }
       .showcase-phone-2 { margin-top: 36px; margin-left: -18px; }
       .hero-mega-title { letter-spacing: -1.5px; }
       .iphone-frame-wrap { width: 280px; height: 570px; }
@@ -1296,11 +1399,65 @@
     }
 
     /* ─── HERO MOBILE ────────────────────────────────────────────── */
-    /* Scroll-Länge stark reduzieren — 420vh ist auf Mobile zu viel  */
+    /* Scroll-Länge stark reduzieren – 420vh ist auf Mobile zu viel  */
     @media (max-width: 768px) {
       #hero-scroll { height: 220vh; }
-      .hero-phone-anchor { top: 40%; }
+      .hero-headline { top: 22%; }
+      .hero-phone-anchor { top: 52%; }
       #how { padding-top: 56px; }
+    }
+
+    /* ─── FOR WHOM MOBILE ───────────────────────────────────────── */
+    @keyframes swipeHint {
+      0%, 100% { transform: translateY(-50%) translateX(0);   opacity: 0.7; }
+      50%       { transform: translateY(-50%) translateX(5px); opacity: 1;   }
+    }
+
+    @media (max-width: 768px) {
+      /* Karten sofort sichtbar + gleiche Schriftgrössen wie Features-Karten */
+      .forwhom-card {
+        opacity: 1;
+        transform: none;
+      }
+      .forwhom-title { font-size: 22px; }
+      .forwhom-text  { font-size: 15px; }
+    }
+
+    /* Features-Karussell: gleicher Peek-Effekt */
+    @media (max-width: 768px) {
+      .fmc-wrap { position: relative; }
+      .fmc-wrap::after {
+        content: '';
+        position: absolute;
+        right: 0; top: 0;
+        height: calc(100% - 44px);
+        width: 72px;
+        background: linear-gradient(to left, rgba(255,255,255,1) 10%, transparent);
+        pointer-events: none;
+        z-index: 2;
+        transition: opacity 0.4s;
+      }
+      .fmc-wrap.fmc-last::after { opacity: 0; }
+      .fmc-wrap::before {
+        content: '›';
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 22px);
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--violet);
+        animation: swipeHint 1.3s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 3;
+        line-height: 1;
+        transition: opacity 0.4s;
+      }
+      .fmc-wrap.fmc-last::before { opacity: 0; }
+      .fmc-slide {
+        flex: 0 0 calc(100vw - 96px);
+        box-shadow: 0 14px 36px rgba(124,58,237,0.13), 0 4px 10px rgba(0,0,0,0.05);
+        border-color: rgba(124,58,237,0.08);
+      }
     }
 
     /* Mittlere Phone-Grösse für grosse Phones / kleine Tablets */
@@ -1316,7 +1473,17 @@
   <!-- ── NAV ─────────────────────────────────────────────────────── -->
   <nav id="navbar">
     <span class="nav-logo-text">P<span class="lk-L">L</span><span class="lk-A">A</span>Y<span style="color:var(--orange)">O</span></span>
-    <a href="#cta" class="nav-cta">App herunterladen</a>
+    <div class="nav-right">
+      <div class="lang-wrap">
+        <select class="lang-select" id="langSelect">
+          <option value="de">DE</option>
+          <option value="fr">FR</option>
+          <option value="it">IT</option>
+          <option value="en">EN</option>
+        </select>
+      </div>
+      <a href="#cta" class="nav-cta" data-t="navCta">App laden</a>
+    </div>
   </nav>
 
   <!-- ── HERO SCROLL-PIN ──────────────────────────────────────────── -->
@@ -1328,24 +1495,24 @@
         <div class="hero-blob hero-blob-1"></div>
         <div class="hero-blob hero-blob-2"></div>
 
-        <!-- Big headline — drifts down and fades as phone rises -->
+        <!-- Big headline – drifts down and fades as phone rises -->
         <div class="hero-headline" id="heroHL">
-          <h1 class="hero-mega-title">
+          <h1 class="hero-mega-title" data-t="heroTitle">
             Spieltermine <span class="accent">einfach</span> koordinieren.
           </h1>
         </div>
 
-        <!-- PLAYO logo — crossfades in as headline fades out -->
+        <!-- PLAYO logo – crossfades in as headline fades out -->
         <div class="hero-logo-reveal" id="heroLogoReveal">
           <span class="hero-logo-big">P<span class="lk-L">L</span><span class="lk-A">A</span>Y<span class="accent">O</span></span>
-          <span class="hero-logo-sub">WEIL KINDER SPIELEN WOLLEN.</span>
+          <span class="hero-logo-sub" data-t="heroLogoSub">WEIL KINDER EINFACH SPIELEN WOLLEN.</span>
         </div>
 
-        <!-- Phone — starts partially visible at bottom, rises and exits top -->
+        <!-- Phone – starts partially visible at bottom, rises and exits top -->
         <div class="hero-phone-anchor" id="heroPhone">
           <div class="phone-glow"></div>
           <div class="iphone-frame-wrap">
-            <img class="hero-screen-img" src="assets/screenshots/login.png" alt="PLAYO App" />
+            <img class="hero-screen-img" src="assets/screenshots/hero-login.png" alt="PLAYO App" />
             <img class="iphone-frame" src="assets/iphone-frame.avif" alt="" aria-hidden="true" />
           </div>
         </div>
@@ -1355,11 +1522,19 @@
   </div>
 
   <!-- ── HOW IT WORKS ─────────────────────────────────────────────── -->
-  <section id="how">
+  <section id="how" class="o-bg">
+    <div class="o-bg-layer" aria-hidden="true">
+      <span style="font-size:110px;color:#7C3AED;opacity:0.06;top:5%;left:2%">O</span>
+      <span style="font-size:75px;color:#f97316;opacity:0.08;top:10%;left:65%">O</span>
+      <span style="font-size:160px;color:#8b5cf6;opacity:0.05;top:35%;left:85%">O</span>
+      <span style="font-size:60px;color:#f97316;opacity:0.09;top:55%;left:30%">O</span>
+      <span style="font-size:200px;color:#7C3AED;opacity:0.04;top:60%;left:50%">O</span>
+      <span style="font-size:85px;color:#fb923c;opacity:0.07;top:80%;left:8%">O</span>
+    </div>
     <div class="container">
       <div class="section-head reveal">
-        <h2 class="section-title">In 3 Schritten zum<br>ersten Spieltermin</h2>
-        <p class="section-subtitle">Keine langen Erklärungen. App laden, Eltern verbinden, loslegen.</p>
+        <h2 class="section-title" data-t="howTitle">Startklar in<br>3 Schritten.</h2>
+        <p class="section-subtitle" data-t="howSubtitle">In wenigen Minuten eingerichtet – und dann einfach loslegen.</p>
       </div>
 
       <div class="steps-path" id="stepsPath">
@@ -1378,44 +1553,52 @@
           <div class="step" id="step1">
             <div class="step-num">01</div>
             <div class="step-rule"></div>
-            <div class="step-title">App laden & einrichten</div>
-            <p class="step-text">PLAYO kostenlos im App Store oder Google Play laden. Konto anlegen und ein Profil erstellen — in unter 2 Minuten startklar.</p>
+            <div class="step-title" data-t="step1Title">App laden &amp; einrichten</div>
+            <p class="step-text" data-t="step1Text">PLAYO im App Store oder Google Play laden, Konto anlegen – und in unter zwei Minuten bist du startklar.</p>
           </div>
 
           <div class="step" id="step2">
             <div class="step-num">02</div>
             <div class="step-rule"></div>
-            <div class="step-title">Per K-Code verbinden</div>
-            <p class="step-text">Jede Person erhält einen persönlichen K-Code. Teile ihn mit wem du vertraust — aus Schule, Quartier oder Verein. Nur diese sehen deine Kinder.</p>
+            <div class="step-title" data-t="step2Title">Kontakte einladen</div>
+            <p class="step-text" data-t="step2Text">Schick deinen persönlichen Einladungscode an wen du magst – Nachbarn, Schulfreunde, Vereinsbekannte. Nur wer eingeladen ist, sieht deine Kinder.</p>
           </div>
 
           <div class="step" id="step3">
             <div class="step-num">03</div>
             <div class="step-rule"></div>
-            <div class="step-title">Status setzen. Fertig.</div>
-            <p class="step-text">Ein Tap auf dem Dashboard: «Heute verfügbar.» Alle verbundenen Kontakte sehen es sofort — kein Chat, kein Hin und Her.</p>
+            <div class="step-title" data-t="step3Title">Status setzen. Fertig.</div>
+            <p class="step-text" data-t="step3Text">Ein Tap auf dem Dashboard: «Heute verfügbar.» Alle deine Kontakte sehen es sofort – kein Chat, kein Hin-und-her, kein Warten.</p>
           </div>
 
         </div>
       </div>
 
-      <p class="steps-payoff" id="stepsPayoff">
-        Keine «X» WhatsApp-Nachrichten. Kein Gruppen-Chat.<br class="desktop-br">Keine Sprachmitteilungen. Nur ein Tap — und deine Kontakte wissen ob dein Kind für ein Playdate verfügbar ist.
+      <p class="steps-payoff" id="stepsPayoff" data-t="stepsPayoff">
+        Kein WhatsApp-Gruppenchat. Kein Hin-und-her. Kein «Wann habt ihr eigentlich Zeit?»<br class="desktop-br">Nur ein Tap – und alle deine Kontakte wissen: heute ist Spielen drin.
       </p>
     </div>
   </section>
 
-  <!-- ── FEATURES — Scrollytelling ────────────────────────────────── -->
-  <section id="features">
+  <!-- ── FEATURES – Scrollytelling ────────────────────────────────── -->
+  <section id="features" class="o-bg">
+    <div class="o-bg-layer" aria-hidden="true">
+      <span style="font-size:100px;color:#7C3AED;opacity:0.06;top:8%;left:3%">O</span>
+      <span style="font-size:70px;color:#f97316;opacity:0.08;top:20%;left:60%">O</span>
+      <span style="font-size:180px;color:#8b5cf6;opacity:0.05;top:40%;left:85%">O</span>
+      <span style="font-size:55px;color:#f97316;opacity:0.09;top:60%;left:25%">O</span>
+      <span style="font-size:220px;color:#7C3AED;opacity:0.04;top:65%;left:45%">O</span>
+      <span style="font-size:80px;color:#fb923c;opacity:0.07;top:85%;left:8%">O</span>
+    </div>
     <div class="features-sticky-wrap">
 
       <!-- Left: sticky phone mockup -->
       <div class="features-phone-col">
         <div class="features-phone-frame">
-          <img class="feature-screen-img active" id="fscreen-0" src="assets/screenshots/02-dashboard.png" alt="Dashboard">
-          <img class="feature-screen-img" id="fscreen-1" src="assets/screenshots/04-contacts.png" alt="Kontakte">
-          <img class="feature-screen-img" id="fscreen-2" src="assets/screenshots/05-profile.png" alt="Profil">
-          <img class="feature-screen-img" id="fscreen-3" src="assets/screenshots/02-dashboard.png" alt="Datenschutz">
+          <img class="feature-screen-img active" id="fscreen-0" src="assets/screenshots/feature-dashboard.png" alt="Dashboard">
+          <img class="feature-screen-img" id="fscreen-1" src="assets/screenshots/feature-contacts-invite.png" alt="Kontakt einladen">
+          <img class="feature-screen-img" id="fscreen-2" src="assets/screenshots/feature-guardian.png" alt="Bezugsperson einbinden">
+          <img class="feature-screen-img" id="fscreen-3" src="assets/screenshots/feature-privacy.png" alt="Sichtbarkeit">
           <img class="iphone-frame" src="assets/iphone-frame.avif" alt="">
         </div>
       </div>
@@ -1426,29 +1609,29 @@
           <div class="feature-item-icon">
             <i class="ph-duotone ph-broadcast"></i>
           </div>
-          <div class="feature-item-title">Echtzeit-Verfügbarkeit</div>
-          <p class="feature-item-text">Sieh sofort auf dem Dashboard, welche Kinder deiner Kontakte gerade verfügbar sind — ohne Nachfragen, ohne Wartezeit.</p>
+          <div class="feature-item-title" data-t="feat1Title">Auf einen Blick verfügbar</div>
+          <p class="feature-item-text" data-t="feat1Text">Sieh auf einen Blick, wer gerade verfügbar ist – ganz ohne Nachfragen, ohne Warten, ohne Hin-und-her.</p>
         </div>
         <div class="feature-item" data-screen="1">
           <div class="feature-item-icon">
             <i class="ph-duotone ph-key"></i>
           </div>
-          <div class="feature-item-title">Verbindung per K-Code</div>
-          <p class="feature-item-text">Kein Social-Media-Profil nötig. Teile deinen persönlichen K-Code und verbindet euch — sicher und direkt.</p>
+          <div class="feature-item-title" data-t="feat2Title">Du entscheidest, wer dazukommt</div>
+          <p class="feature-item-text" data-t="feat2Text">Kein öffentliches Profil, kein Social Network. Du entscheidest, wen du einlädst – und erst wenn beide zustimmen, sehen sie deine Kinder.</p>
         </div>
         <div class="feature-item" data-screen="2">
           <div class="feature-item-icon">
             <i class="ph-duotone ph-user-plus"></i>
           </div>
-          <div class="feature-item-title">Bezugspersonen einbinden</div>
-          <p class="feature-item-text">Co-Elternteile, Grosseltern oder Tagesmütter können über den B-Code hinzugefügt werden und Kinder gemeinsam begleiten.</p>
+          <div class="feature-item-title" data-t="feat3Title">Bezugspersonen einbinden</div>
+          <p class="feature-item-text" data-t="feat3Text">Co-Elternteile, Grosseltern oder Tagesmütter lassen sich unkompliziert einbinden – mit genau dem Zugriff auf deine Kinder, den du ihnen gibst.</p>
         </div>
         <div class="feature-item" data-screen="3">
           <div class="feature-item-icon">
             <i class="ph-duotone ph-lock-simple"></i>
           </div>
-          <div class="feature-item-title">Privatsphäre by Design</div>
-          <p class="feature-item-text">Nur Personen, die du selbst verbindest, sehen deine Kinder. Keine Algorithmen, keine Datenweitergabe, kein Social Feed.</p>
+          <div class="feature-item-title" data-t="feat4Title">Privatsphäre by Design</div>
+          <p class="feature-item-text" data-t="feat4Text">Nur wen du einlädst, sieht deine Kinder. Keine Algorithmen, kein Datenverkauf, kein öffentlicher Feed – und das ist keine Absichtserklärung, sondern wie die App gebaut ist.</p>
         </div>
       </div>
 
@@ -1461,46 +1644,174 @@
       </div>
 
     </div>
+
+    <!-- ── Mobile Swipe-Carousel (nur auf Mobile sichtbar) ────────── -->
+    <div class="fmc-wrap">
+      <div class="fmc-track">
+
+        <div class="fmc-slide">
+          <div class="fmc-top"></div>
+          <div class="fmc-phone">
+            <img class="fmc-screen" src="assets/screenshots/feature-dashboard.png" alt="">
+            <img class="fmc-frame" src="assets/iphone-frame.avif" alt="">
+          </div>
+          <div class="fmc-body">
+            <div class="fmc-icon"><i class="ph-duotone ph-broadcast"></i></div>
+            <div class="fmc-title" data-t="feat1Title">Auf einen Blick verfügbar</div>
+            <p class="fmc-text" data-t="feat1Text">Sieh auf einen Blick, wer gerade verfügbar ist – ganz ohne Nachfragen, ohne Warten, ohne Hin-und-her.</p>
+          </div>
+        </div>
+
+        <div class="fmc-slide">
+          <div class="fmc-top"></div>
+          <div class="fmc-phone">
+            <img class="fmc-screen" src="assets/screenshots/feature-contacts-invite.png" alt="">
+            <img class="fmc-frame" src="assets/iphone-frame.avif" alt="">
+          </div>
+          <div class="fmc-body">
+            <div class="fmc-icon"><i class="ph-duotone ph-key"></i></div>
+            <div class="fmc-title" data-t="feat2Title">Du entscheidest, wer dazukommt</div>
+            <p class="fmc-text" data-t="feat2Text">Kein öffentliches Profil, kein Social Network. Du entscheidest, wen du einlädst – und erst wenn beide zustimmen, sehen sie deine Kinder.</p>
+          </div>
+        </div>
+
+        <div class="fmc-slide">
+          <div class="fmc-top"></div>
+          <div class="fmc-phone">
+            <img class="fmc-screen" src="assets/screenshots/feature-guardian.png" alt="">
+            <img class="fmc-frame" src="assets/iphone-frame.avif" alt="">
+          </div>
+          <div class="fmc-body">
+            <div class="fmc-icon"><i class="ph-duotone ph-user-plus"></i></div>
+            <div class="fmc-title" data-t="feat3Title">Bezugspersonen einbinden</div>
+            <p class="fmc-text" data-t="feat3Text">Co-Elternteile, Grosseltern oder Tagesmütter lassen sich unkompliziert einbinden – mit genau dem Zugriff auf deine Kinder, den du ihnen gibst.</p>
+          </div>
+        </div>
+
+        <div class="fmc-slide">
+          <div class="fmc-top"></div>
+          <div class="fmc-phone">
+            <img class="fmc-screen" src="assets/screenshots/feature-privacy.png" alt="">
+            <img class="fmc-frame" src="assets/iphone-frame.avif" alt="">
+          </div>
+          <div class="fmc-body">
+            <div class="fmc-icon"><i class="ph-duotone ph-lock-simple"></i></div>
+            <div class="fmc-title" data-t="feat4Title">Privatsphäre by Design</div>
+            <p class="fmc-text" data-t="feat4Text">Nur wen du einlädst, sieht deine Kinder. Keine Algorithmen, kein Datenverkauf, kein öffentlicher Feed – und das ist keine Absichtserklärung, sondern wie die App gebaut ist.</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="fmc-dots" aria-hidden="true">
+        <span class="fmc-dot active"></span>
+        <span class="fmc-dot"></span>
+        <span class="fmc-dot"></span>
+        <span class="fmc-dot"></span>
+      </div>
+    </div>
+
   </section>
 
   <!-- ── FOR WHOM ─────────────────────────────────────────────────── -->
-  <section id="forwhom">
+  <section id="forwhom" class="o-bg">
+    <div class="o-bg-layer" aria-hidden="true">
+      <span style="font-size:120px;color:#7C3AED;opacity:0.07;top:5%;left:8%">O</span>
+      <span style="font-size:80px;color:#f97316;opacity:0.09;top:12%;left:55%">O</span>
+      <span style="font-size:160px;color:#8b5cf6;opacity:0.06;top:30%;left:78%">O</span>
+      <span style="font-size:60px;color:#f97316;opacity:0.10;top:45%;left:20%">O</span>
+      <span style="font-size:200px;color:#7C3AED;opacity:0.05;top:55%;left:40%">O</span>
+      <span style="font-size:90px;color:#fb923c;opacity:0.08;top:70%;left:5%">O</span>
+      <span style="font-size:110px;color:#6d28d9;opacity:0.07;top:75%;left:70%">O</span>
+      <span style="font-size:50px;color:#f97316;opacity:0.12;top:88%;left:88%">O</span>
+    </div>
+    <div class="forwhom-sticky-inner">
     <div class="container">
       <div class="section-head reveal">
-        <h2 class="section-title">Weil Kinder einfach spielen wollen.</h2>
-        <p class="section-subtitle">Ob Eltern, Grosseltern, Tagesmutter oder Bezugsperson — PLAYO passt sich an, wer auch immer die Kinder begleitet.</p>
+        <h2 class="section-title" data-t="forwhomTitle">Weil Kinder einfach spielen wollen.</h2>
+        <p class="section-subtitle" data-t="forwhomSubtitle">Jede Situation ist anders. PLAYO passt sich an – egal, wer gerade für deine Kinder da ist.</p>
       </div>
+      <div class="forwhom-grid-wrap">
       <div class="forwhom-grid">
 
         <div class="forwhom-card">
+          <svg class="forwhom-blobs" aria-hidden="true" viewBox="0 0 440 260" preserveAspectRatio="xMidYMid slice">
+            <defs><filter id="cb1"><feGaussianBlur stdDeviation="4"/></filter></defs>
+            <g filter="url(#cb1)">
+              <text x="-20" y="90"  font-family="Nunito,sans-serif" font-weight="900" font-size="120" fill="white"   opacity="0.09">O</text>
+              <text x="90"  y="40"  font-family="Nunito,sans-serif" font-weight="900" font-size="75"  fill="#f97316" opacity="0.17">O</text>
+              <text x="240" y="100" font-family="Nunito,sans-serif" font-weight="900" font-size="100" fill="white"   opacity="0.07">O</text>
+              <text x="330" y="50"  font-family="Nunito,sans-serif" font-weight="900" font-size="85"  fill="#fb923c" opacity="0.14">O</text>
+              <text x="60"  y="210" font-family="Nunito,sans-serif" font-weight="900" font-size="80"  fill="#f97316" opacity="0.11">O</text>
+              <text x="280" y="250" font-family="Nunito,sans-serif" font-weight="900" font-size="90"  fill="white"   opacity="0.07">O</text>
+            </g>
+          </svg>
           <div class="forwhom-icon"><i class="ph-duotone ph-users"></i></div>
-          <div class="forwhom-title">Berufstätige Eltern</div>
-          <p class="forwhom-text">Keine Zeit für lange Koordinations-Chats. PLAYO zeigt auf einen Blick, wann Spielen möglich ist — ohne Hin und Her.</p>
+          <div class="forwhom-title" data-t="fw1Title">Berufstätige Eltern</div>
+          <p class="forwhom-text" data-t="fw1Text">Wenig Zeit, aber der Wunsch, dass deine Kinder einfach spielen können. PLAYO zeigt dir sofort, wann es gerade klappt.</p>
         </div>
 
         <div class="forwhom-card">
+          <svg class="forwhom-blobs" aria-hidden="true" viewBox="0 0 440 260" preserveAspectRatio="xMidYMid slice">
+            <defs><filter id="cb2"><feGaussianBlur stdDeviation="4"/></filter></defs>
+            <g filter="url(#cb2)">
+              <text x="300" y="90"  font-family="Nunito,sans-serif" font-weight="900" font-size="120" fill="white"   opacity="0.09">O</text>
+              <text x="60"  y="50"  font-family="Nunito,sans-serif" font-weight="900" font-size="80"  fill="#fb923c" opacity="0.15">O</text>
+              <text x="160" y="110" font-family="Nunito,sans-serif" font-weight="900" font-size="95"  fill="white"   opacity="0.07">O</text>
+              <text x="-10" y="180" font-family="Nunito,sans-serif" font-weight="900" font-size="85"  fill="#f97316" opacity="0.13">O</text>
+              <text x="340" y="240" font-family="Nunito,sans-serif" font-weight="900" font-size="75"  fill="white"   opacity="0.08">O</text>
+            </g>
+          </svg>
           <div class="forwhom-icon"><i class="ph-duotone ph-users-three"></i></div>
-          <div class="forwhom-title">Patchworkfamilien</div>
-          <p class="forwhom-text">Beide Elternteile haben Zugriff. Bezugspersonen können gezielt für bestimmte Kinder berechtigt werden.</p>
+          <div class="forwhom-title" data-t="fw2Title">Patchworkfamilien</div>
+          <p class="forwhom-text" data-t="fw2Text">Mal bei Mama, mal bei Papa – PLAYO hält alle auf dem gleichen Stand. Wer deine Kinder sehen darf, bestimmst du.</p>
         </div>
 
         <div class="forwhom-card">
+          <svg class="forwhom-blobs" aria-hidden="true" viewBox="0 0 440 260" preserveAspectRatio="xMidYMid slice">
+            <defs><filter id="cb3"><feGaussianBlur stdDeviation="4"/></filter></defs>
+            <g filter="url(#cb3)">
+              <text x="-10" y="70"  font-family="Nunito,sans-serif" font-weight="900" font-size="100" fill="#f97316" opacity="0.14">O</text>
+              <text x="120" y="30"  font-family="Nunito,sans-serif" font-weight="900" font-size="70"  fill="white"   opacity="0.10">O</text>
+              <text x="280" y="120" font-family="Nunito,sans-serif" font-weight="900" font-size="110" fill="#fb923c" opacity="0.12">O</text>
+              <text x="50"  y="200" font-family="Nunito,sans-serif" font-weight="900" font-size="90"  fill="white"   opacity="0.07">O</text>
+              <text x="340" y="260" font-family="Nunito,sans-serif" font-weight="900" font-size="80"  fill="#f97316" opacity="0.11">O</text>
+            </g>
+          </svg>
           <div class="forwhom-icon"><i class="ph-duotone ph-hand-heart"></i></div>
-          <div class="forwhom-title">Grosseltern & Betreuung</div>
-          <p class="forwhom-text">Tagesmütter, Grosseltern und Bezugspersonen werden einfach eingebunden — mit genau so viel Zugriff wie nötig.</p>
+          <div class="forwhom-title" data-t="fw3Title">Grosseltern &amp; Betreuung</div>
+          <p class="forwhom-text" data-t="fw3Text">Oma, Tagesvater, Nanny – alle, die du einbindest, sehen nur das, was du ihnen für deine Kinder freigibst.</p>
         </div>
 
         <div class="forwhom-card">
+          <svg class="forwhom-blobs" aria-hidden="true" viewBox="0 0 440 260" preserveAspectRatio="xMidYMid slice">
+            <defs><filter id="cb4"><feGaussianBlur stdDeviation="4"/></filter></defs>
+            <g filter="url(#cb4)">
+              <text x="320" y="70"  font-family="Nunito,sans-serif" font-weight="900" font-size="105" fill="#f97316" opacity="0.15">O</text>
+              <text x="30"  y="60"  font-family="Nunito,sans-serif" font-weight="900" font-size="85"  fill="white"   opacity="0.09">O</text>
+              <text x="170" y="140" font-family="Nunito,sans-serif" font-weight="900" font-size="115" fill="white"   opacity="0.07">O</text>
+              <text x="-20" y="240" font-family="Nunito,sans-serif" font-weight="900" font-size="95"  fill="#fb923c" opacity="0.12">O</text>
+              <text x="300" y="260" font-family="Nunito,sans-serif" font-weight="900" font-size="70"  fill="white"   opacity="0.08">O</text>
+            </g>
+          </svg>
           <div class="forwhom-icon"><i class="ph-duotone ph-buildings"></i></div>
-          <div class="forwhom-title">Nachbarschaft & Klasse</div>
-          <p class="forwhom-text">Verbinde dich mit Eltern aus der Schulklasse oder dem Quartier — und sieh sofort, wer wann verfügbar ist.</p>
+          <div class="forwhom-title" data-t="fw4Title">Nachbarschaft &amp; Klasse</div>
+          <p class="forwhom-text" data-t="fw4Text">Eltern aus der Schulklasse, dem Verein oder dem Quartier – verbinde dich, und sieh sofort, wessen Kinder gerade verfügbar sind.</p>
         </div>
 
       </div>
+      </div><!-- /forwhom-grid-wrap -->
     </div>
+    <div class="fw-dots" aria-hidden="true">
+      <span class="fw-dot"></span>
+      <span class="fw-dot"></span>
+      <span class="fw-dot"></span>
+      <span class="fw-dot"></span>
+    </div>
+    </div><!-- /forwhom-sticky-inner -->
   </section>
 
   <!-- ── SHOWCASE ─────────────────────────────────────────────────── -->
+  <div id="showcase-scroll-wrap">
   <section id="showcase">
     <div class="showcase-blob showcase-blob-1"></div>
     <div class="showcase-blob showcase-blob-2"></div>
@@ -1509,55 +1820,55 @@
         <div class="showcase-phones reveal">
           <div class="showcase-phone-1">
             <div class="showcase-frame-lg">
-              <img class="showcase-screen-img" src="assets/screenshots/02-dashboard.png" alt="PLAYO Dashboard" />
+              <video id="showcase-profil-video" class="showcase-screen-img" src="assets/profil-scroll.mp4" muted playsinline preload="auto"></video>
               <img class="iphone-frame" src="assets/iphone-frame.avif" alt="" aria-hidden="true" />
             </div>
           </div>
           <div class="showcase-phone-2">
             <div class="showcase-frame-sm">
-              <img class="showcase-screen-img" src="assets/screenshots/04-contacts.png" alt="PLAYO Kontakte" />
+              <img class="showcase-screen-img" src="assets/screenshots/showcase-contacts.png" alt="PLAYO Kontakte" />
               <img class="iphone-frame" src="assets/iphone-frame.avif" alt="" aria-hidden="true" />
             </div>
           </div>
         </div>
         <div class="showcase-content reveal reveal-delay-2">
-          <span class="badge badge-dark" style="margin-bottom:16px;display:inline-flex;">Vertrauen &amp; Datenschutz</span>
-          <h2 class="section-title">Eure Daten gehören euch. Punkt.</h2>
-          <p class="section-subtitle">PLAYO wurde von Eltern für Eltern entwickelt — mit höchsten Ansprüchen an Datenschutz und Sicherheit.</p>
+          <span class="badge badge-dark" style="margin-bottom:16px;display:inline-flex;" data-t="showcaseBadge">Vertrauen &amp; Datenschutz</span>
+          <h2 class="section-title" data-t="showcaseTitle">Eure Daten gehören euch. Punkt.</h2>
+          <p class="section-subtitle" data-t="showcaseSubtitle">PLAYO wurde von einem Elternteil entwickelt, das dieselben Fragen hatte wie du. Datenschutz ist kein Feature – er ist das Fundament.</p>
           <div class="trust-points">
             <div class="trust-point">
               <div class="trust-icon"><i class="ph-duotone ph-shield-check"></i></div>
               <div>
                 <div class="trust-point-title">
-                  Entwickelt in der Schweiz
+                  <span data-t="trust1Title">Entwickelt in der Schweiz</span>
                   <svg class="trust-title-flag" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                     <rect width="32" height="32" fill="#FF0000"/>
                     <rect x="6" y="13" width="20" height="6" fill="white"/>
                     <rect x="13" y="6" width="6" height="20" fill="white"/>
                   </svg>
                 </div>
-                <p class="trust-point-text">Schweizer Werte: Präzision, Diskretion und Qualität — auch digital.</p>
+                <p class="trust-point-text" data-t="trust1Text">Entwickelt und gehostet nach Schweizer Recht (revDSG). Deine Daten verlassen nicht den europäischen Rechtsraum.</p>
               </div>
             </div>
             <div class="trust-point">
               <div class="trust-icon"><i class="ph-duotone ph-prohibit"></i></div>
               <div>
-                <div class="trust-point-title">Keine Werbung, nie</div>
-                <p class="trust-point-text">Wir verkaufen keine Daten und schalten keine Werbung. PLAYO ist und bleibt werbefrei.</p>
+                <div class="trust-point-title" data-t="trust2Title">Keine Werbung, nie</div>
+                <p class="trust-point-text" data-t="trust2Text">Wir verkaufen keine Daten und schalten keine Werbung. PLAYO ist und bleibt werbefrei.</p>
               </div>
             </div>
             <div class="trust-point">
               <div class="trust-icon"><i class="ph-duotone ph-eye"></i></div>
               <div>
-                <div class="trust-point-title">Nur deine Kontakte sehen dich</div>
-                <p class="trust-point-text">Du entscheidest, wer deine Kinder sieht. Kein offenes Profil, kein öffentlicher Feed.</p>
+                <div class="trust-point-title" data-t="trust3Title">Nur deine Kontakte sehen dich</div>
+                <p class="trust-point-text" data-t="trust3Text">Du entscheidest, wer deine Kinder sieht. Kein offenes Profil, kein öffentlicher Feed.</p>
               </div>
             </div>
             <div class="trust-point">
               <div class="trust-icon"><i class="ph-duotone ph-trash"></i></div>
               <div>
-                <div class="trust-point-title">Volle Kontrolle</div>
-                <p class="trust-point-text">Konto und alle Daten können jederzeit vollständig gelöscht werden.</p>
+                <div class="trust-point-title" data-t="trust4Title">Volle Kontrolle, jederzeit</div>
+                <p class="trust-point-text" data-t="trust4Text">Du kannst Verbindungen trennen, Zugriff entziehen oder dein Konto mit allen Daten vollständig löschen – wann immer du willst.</p>
               </div>
             </div>
           </div>
@@ -1565,13 +1876,22 @@
       </div>
     </div>
   </section>
+  </div><!-- /showcase-scroll-wrap -->
 
   <!-- ── CTA ──────────────────────────────────────────────────────── -->
-  <section id="cta">
+  <section id="cta" class="o-bg">
+    <div class="o-bg-layer" aria-hidden="true">
+      <span style="font-size:130px;color:#7C3AED;opacity:0.06;top:5%;left:5%">O</span>
+      <span style="font-size:90px;color:#f97316;opacity:0.08;top:15%;left:70%">O</span>
+      <span style="font-size:170px;color:#8b5cf6;opacity:0.05;top:50%;left:80%">O</span>
+      <span style="font-size:65px;color:#fb923c;opacity:0.09;top:70%;left:15%">O</span>
+      <span style="font-size:110px;color:#7C3AED;opacity:0.06;top:80%;left:50%">O</span>
+    </div>
     <div class="container">
       <div class="cta-card reveal">
-        <h2 class="cta-title">Bereit für stressfreie<br>Spieltermine?</h2>
-        <p class="cta-subtitle">PLAYO ist kostenlos verfügbar. Lade die App herunter und verbinde dich noch heute mit anderen Menschen mit Kindern.</p>
+        <div class="cta-logo">P<span class="lk-L">L</span><span class="lk-A">A</span>Y<span class="accent">O</span></div>
+        <h2 class="cta-title" data-t="ctaTitle">Weil deine Kinder<br><span style="color:var(--orange)">spielen</span> wollen.</h2>
+        <p class="cta-subtitle" data-t="ctaSubtitle">Verbinde dich mit Eltern aus deiner Schulklasse, deinem Quartier oder Verein – und sieh auf einen Blick, wessen Kinder gerade spielen könnten. Für deine Kinder.</p>
         <div class="store-badges">
 
           <!-- Apple App Store -->
@@ -1580,8 +1900,8 @@
               <path d="M18.23 14.36c-.03-3.1 2.53-4.6 2.65-4.67-1.45-2.12-3.7-2.41-4.5-2.44-1.9-.2-3.74 1.13-4.71 1.13-.98 0-2.48-1.1-4.08-1.07-2.08.03-4.02 1.22-5.09 3.08-2.19 3.8-.56 9.4 1.56 12.47 1.05 1.51 2.28 3.2 3.9 3.14 1.57-.06 2.16-1.01 4.06-1.01 1.88 0 2.43 1.01 4.08.98 1.69-.03 2.76-1.53 3.79-3.05 1.2-1.74 1.69-3.44 1.71-3.53-.04-.02-3.34-1.28-3.37-5.04zM15.1 4.9C15.96 3.86 16.54 2.44 16.38.97c-1.27.05-2.83.85-3.73 1.87-.82.94-1.53 2.4-1.34 3.82 1.41.11 2.86-.72 3.79-1.76z" fill="white"/>
             </svg>
             <div class="store-badge-text">
-              <span class="store-badge-label">Laden im</span>
-              <span class="store-badge-name">App Store</span>
+              <span class="store-badge-label" data-t="ctaAppleLabel">Laden im</span>
+              <span class="store-badge-name" data-t="ctaAppleName">App Store</span>
             </div>
           </a>
 
@@ -1594,13 +1914,13 @@
               <path d="M16.055 8.072L2.376.288C1.575-.167.863-.11.432.346l11.672 11.634 3.951-3.908z" fill="#4CAF50"/>
             </svg>
             <div class="store-badge-text">
-              <span class="store-badge-label">Jetzt bei</span>
-              <span class="store-badge-name">Google Play</span>
+              <span class="store-badge-label" data-t="ctaGoogleLabel">Jetzt bei</span>
+              <span class="store-badge-name" data-t="ctaGoogleName">Google Play</span>
             </div>
           </a>
 
         </div>
-        <p class="cta-note">iOS &amp; Android · Kostenlos · Keine versteckten Kosten</p>
+        <p class="cta-note" data-t="ctaNote">Für Eltern, die ihre Kinder mehr spielen sehen wollen · 60 Tage kostenlos · Danach CHF 9.90 / Jahr</p>
       </div>
     </div>
   </section>
@@ -1611,30 +1931,296 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-logo">P<span class="lk-L">L</span><span class="lk-A">A</span>Y<span style="color:var(--orange)">O</span></div>
-        <p class="footer-tagline">Spieltermine einfach koordinieren.</p>
         <span class="swiss-badge">
           <svg class="flag-ch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
             <rect width="32" height="32" fill="#FF0000"/>
             <rect x="6" y="13" width="20" height="6" fill="white"/>
             <rect x="13" y="6" width="6" height="20" fill="white"/>
           </svg>
-          Made in Switzerland
+          <span data-t="footerSwiss">Made in Switzerland</span>
         </span>
         <ul class="footer-links">
-          <li><a href="#">Datenschutz</a></li>
-          <li><a href="#">Impressum</a></li>
-          <li><a href="#">Kontakt</a></li>
-          <li><a href="#">FAQ</a></li>
+          <li><a href="#" data-t="footerLink1">Datenschutz</a></li>
+          <li><a href="#" data-t="footerLink2">Impressum</a></li>
+          <li><a href="#" data-t="footerLink3">Kontakt</a></li>
+          <li><a href="#" data-t="footerLink4">FAQ</a></li>
         </ul>
         <div class="footer-divider"></div>
-        <p class="footer-copy">© 2026 PLAYO · Alle Rechte vorbehalten</p>
+        <p class="footer-copy" data-t="footerCopy">© 2026 PLAYO · Alle Rechte vorbehalten</p>
       </div>
     </div>
   </footer>
 
   <!-- ── SCRIPTS ──────────────────────────────────────────────────── -->
   <script>
-    // ── Sticky nav — transparent on dark sections, frosted on light ─
+    /* ═══════════════════════════════════════════════════════════════
+       LANGUAGES — alle Seitentexte in DE / FR / IT / EN.
+       Neue Sprache hinzufügen: neuen Block kopieren & übersetzen.
+       ═══════════════════════════════════════════════════════════════ */
+    const LANGUAGES = {
+
+      /* ── DEUTSCH ─────────────────────────────────────────────────── */
+      de: {
+        navCta: 'App laden',
+        heroTitle:  'Spieltermine <span class="accent">einfach</span> koordinieren.',
+        heroLogoSub: 'WEIL KINDER ZUSAMMEN SPIELEN WOLLEN.',
+        howTitle:    'Startklar in<br>drei Schritten.',
+        howSubtitle: 'Die moderne Lösung für Spieltermine deines Kindes – übersichtlich, zuverlässig und sicher koordiniert.',
+        step1Title: 'App laden &amp; einrichten',
+        step1Text:  'PLAYO im App Store oder Google Play laden, Konto anlegen – und in unter zwei Minuten bist du startklar.',
+        step2Title: 'Kontakte einladen',
+        step2Text:  'Verbinde dich per Einladungscode mit anderen Eltern aus dem Umfeld deines Kindes – sicher, geschützt und nur für eingeladene Kontakte zugänglich.',
+        step3Title: 'Status setzen. Fertig.',
+        step3Text:  'Ein Tap auf dem Dashboard: «Heute verfügbar.» und ausgewählte Kontakte sehen den Status deines Kindes sofort – kein Chat, kein Hin-und-her, kein Warten.',
+        stepsPayoff: 'Keine endlosen WhatsApp-Chats. Kein ständiges Hin-und-her. Kein Klassenlisten-Chaos – stattdessen ein Tap, alle vernetzten Eltern sehen sofort: Heute kann dein Kind spielen. Mehr Zeit für dich, mehr Spass für dein Kind.',
+        feat1Title: 'Auf einen Blick verfügbar',
+        feat1Text:  'Sieh auf einen Blick, wer gerade verfügbar ist – ganz ohne Nachfragen, ohne Warten, ohne Hin-und-her.',
+        feat2Title: 'Du entscheidest, wer dazukommt',
+        feat2Text:  'Kein öffentliches Profil, kein Social Network. Du entscheidest, wen du einlädst – und nur wenn du zustimmst, sehen sie deine Kinder.',
+        feat3Title: 'Bezugspersonen einbinden',
+        feat3Text:  'Nicht nur Partner*innen – auch Co-Eltern, Grosseltern oder Tagesmütter lassen sich einfach einbinden. Du entscheidest, welchen Zugriff sie auf deine Kinder erhalten.',
+        feat4Title: 'Privatsphäre by Design',
+        feat4Text:  'Nur wen du einlädst, sieht deine Kinder. Keine Algorithmen, kein Datenverkauf, kein öffentlicher Feed – und das ist keine Absichtserklärung, sondern wie die App gebaut ist.',
+        forwhomTitle:    'Weil Kinder zusammen spielen wollen.',
+        forwhomSubtitle: 'Jede Situation ist anders. PLAYO passt sich an – egal, wer gerade für deine Kinder da ist.',
+        fw1Title: 'Berufstätige Eltern',
+        fw1Text:  'Wenig Zeit, aber der Wunsch, dass deine Kinder einfach spielen können. PLAYO zeigt dir sofort, wann es gerade klappt.',
+        fw2Title: 'Patchworkfamilien',
+        fw2Text:  'Mal bei Mama, mal bei Papa – PLAYO hält alle auf dem gleichen Stand. Wer deine Kinder sehen darf, bestimmst du.',
+        fw3Title: 'Grosseltern &amp; Betreuung',
+        fw3Text:  'Grosi, Tagesvater, Nanny – alle, die du einbindest, sehen nur das, was du ihnen für deine Kinder freigibst.',
+        fw4Title: 'Nachbarschaft &amp; Klasse',
+        fw4Text:  'Eltern von Klassenkamerad*innen, dem Verein oder dem Quartier – verbinde dich, und sieh sofort, wessen Kinder gerade verfügbar sind.',
+        showcaseBadge:    'Vertrauen &amp; Datenschutz',
+        showcaseTitle:    'Eure Daten gehören euch. Punkt.',
+        showcaseSubtitle: 'PLAYO wurde von einem Elternteil entwickelt, das dieselben Fragen hatte wie du. Datenschutz ist nicht nur ein Feature, sondern das Fundament und Versprechen, auf dem unsere App aufgebaut ist.',
+        trust1Title: 'Entwickelt in der Schweiz',
+        trust1Text:  'Entwickelt und gehostet nach Schweizer Recht (revDSG). Deine Daten verlassen nicht den europäischen Rechtsraum.',
+        trust2Title: 'Keine Werbung, nie',
+        trust2Text:  'Wir verkaufen keine Daten und schalten keine Werbung. PLAYO ist und bleibt werbefrei.',
+        trust3Title: 'Nur deine Kontakte sehen dich',
+        trust3Text:  'Du entscheidest, wer deine Kinder sieht. Kein offenes Profil, kein öffentlicher Feed.',
+        trust4Title: 'Volle Kontrolle, jederzeit',
+        trust4Text:  'Du kannst Verbindungen trennen, Zugriff entziehen oder dein Konto mit allen Daten vollständig löschen – wann immer du willst.',
+        ctaTitle:    'WEIL KINDER ZUSAMMEN SPIELEN WOLLEN.',
+        ctaSubtitle: 'Mit wenigen Klicks kannst du dich mit den Eltern aus Schule, Nachbarschaft oder Verein deines Kindes verbinden. Auf einen Blick siehst du, wessen Kinder gerade spielen könnten – so wird das Planen von Spielterminen einfach, sicher und stressfrei für alle Beteiligten.',
+        ctaAppleLabel: 'Laden im',
+        ctaAppleName:  'App Store',
+        ctaGoogleLabel: 'Jetzt bei',
+        ctaGoogleName:  'Google Play',
+        ctaNote: 'Für Eltern, die ihre Kinder mehr spielen sehen wollen · 60 Tage kostenlos · Danach CHF 9.90 / Jahr',
+        footerSwiss:   'Made in Switzerland',
+        footerLink1:   'Datenschutz',
+        footerLink2:   'Impressum',
+        footerLink3:   'Kontakt',
+        footerLink4:   'FAQ',
+        footerCopy:    '© 2026 PLAYO · Alle Rechte vorbehalten',
+      },
+
+      /* ── FRANÇAIS ────────────────────────────────────────────────── */
+      fr: {
+        navCta: 'Télécharger',
+        heroTitle:  'Coordonner les jeux <span class="accent">facilement</span>.',
+        heroLogoSub: 'PARCE QUE LES ENFANTS VEULENT JOUER ENSEMBLE.',
+        howTitle:    'Prêt en<br>3 étapes.',
+        howSubtitle: 'La solution moderne pour les jeux de votre enfant – claire, fiable et coordonnée en toute sécurité.',
+        step1Title: 'Télécharger &amp; configurer',
+        step1Text:  'Téléchargez PLAYO sur l\'App Store ou Google Play, créez un compte – et vous êtes prêt en moins de deux minutes.',
+        step2Title: 'Inviter des contacts',
+        step2Text:  'Connectez-vous via un code d\'invitation avec d\'autres parents de l\'entourage de votre enfant – en toute sécurité, uniquement pour les contacts invités.',
+        step3Title: 'Définir le statut. C\'est tout.',
+        step3Text:  'Un tap sur le tableau de bord: «Disponible aujourd\'hui.» et les contacts sélectionnés voient immédiatement le statut de votre enfant – pas de chat, pas d\'allers-retours, pas d\'attente.',
+        stepsPayoff: 'Plus de chats WhatsApp sans fin. Plus d\'allers-retours constants. Un seul tap – et tous les parents connectés savent aussitôt: aujourd\'hui, votre enfant peut jouer. Plus de temps pour vous, plus de plaisir pour votre enfant.',
+        feat1Title: 'Disponible en un coup d\'œil',
+        feat1Text:  'Voyez d\'un coup d\'œil qui est disponible maintenant – sans demander, sans attendre, sans allers-retours.',
+        feat2Title: 'Vous décidez qui rejoint',
+        feat2Text:  'Pas de profil public, pas de réseau social. Vous décidez qui vous invitez – et ce n\'est qu\'après votre accord que les autres voient vos enfants.',
+        feat3Title: 'Inclure les proches',
+        feat3Text:  'Co-parents, grands-parents ou assistantes maternelles peuvent être facilement inclus – avec exactement l\'accès à vos enfants que vous leur accordez.',
+        feat4Title: 'Confidentialité by Design',
+        feat4Text:  'Seuls ceux que vous invitez voient vos enfants. Pas d\'algorithmes, pas de vente de données, pas de fil public – c\'est comment l\'app est construite.',
+        forwhomTitle:    'Parce que les enfants veulent jouer ensemble.',
+        forwhomSubtitle: 'Chaque situation est différente. PLAYO s\'adapte – peu importe qui s\'occupe de vos enfants.',
+        fw1Title: 'Parents actifs',
+        fw1Text:  'Peu de temps, mais l\'envie que vos enfants puissent simplement jouer. PLAYO vous montre instantanément quand c\'est possible.',
+        fw2Title: 'Familles recomposées',
+        fw2Text:  'Tantôt chez maman, tantôt chez papa – PLAYO tient tout le monde au courant. Vous décidez qui peut voir vos enfants.',
+        fw3Title: 'Grands-parents &amp; Garde',
+        fw3Text:  'Grand-mère, assistante maternelle, nourrice – tous ceux que vous incluez ne voient que ce que vous partagez pour vos enfants.',
+        fw4Title: 'Quartier &amp; Classe',
+        fw4Text:  'Parents de la classe, du club ou du quartier – connectez-vous et voyez instantanément quels enfants sont disponibles.',
+        showcaseBadge:    'Confiance &amp; Confidentialité',
+        showcaseTitle:    'Vos données vous appartiennent. Point.',
+        showcaseSubtitle: 'PLAYO a été développé par un parent qui avait les mêmes questions que vous. La confidentialité n\'est pas une fonctionnalité – c\'est le fondement et la promesse sur lesquels notre app est construite.',
+        trust1Title: 'Développé en Suisse',
+        trust1Text:  'Développé et hébergé selon le droit suisse (LPD). Vos données ne quittent pas l\'espace juridique européen.',
+        trust2Title: 'Pas de pub, jamais',
+        trust2Text:  'Nous ne vendons pas de données et n\'affichons pas de publicités. PLAYO est et reste sans publicité.',
+        trust3Title: 'Seuls vos contacts vous voient',
+        trust3Text:  'Vous décidez qui voit vos enfants. Pas de profil ouvert, pas de fil public.',
+        trust4Title: 'Contrôle total, à tout moment',
+        trust4Text:  'Vous pouvez couper des connexions, révoquer l\'accès ou supprimer complètement votre compte avec toutes les données – quand vous voulez.',
+        ctaTitle:    'PARCE QUE LES ENFANTS VEULENT JOUER ENSEMBLE.',
+        ctaSubtitle: 'En quelques clics, connectez-vous avec les parents de l\'école, du quartier ou du club de votre enfant. Voyez d\'un coup d\'œil quels enfants pourraient jouer maintenant – simple, sûr et sans stress pour tout le monde.',
+        ctaAppleLabel: 'Télécharger sur',
+        ctaAppleName:  'App Store',
+        ctaGoogleLabel: 'Disponible sur',
+        ctaGoogleName:  'Google Play',
+        ctaNote: 'Pour les parents qui veulent voir leurs enfants jouer plus · 60 jours gratuits · Ensuite CHF 9.90 / an',
+        footerSwiss:   'Fabriqué en Suisse',
+        footerLink1:   'Confidentialité',
+        footerLink2:   'Mentions légales',
+        footerLink3:   'Contact',
+        footerLink4:   'FAQ',
+        footerCopy:    '© 2026 PLAYO · Tous droits réservés',
+      },
+
+      /* ── ITALIANO ────────────────────────────────────────────────── */
+      it: {
+        navCta: 'Scarica l\'app',
+        heroTitle:  'Coordinare i giochi <span class="accent">facilmente</span>.',
+        heroLogoSub: 'PERCHÉ I BAMBINI VOGLIONO GIOCARE INSIEME.',
+        howTitle:    'Pronto in<br>3 passi.',
+        howSubtitle: 'La soluzione moderna per i giochi di tuo figlio – chiara, affidabile e coordinata in tutta sicurezza.',
+        step1Title: 'Scarica &amp; configura',
+        step1Text:  'Scarica PLAYO dall\'App Store o Google Play, crea un account – e sei pronto in meno di due minuti.',
+        step2Title: 'Invita i contatti',
+        step2Text:  'Connettiti tramite codice di invito con altri genitori dell\'ambiente di tuo figlio – in modo sicuro, protetto e accessibile solo ai contatti invitati.',
+        step3Title: 'Imposta lo stato. Fatto.',
+        step3Text:  'Un tap sulla dashboard: «Disponibile oggi.» e i contatti selezionati vedono subito lo stato di tuo figlio – nessuna chat, nessun andirivieni, nessuna attesa.',
+        stepsPayoff: 'Nessuna chat WhatsApp infinita. Nessun andirivieni continuo. Un solo tap – e tutti i genitori collegati sanno subito: oggi tuo figlio può giocare. Più tempo per te, più divertimento per tuo figlio.',
+        feat1Title: 'Disponibile a colpo d\'occhio',
+        feat1Text:  'Vedi a colpo d\'occhio chi è disponibile adesso – senza chiedere, senza aspettare, senza andirivieni.',
+        feat2Title: 'Decidi tu chi entra',
+        feat2Text:  'Nessun profilo pubblico, nessun social network. Decidi tu chi inviti – e solo dopo il tuo consenso gli altri vedono i tuoi figli.',
+        feat3Title: 'Includi le persone di riferimento',
+        feat3Text:  'Co-genitori, nonni o tate possono essere inclusi facilmente – con esattamente l\'accesso ai tuoi figli che tu concedi loro.',
+        feat4Title: 'Privacy by Design',
+        feat4Text:  'Solo chi inviti può vedere i tuoi figli. Nessun algoritmo, nessuna vendita di dati, nessun feed pubblico – è come è costruita l\'app.',
+        forwhomTitle:    'Perché i bambini vogliono giocare insieme.',
+        forwhomSubtitle: 'Ogni situazione è diversa. PLAYO si adatta – non importa chi si prende cura dei tuoi figli.',
+        fw1Title: 'Genitori lavoratori',
+        fw1Text:  'Poco tempo, ma il desiderio che i tuoi figli possano semplicemente giocare. PLAYO ti mostra immediatamente quando funziona.',
+        fw2Title: 'Famiglie allargate',
+        fw2Text:  'A volte dalla mamma, a volte dal papà – PLAYO mantiene tutti aggiornati. Decidi tu chi può vedere i tuoi figli.',
+        fw3Title: 'Nonni &amp; Assistenza',
+        fw3Text:  'Nonna, tata, baby-sitter – tutti quelli che includi vedono solo ciò che condividi per i tuoi figli.',
+        fw4Title: 'Quartiere &amp; Classe',
+        fw4Text:  'Genitori della classe, del club o del quartiere – connettiti e vedi subito quali bambini sono disponibili.',
+        showcaseBadge:    'Fiducia &amp; Privacy',
+        showcaseTitle:    'I tuoi dati appartengono a te. Punto.',
+        showcaseSubtitle: 'PLAYO è stato sviluppato da un genitore che aveva le stesse domande tue. La privacy non è solo una funzionalità – è il fondamento e la promessa su cui è costruita la nostra app.',
+        trust1Title: 'Sviluppato in Svizzera',
+        trust1Text:  'Sviluppato e ospitato secondo il diritto svizzero (LPD). I tuoi dati non lasciano lo spazio giuridico europeo.',
+        trust2Title: 'Nessuna pubblicità, mai',
+        trust2Text:  'Non vendiamo dati e non mostriamo pubblicità. PLAYO è e rimane senza pubblicità.',
+        trust3Title: 'Solo i tuoi contatti ti vedono',
+        trust3Text:  'Decidi tu chi vede i tuoi figli. Nessun profilo aperto, nessun feed pubblico.',
+        trust4Title: 'Controllo totale, sempre',
+        trust4Text:  'Puoi disconnettere connessioni, revocare l\'accesso o eliminare completamente il tuo account con tutti i dati – quando vuoi.',
+        ctaTitle:    'PERCHÉ I BAMBINI VOGLIONO GIOCARE INSIEME.',
+        ctaSubtitle: 'In pochi click puoi connetterti con i genitori della scuola, del quartiere o del club di tuo figlio. Vedi a colpo d\'occhio quali bambini potrebbero giocare adesso – semplice, sicuro e senza stress per tutti.',
+        ctaAppleLabel: 'Scarica su',
+        ctaAppleName:  'App Store',
+        ctaGoogleLabel: 'Disponibile su',
+        ctaGoogleName:  'Google Play',
+        ctaNote: 'Per i genitori che vogliono vedere i propri figli giocare di più · 60 giorni gratuiti · Poi CHF 9.90 / anno',
+        footerSwiss:   'Fatto in Svizzera',
+        footerLink1:   'Privacy',
+        footerLink2:   'Note legali',
+        footerLink3:   'Contatto',
+        footerLink4:   'FAQ',
+        footerCopy:    '© 2026 PLAYO · Tutti i diritti riservati',
+      },
+
+      /* ── ENGLISH ─────────────────────────────────────────────────── */
+      en: {
+        navCta: 'Download App',
+        heroTitle:  'Coordinate playdates <span class="accent">easily</span>.',
+        heroLogoSub: 'BECAUSE KIDS JUST WANT TO PLAY TOGETHER.',
+        howTitle:    'Ready in<br>3 steps.',
+        howSubtitle: 'The modern solution for your child\'s playdates – clear, reliable and safely coordinated.',
+        step1Title: 'Download &amp; set up',
+        step1Text:  'Download PLAYO from the App Store or Google Play, create an account – and you\'re ready in under two minutes.',
+        step2Title: 'Invite contacts',
+        step2Text:  'Connect via invitation code with other parents in your child\'s circle – secure, protected and accessible only to invited contacts.',
+        step3Title: 'Set status. Done.',
+        step3Text:  'One tap on the dashboard: «Available today.» and selected contacts immediately see your child\'s status – no chat, no back and forth, no waiting.',
+        stepsPayoff: 'No endless WhatsApp chats. No constant back and forth. One tap – and all connected parents instantly know: today your child can play. More time for you, more fun for your child.',
+        feat1Title: 'Available at a glance',
+        feat1Text:  'See at a glance who\'s available right now – no asking, no waiting, no back and forth.',
+        feat2Title: 'You decide who joins',
+        feat2Text:  'No public profile, no social network. You decide who you invite – and only after your approval do others see your children.',
+        feat3Title: 'Include caregivers',
+        feat3Text:  'Not just partners – co-parents, grandparents or childminders can be easily included. You decide what access they get to your children.',
+        feat4Title: 'Privacy by Design',
+        feat4Text:  'Only those you invite can see your children. No algorithms, no data selling, no public feed – that\'s not a statement of intent, it\'s how the app is built.',
+        forwhomTitle:    'Because kids just want to play together.',
+        forwhomSubtitle: 'Every situation is different. PLAYO adapts – no matter who\'s looking after your children.',
+        fw1Title: 'Working Parents',
+        fw1Text:  'Little time, but the wish that your children can simply play. PLAYO shows you instantly when it works out.',
+        fw2Title: 'Blended Families',
+        fw2Text:  'Sometimes at mum\'s, sometimes at dad\'s – PLAYO keeps everyone on the same page. You decide who can see your children.',
+        fw3Title: 'Grandparents &amp; Carers',
+        fw3Text:  'Grandma, childminder, nanny – everyone you include only sees what you share for your children.',
+        fw4Title: 'Neighbourhood &amp; Class',
+        fw4Text:  'Parents from the school class, club or neighbourhood – connect and instantly see whose children are available.',
+        showcaseBadge:    'Trust &amp; Privacy',
+        showcaseTitle:    'Your data belongs to you. Full stop.',
+        showcaseSubtitle: 'PLAYO was developed by a parent who had the same questions as you. Privacy isn\'t just a feature – it\'s the foundation and promise on which our app is built.',
+        trust1Title: 'Developed in Switzerland',
+        trust1Text:  'Developed and hosted under Swiss law (revDSG). Your data does not leave the European legal area.',
+        trust2Title: 'No ads, ever',
+        trust2Text:  'We don\'t sell data and don\'t show ads. PLAYO is and remains ad-free.',
+        trust3Title: 'Only your contacts see you',
+        trust3Text:  'You decide who sees your children. No open profile, no public feed.',
+        trust4Title: 'Full control, anytime',
+        trust4Text:  'You can disconnect connections, revoke access or completely delete your account with all data – whenever you want.',
+        ctaTitle:    'BECAUSE KIDS JUST WANT TO PLAY TOGETHER.',
+        ctaSubtitle: 'In just a few clicks, connect with parents from your child\'s school, neighbourhood or club. See at a glance whose children could play right now – simple, safe and stress-free for everyone.',
+        ctaAppleLabel: 'Download on the',
+        ctaAppleName:  'App Store',
+        ctaGoogleLabel: 'Get it on',
+        ctaGoogleName:  'Google Play',
+        ctaNote: 'For parents who want to see their children play more · 60 days free · Then CHF 9.90 / year',
+        footerSwiss:   'Made in Switzerland',
+        footerLink1:   'Privacy',
+        footerLink2:   'Imprint',
+        footerLink3:   'Contact',
+        footerLink4:   'FAQ',
+        footerCopy:    '© 2026 PLAYO · All rights reserved',
+      },
+    };
+
+    // ── Sprache aktiv setzen ─────────────────────────────────────────
+    let currentLang = localStorage.getItem('playo-lang') || 'de';
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('playo-lang', lang);
+      const t = LANGUAGES[lang] || LANGUAGES.de;
+      document.querySelectorAll('[data-t]').forEach(el => {
+        const val = t[el.dataset.t];
+        if (val !== undefined) el.innerHTML = val;
+      });
+      const sel = document.getElementById('langSelect');
+      if (sel) sel.value = lang;
+      document.documentElement.lang = lang;
+    }
+
+    // Sprachschalter Event
+    const langSelect = document.getElementById('langSelect');
+    if (langSelect) langSelect.addEventListener('change', e => applyLanguage(e.target.value));
+
+    // Beim Laden: gespeicherte Sprache oder Browsersprache
+    (function initLang() {
+      const saved = localStorage.getItem('playo-lang');
+      if (saved && LANGUAGES[saved]) { applyLanguage(saved); return; }
+      const browser = (navigator.language || 'de').slice(0, 2).toLowerCase();
+      applyLanguage(LANGUAGES[browser] ? browser : 'de');
+    })();
+
+    // ── Sticky nav – transparent on dark sections, frosted on light ─
     const navbar = document.getElementById('navbar');
     const darkSectionIds = ['hero-scroll', 'showcase'];
     let darkRanges = [];
@@ -1695,7 +2281,7 @@
       // Phone: auf Mobile weniger weit reisen (50vh → -85vh statt 60vh → -100vh)
       heroPhone.style.transform = `translateY(${isMob ? 50 - 135 * a : 60 - 160 * a}vh)`;
 
-      // Headline: drifts down, fades late — auf Mobile kürzerer Drift
+      // Headline: drifts down, fades late – auf Mobile kürzerer Drift
       const hlFade = easeInOutCubic(progress(a, 0.74, 0.96));
       heroHL.style.opacity   = 1 - hlFade;
       heroHL.style.transform = `translateX(-50%) translateY(${a * (isMob ? 28 : 44)}vh)`;
@@ -1707,7 +2293,7 @@
       heroLogoReveal.classList.toggle('sub-visible', logoT > 0.7);
 
       // Ramp: during logo stand (p=0.85→1.0), drift the inner content upward.
-      // heroSticky stays locked — only the inner wrapper moves, so no edge/strip artifacts.
+      // heroSticky stays locked – only the inner wrapper moves, so no edge/strip artifacts.
       const standP = easeInOutCubic(progress(p, 0.85, 1.0));
       heroInner.style.transform = `translateY(${-standP * (isMob ? 18 : 25)}vh)`;
     }
@@ -1723,6 +2309,33 @@
 
     requestAnimationFrame(heroLoop);
 
+    // ── O-Background Parallax ───────────────────────────────────────
+    // Transform spans inside the layer (not the layer itself) to avoid
+    // creating a new stacking context that would break z-index.
+    const oBgSpanGroups = document.querySelectorAll('.o-bg-layer');
+    let parallaxTicking = false;
+
+    function applyParallax() {
+      oBgSpanGroups.forEach(layer => {
+        const rect = layer.parentElement.getBoundingClientRect();
+        const sectionMid = rect.top + rect.height / 2;
+        const offset = -sectionMid * 0.18;
+        layer.querySelectorAll('span').forEach(span => {
+          span.style.translate = `0 ${offset}px`;
+        });
+      });
+      parallaxTicking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!parallaxTicking) {
+        requestAnimationFrame(applyParallax);
+        parallaxTicking = true;
+      }
+    }, { passive: true });
+
+    applyParallax();
+
     // ── Section scroll reveal ───────────────────────────────────────
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
@@ -1736,7 +2349,7 @@
 
     reveals.forEach(el => observer.observe(el));
 
-    // ── How it works — sequential path activation ───────────────────
+    // ── How it works – sequential path activation ───────────────────
     const stepsPath = document.getElementById('stepsPath');
     const step1El   = document.getElementById('step1');
     const step2El   = document.getElementById('step2');
@@ -1800,41 +2413,27 @@
     const mq             = window.matchMedia('(max-width: 768px)');
     let   featEntranceDone = false;
 
-    // ── Mobile: scroll-progress-basiertes Einblenden ────────────────
-    // Berechnet anhand der Scrollposition, welches Item sichtbar sein soll
-    const featSection = document.getElementById('features');
-    const mobDots     = document.querySelectorAll('.mob-feat-dot');
-    let lastMobIdx = -1;
+    // ── Mobile Swipe-Carousel: Dots + Scroll-Lock ────────────────────
+    const fmcTrack   = document.querySelector('.fmc-track');
+    const fmcSlides  = document.querySelectorAll('.fmc-slide');
+    const fmcDots    = document.querySelectorAll('.fmc-dot');
+    const fmcSection = document.getElementById('features');
+    if (fmcTrack && fmcSlides.length && fmcDots.length) {
+      let allCardsSeen = false;
 
-    function updateMobileFeature() {
-      if (!mq.matches || !featSection) return;
-      const rect      = featSection.getBoundingClientRect();
-      const maxScroll = featSection.offsetHeight - window.innerHeight;
-      if (maxScroll <= 0) return;
-      const progress  = Math.max(0, Math.min(1, -rect.top / maxScroll));
-      const activeIdx = Math.min(
-        Math.floor(progress * featureItems.length),
-        featureItems.length - 1
-      );
-      if (activeIdx === lastMobIdx) return;
-      lastMobIdx = activeIdx;
-      // Text-Items
-      featureItems.forEach((el, i) => {
-        el.classList.toggle('mob-visible', i === activeIdx);
-      });
-      // Phone-Screen
-      featureScreens.forEach(el => el.classList.remove('active'));
-      const activeItem = featureItems[activeIdx];
-      const s = document.getElementById(`fscreen-${activeItem.dataset.screen}`);
-      if (s) s.classList.add('active');
-      // Fortschritts-Punkte
-      mobDots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === activeIdx);
-      });
+      // Scroll-Lock via CSS touch-action: nur horizontales Wischen erlaubt
+      if (mq.matches) fmcSection.style.touchAction = 'pan-x';
+
+      fmcTrack.addEventListener('scroll', () => {
+        const slideW = fmcSlides[0].offsetWidth + 16;
+        const idx    = Math.round(fmcTrack.scrollLeft / slideW);
+        fmcDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        if (idx >= fmcSlides.length - 1 && !allCardsSeen) {
+          allCardsSeen = true;
+          fmcSection.style.touchAction = ''; // Scroll-Lock aufheben
+        }
+      }, { passive: true });
     }
-
-    window.addEventListener('scroll', updateMobileFeature, { passive: true });
-    updateMobileFeature();
 
     // ── Desktop: Scrollytelling active/seen ─────────────────────────
     // Läuft immer, gibt aber bei Mobile sofort auf
@@ -1881,18 +2480,71 @@
     if (document.getElementById('features')) {
       featEntranceObserver.observe(document.getElementById('features'));
     }
-    // ── For Whom — gestaffelte Einfahrt mit Scale ───────────────────
+    // ── For Whom ──────────────────────────────────────────────────
     const forwhomCards = document.querySelectorAll('.forwhom-card');
-    const forwhomObs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const idx = Array.from(forwhomCards).indexOf(entry.target);
-        setTimeout(() => entry.target.classList.add('fw-visible'), idx * 130);
-        forwhomObs.unobserve(entry.target);
-      });
-    }, { threshold: 0.12 });
-    forwhomCards.forEach(el => forwhomObs.observe(el));
 
+    if (mq.matches) {
+      // Mobile: Karten sofort einblenden
+      forwhomCards.forEach(c => c.classList.add('fw-visible'));
+    } else {
+      // Desktop: gestaffelte Einfahrt per IntersectionObserver
+      const forwhomObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const idx = Array.from(forwhomCards).indexOf(entry.target);
+          setTimeout(() => entry.target.classList.add('fw-visible'), idx * 130);
+          forwhomObs.unobserve(entry.target);
+        });
+      }, { threshold: 0.12 });
+      forwhomCards.forEach(el => forwhomObs.observe(el));
+    }
+
+    // ── Features: Pfeil + Gradient ausblenden bei letzter Karte ───
+    const fmcWrap = document.querySelector('.fmc-wrap');
+    if (mq.matches && fmcTrack && fmcSlides.length && fmcWrap) {
+      fmcTrack.addEventListener('scroll', () => {
+        const slideW = fmcSlides[0].offsetWidth + 16;
+        const idx    = Math.round(fmcTrack.scrollLeft / slideW);
+        if (idx >= fmcSlides.length - 1) fmcWrap.classList.add('fmc-last');
+        else fmcWrap.classList.remove('fmc-last');
+      }, { passive: true });
+    }
+
+  </script>
+
+  <!-- ── Showcase Video — Scroll-driven ───────────────────────────── -->
+  <script>
+    (function () {
+      const video = document.getElementById('showcase-profil-video');
+      const wrap  = document.getElementById('showcase-scroll-wrap');
+      if (!video || !wrap) return;
+
+      const PX_PER_SEC = 300; // Scroll-Pixel pro Video-Sekunde
+
+      // Wrap-Höhe setzen sobald Videolänge bekannt
+      function setWrapHeight() {
+        if (!video.duration) return;
+        const scrollRange = video.duration * PX_PER_SEC;
+        wrap.style.height = window.innerHeight + scrollRange + 'px';
+      }
+
+      video.addEventListener('loadedmetadata', setWrapHeight);
+      window.addEventListener('resize', setWrapHeight);
+      if (video.readyState >= 1) setWrapHeight(); // bereits geladen
+
+      // Scroll → currentTime
+      function onScroll() {
+        const wrapTop   = wrap.getBoundingClientRect().top + window.scrollY;
+        const scrolled  = window.scrollY - wrapTop;
+        const maxScroll = wrap.offsetHeight - window.innerHeight;
+        if (scrolled < 0 || !video.duration) return;
+        const progress = Math.min(1, scrolled / maxScroll);
+        video.currentTime = progress * video.duration;
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
   </script>
 
 </body>
