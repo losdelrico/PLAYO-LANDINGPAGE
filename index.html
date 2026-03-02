@@ -1174,6 +1174,32 @@
     }
     .trust-point-text { font-size: 13px; color: rgba(255,255,255,0.50); line-height: 1.55; }
 
+    .lang-toggle {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 8px; padding: 0; border: none; background: none; cursor: pointer;
+      font-size: 12px; color: #A78BFA; font-family: var(--font-body);
+    }
+    .lang-toggle:hover { color: #fff; }
+    .lang-toggle-label-hide { display: none; }
+    .lang-toggle.open .lang-toggle-label-show { display: none; }
+    .lang-toggle.open .lang-toggle-label-hide { display: inline; }
+    .lang-toggle-icon { transition: transform 0.3s ease; font-size: 11px; }
+    .lang-toggle.open .lang-toggle-icon { transform: rotate(180deg); }
+
+    .lang-list {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, margin-top 0.3s ease;
+      margin-top: 0;
+    }
+    .lang-list.open { max-height: 200px; margin-top: 10px; }
+    .lang-pill {
+      font-size: 11px; padding: 3px 9px;
+      border-radius: 20px; background: rgba(167,139,250,0.12);
+      color: rgba(255,255,255,0.65); border: 1px solid rgba(167,139,250,0.2);
+      white-space: nowrap;
+    }
+
     /* ─── CTA ───────────────────────────────────────────────────── */
     #cta {
       background:
@@ -1869,6 +1895,36 @@
               <div>
                 <div class="trust-point-title" data-t="trust4Title">Volle Kontrolle, jederzeit</div>
                 <p class="trust-point-text" data-t="trust4Text">Du kannst Verbindungen trennen, Zugriff entziehen oder dein Konto mit allen Daten vollständig löschen – wann immer du willst.</p>
+              </div>
+            </div>
+            <div class="trust-point">
+              <div class="trust-icon"><i class="ph-duotone ph-globe"></i></div>
+              <div>
+                <div class="trust-point-title">Über 15 Sprachen verfügbar</div>
+                <p class="trust-point-text">Jeder Kontakt nutzt PLAYO in seiner eigenen Sprache – über 15 Sprachen verfügbar.</p>
+                <button class="lang-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+                  <span class="lang-toggle-label-show">Alle Sprachen anzeigen</span>
+                  <span class="lang-toggle-label-hide">Weniger anzeigen</span>
+                  <i class="ph-duotone ph-caret-down lang-toggle-icon"></i>
+                </button>
+                <div class="lang-list">
+                  <span class="lang-pill">🇧🇦 Bosanski</span>
+                  <span class="lang-pill">🇨🇭 Deutsch</span>
+                  <span class="lang-pill">🇬🇧 English</span>
+                  <span class="lang-pill">🇪🇸 Español</span>
+                  <span class="lang-pill">🇫🇷 Français</span>
+                  <span class="lang-pill">🇭🇷 Hrvatski</span>
+                  <span class="lang-pill">🇮🇹 Italiano</span>
+                  <span class="lang-pill">🇵🇹 Português</span>
+                  <span class="lang-pill">🇦🇱 Shqip</span>
+                  <span class="lang-pill">🇷🇸 Srpski</span>
+                  <span class="lang-pill">🇹🇷 Türkçe</span>
+                  <span class="lang-pill">🇷🇺 Русский</span>
+                  <span class="lang-pill">🇺🇦 Українська</span>
+                  <span class="lang-pill">🇪🇷 ትግርኛ</span>
+                  <span class="lang-pill">🇪🇬 العربية</span>
+                  <span class="lang-pill">🐻 Bärndütsch</span>
+                </div>
               </div>
             </div>
           </div>
