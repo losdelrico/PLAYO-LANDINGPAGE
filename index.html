@@ -109,10 +109,11 @@
       font-size: 22px;
       color: white;
       letter-spacing: -0.5px;
-      transition: color 0.4s;
+      transition: color 0.4s, opacity 0.5s;
     }
     .nav-logo-text span { color: var(--orange); }
     nav.on-light .nav-logo-text { color: var(--gray-900); }
+    nav.logo-hidden .nav-logo-text { opacity: 0; pointer-events: none; }
 
     .nav-cta {
       display: inline-flex;
@@ -1369,7 +1370,7 @@
     .lk-L { margin-right: 0.05em; }
     .lk-A { margin-right: -0.10em; }
     .nav-logo-text .lk-L,
-    .nav-logo-text .lk-A { color: white; transition: color 0.4s; }
+    .nav-logo-text .lk-A { color: white; transition: color 0.4s, opacity 0.5s; }
     nav.on-light .nav-logo-text .lk-L,
     nav.on-light .nav-logo-text .lk-A { color: var(--gray-900); }
     .footer-logo .lk-L,
@@ -2281,18 +2282,22 @@
     const navbar = document.getElementById('navbar');
     const darkSectionIds = ['hero-scroll', 'showcase-scroll-wrap'];
     let darkRanges = [];
+    let showcaseBottom = 0;
 
     function calcDarkRanges() {
       darkRanges = darkSectionIds.map(id => {
         const el = document.getElementById(id);
         return { top: el.offsetTop, bottom: el.offsetTop + el.offsetHeight };
       });
+      const sw = document.getElementById('showcase-scroll-wrap');
+      if (sw) showcaseBottom = sw.offsetTop + sw.offsetHeight;
     }
 
     function updateNavStyle() {
       const y = window.scrollY;
       const isDark = darkRanges.some(r => y >= r.top && y < r.bottom);
       navbar.classList.toggle('on-light', !isDark);
+      navbar.classList.toggle('logo-hidden', showcaseBottom > 0 && y >= showcaseBottom);
     }
 
     calcDarkRanges();
