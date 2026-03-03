@@ -1,2 +1,5 @@
 .DS_Store
 Fotos für Claude/
+Daten für Claude/
+*.backup*.html
+index.backup*.html
