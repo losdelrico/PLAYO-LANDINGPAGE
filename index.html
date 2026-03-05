@@ -2971,9 +2971,14 @@
 
     function heroLoop() {
       _pRaw = getScrollP();
-      _p   += (_pRaw - _p) * 0.08;
-      // snap to target when close enough to avoid endless micro-updates
-      if (Math.abs(_pRaw - _p) < 0.0003) _p = _pRaw;
+      // Auf Mobile kein Lerp – natives Momentum-Scrolling übernimmt die Glätte
+      const isMobScroll = window.innerWidth <= 768;
+      if (isMobScroll) {
+        _p = _pRaw;
+      } else {
+        _p += (_pRaw - _p) * 0.08;
+        if (Math.abs(_pRaw - _p) < 0.0003) _p = _pRaw;
+      }
       applyHero(_p);
       requestAnimationFrame(heroLoop);
     }
