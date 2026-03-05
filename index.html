@@ -1594,12 +1594,35 @@
       .hero-phone-anchor { margin-left: -140px; margin-top: -285px; }
     }
 
-    /* ─── HERO MOBILE ────────────────────────────────────────────── */
-    /* Scroll-Länge stark reduzieren – 420vh ist auf Mobile zu viel  */
+    /* ─── HERO MOBILE – statisch, kein Scroll-Tunnel ───────────────── */
     @media (max-width: 768px) {
-      #hero-scroll { height: 220vh; }
-      .hero-headline { top: 22%; }
-      .hero-phone-anchor { top: 52%; }
+      /* Ein Viewport, kein Scroll-Pin */
+      #hero-scroll        { height: 100vh; }
+      .hero-sticky        { height: 100vh; }
+
+      /* Headline: fest oben, kein JS-Transform */
+      .hero-headline {
+        top: 22% !important;
+        opacity: 1 !important;
+        transform: translateX(-50%) !important;
+      }
+
+      /* PLAYO-Logo-Reveal verstecken */
+      .hero-logo-reveal   { display: none !important; }
+
+      /* Hero-Inner: kein Slide-Up */
+      .hero-inner         { transform: none !important; }
+
+      /* Phone: halb sichtbar von unten, geclippt durch overflow:hidden */
+      .hero-phone-anchor {
+        top: auto !important;
+        bottom: -285px !important;
+        left: 50% !important;
+        margin-left: -140px !important;
+        margin-top: 0 !important;
+        transform: none !important;
+      }
+
       #how { padding-top: 56px; }
     }
 
@@ -2970,14 +2993,8 @@
     }
 
     if (window.innerWidth <= 768) {
-      // Mobile: passiver Scroll-Listener statt kontinuierlichem rAF-Loop
-      // → kein JS-Overhead im Hintergrund, kein Stottern beim Scroll-Start
-      function onHeroScroll() {
-        _p = getScrollP();
-        applyHero(_p);
-      }
-      window.addEventListener('scroll', onHeroScroll, { passive: true });
-      onHeroScroll(); // Initialzustand setzen
+      // Mobile: vollständig statisch – CSS übernimmt Positionierung via !important
+      // Kein JS, kein rAF, kein Stottern
     } else {
       // Desktop: cinematischer Lerp-Loop
       function heroLoop() {
