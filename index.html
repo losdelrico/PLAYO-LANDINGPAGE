@@ -46,8 +46,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Phosphor Icons – duotone -->
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <!-- Phosphor Icons – duotone (CSS-only, kein eval) -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css" />
 
   <style>
     /* ─── Reset & Base ─────────────────────────────────────────── */
@@ -2544,7 +2544,7 @@
 
         <form class="waitlist-form" id="waitlist-form" novalidate>
           <div class="waitlist-input-wrap">
-            <input class="waitlist-input" type="email" placeholder="deine@email.com" data-t-ph="waitlistPlaceholder" required autocomplete="email" />
+            <input class="waitlist-input" type="email" id="waitlist-email" name="email" placeholder="deine@email.com" data-t-ph="waitlistPlaceholder" required autocomplete="email" />
             <button type="submit" class="waitlist-submit" data-t="waitlistBtn">Auf die Liste!</button>
           </div>
           <p class="waitlist-note" data-t="waitlistNote">Kostenlos · Kein Spam · Erste Info wenn die App live geht</p>
