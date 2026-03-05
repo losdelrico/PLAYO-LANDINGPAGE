@@ -1167,6 +1167,9 @@
       object-position: top;
       display: block;
     }
+    /* Desktop: Video sichtbar, statisches Bild versteckt */
+    .showcase-video-mobile { display: none; }
+    .showcase-video-desktop { display: block; }
     .showcase-frame-lg .showcase-screen-img { border-radius: 8px; z-index: 1; }
     .showcase-frame-sm .showcase-screen-img { border-radius: 6px; z-index: 1; }
 
@@ -1433,6 +1436,10 @@
       .step { opacity: 1; transform: none; }
       .features-grid { grid-template-columns: 1fr; }
       .forwhom-grid { grid-template-columns: 1fr; max-width: 480px; }
+
+      /* Showcase: Video → statisches Bild auf Mobile */
+      .showcase-video-desktop { display: none; }
+      .showcase-video-mobile  { display: block; }
 
       /* Showcase: kein Sticky-Clip auf Mobile */
       #showcase-scroll-wrap { height: auto !important; }
@@ -2286,7 +2293,8 @@
         <div class="showcase-phones reveal">
           <div class="showcase-phone-1">
             <div class="showcase-frame-lg">
-              <video id="showcase-profil-video" class="showcase-screen-img" src="assets/profil-scroll.mp4?v=3" muted playsinline preload="auto"></video>
+              <video id="showcase-profil-video" class="showcase-screen-img showcase-video-desktop" src="assets/profil-scroll.mp4?v=3" muted playsinline preload="auto"></video>
+            <img class="showcase-screen-img showcase-video-mobile" src="assets/screenshots/hero-login.png" alt="PLAYO App" />
               <img class="iphone-frame" src="assets/iphone-frame.avif" alt="" aria-hidden="true" />
             </div>
           </div>
