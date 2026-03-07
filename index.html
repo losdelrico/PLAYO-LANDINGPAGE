@@ -10,6 +10,37 @@
        SETUP: Ersetze G-YHR44GPY3B mit deiner echten GA4 Measurement ID.
        GA feuert NICHT bevor der Nutzer im Cookie-Banner zustimmt.
        ──────────────────────────────────────────────────────────── -->
+  <!-- Deep Link Handler: öffnet PLAYO App wenn Supabase Auth-Token im URL-Hash -->
+  <script>
+    (function() {
+      const hash = window.location.hash.substring(1);
+      if (!hash) return;
+      const params = new URLSearchParams(hash);
+      const accessToken = params.get('access_token');
+      const type = params.get('type');
+      if (!accessToken) return;
+      const scheme = type === 'recovery' ? 'ch.playo.app://reset-password' : 'ch.playo.app://callback';
+      const deepLink = scheme + '#' + hash;
+
+      // Overlay anzeigen
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#f5f3ff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;font-family:Arial,sans-serif;';
+      overlay.innerHTML = '<div style="font-size:28px;font-weight:900;color:#1a1a2e;margin-bottom:32px;">PLAY<span style="color:#f97316;">O</span></div>'
+        + '<div style="background:white;border-radius:24px;padding:40px 32px;max-width:360px;width:100%;text-align:center;box-shadow:0 4px 24px rgba(124,58,237,0.10);border:1px solid #ede9f6;">'
+        + '<h2 style="font-size:18px;font-weight:700;color:#1a1a2e;margin:0 0 12px;">Fast fertig!</h2>'
+        + '<p style="font-size:14px;color:#6b7280;line-height:1.5;margin:0 0 28px;">Tippe auf den Button um die PLAYO App zu öffnen.</p>'
+        + '<a href="' + deepLink + '" style="display:block;background:#4c2d9e;color:white;font-size:15px;font-weight:700;text-decoration:none;padding:14px 32px;border-radius:12px;">PLAYO App öffnen</a>'
+        + '</div>';
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.appendChild(overlay);
+      });
+      if (document.readyState !== 'loading') document.body.appendChild(overlay);
+
+      // Versuche automatisch zu öffnen
+      window.location = deepLink;
+    })();
+  </script>
+
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
@@ -74,7 +105,7 @@
       --shadow-card: 0 4px 24px rgba(76, 29, 149, 0.10);
     }
 
-    html { scroll-behavior: smooth; overflow-x: clip; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       font-family: var(--font-body);
@@ -2595,6 +2626,7 @@
         </span>
         <ul class="footer-links">
           <li><a href="#" onclick="openModal('datenschutz');return false;" data-t="footerLink1">Datenschutz</a></li>
+          <li><a href="#datenschutz-app" onclick="openModal('datenschutz-app');return false;" data-t="footerLink5">Datenschutz der App</a></li>
           <li><a href="#" onclick="openModal('impressum');return false;" data-t="footerLink2">Impressum</a></li>
           <li><a href="#" onclick="openModal('kontakt');return false;" data-t="footerLink3">Kontakt</a></li>
           <li><a href="#" onclick="openModal('faq');return false;" data-t="footerLink4">FAQ</a></li>
@@ -2674,6 +2706,7 @@
         footerLink2:   'Impressum',
         footerLink3:   'Kontakt',
         footerLink4:   'FAQ',
+        footerLink5:   'Datenschutz der App',
         footerCopy:    '© 2026 PLAYO · Alle Rechte vorbehalten',
       },
 
@@ -2738,6 +2771,7 @@
         footerLink2:   'Mentions légales',
         footerLink3:   'Contact',
         footerLink4:   'FAQ',
+        footerLink5:   'Confidentialité de l\'App',
         footerCopy:    '© 2026 PLAYO · Tous droits réservés',
       },
 
@@ -2802,6 +2836,7 @@
         footerLink2:   'Note legali',
         footerLink3:   'Contatto',
         footerLink4:   'FAQ',
+        footerLink5:   'Privacy dell\'App',
         footerCopy:    '© 2026 PLAYO · Tutti i diritti riservati',
       },
 
@@ -2866,6 +2901,7 @@
         footerLink2:   'Imprint',
         footerLink3:   'Contact',
         footerLink4:   'FAQ',
+        footerLink5:   'App Privacy Policy',
         footerCopy:    '© 2026 PLAYO · All rights reserved',
       },
     };
@@ -3523,6 +3559,145 @@
     </div>
   </div>
 
+  <!-- DATENSCHUTZ DER APP -->
+  <div class="legal-overlay" id="modal-datenschutz-app" role="dialog" aria-modal="true" aria-label="Datenschutz der App">
+    <div class="legal-panel">
+      <div class="legal-header">
+        <div class="legal-header-left">
+          <div class="legal-header-icon">
+            <i class="ph-duotone ph-shield-check"></i>
+          </div>
+          <div>
+            <div class="legal-title">Datenschutz der App</div>
+            <div class="legal-subtitle">Stand: 01. März 2026 · PLAYO Version 1.0</div>
+          </div>
+        </div>
+        <button class="legal-close" onclick="closeModal('datenschutz-app')" aria-label="Schliessen">✕</button>
+      </div>
+      <div class="legal-body">
+
+        <div class="legal-box" style="margin-bottom:20px;">
+          PLAYO verarbeitet ausschliesslich Daten, die du aktiv eingibst. Kein Tracking, keine Werbung, keine Weitergabe an Dritte.
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">Wer ist verantwortlich?</div>
+          <div class="legal-row"><span class="legal-row-label">Produkt</span><span class="legal-row-value">PLAYO</span></div>
+          <div class="legal-row"><span class="legal-row-label">Betreiber</span><span class="legal-row-value">BOFF GmbH</span></div>
+          <div class="legal-row"><span class="legal-row-label">Adresse</span><span class="legal-row-value">Sickingerstrasse 10, 3014 Bern</span></div>
+          <div class="legal-row"><span class="legal-row-label">E-Mail</span><span class="legal-row-value"><a href="mailto:info@playo.ch">info@playo.ch</a></span></div>
+          <div class="legal-row"><span class="legal-row-label">Urheber</span><span class="legal-row-value">Yves Farine</span></div>
+          <div class="legal-row"><span class="legal-row-label">Rechtsrahmen</span><span class="legal-row-value">revDSG (CH) · DSGVO (EU)</span></div>
+          <div class="legal-row"><span class="legal-row-label">Server-Standort</span><span class="legal-row-value">Frankfurt (EU)</span></div>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">Welche Daten speichern wir?</div>
+          <p style="font-weight:600;color:#1A1530;margin-bottom:8px;">Dein Profil</p>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>E-Mail-Adresse (für Login)</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Vorname und Nachname</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Telefonnummer (nur für bestätigte Kontakte sichtbar)</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Passwort (nur als sicherer Hash — nie als Klartext)</span></div>
+          <p style="font-weight:600;color:#1A1530;margin:12px 0 8px;">Kinder-Daten</p>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Name des Kindes</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Verfügbarkeitsstatus (von dir gesetzt)</span></div>
+          <div class="legal-check"><span class="legal-check-icon red">✗</span><span>Kein Foto, kein Geburtsdatum, keine Adresse</span></div>
+          <div class="legal-check"><span class="legal-check-icon red">✗</span><span>Kein Schulname, kein Standort, keine Gesundheitsdaten</span></div>
+          <p style="font-weight:600;color:#1A1530;margin:12px 0 8px;">Was PLAYO nie erhebt</p>
+          <div class="legal-check"><span class="legal-check-icon red">✗</span><span>Kein GPS / Standort-Tracking</span></div>
+          <div class="legal-check"><span class="legal-check-icon red">✗</span><span>Kein Verhaltenstracking oder Analysen</span></div>
+          <div class="legal-check"><span class="legal-check-icon red">✗</span><span>Keine Werbecookies</span></div>
+          <div class="legal-check"><span class="legal-check-icon red">✗</span><span>Keine Zahlungsdaten</span></div>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">Wofür verwenden wir deine Daten?</div>
+          <p style="color:#6b7280;font-size:13px;margin-bottom:10px;">Alle Daten werden ausschliesslich für den Betrieb von PLAYO verwendet. Keine Sekundärnutzung.</p>
+          <div class="legal-row"><span class="legal-row-label">Login &amp; Authentifizierung</span><span class="legal-row-value">E-Mail, Passwort-Hash</span></div>
+          <div class="legal-row"><span class="legal-row-label">Profil-Anzeige bei Kontakten</span><span class="legal-row-value">Name, Telefon</span></div>
+          <div class="legal-row"><span class="legal-row-label">Kind-Status koordinieren</span><span class="legal-row-value">Zeitplan-Daten</span></div>
+          <div class="legal-row"><span class="legal-row-label">Kontakt-Vernetzung</span><span class="legal-row-value">E-Mail oder Einladungscode</span></div>
+          <div class="legal-row"><span class="legal-row-label">Einwilligungsnachweis</span><span class="legal-row-value">Zeitstempel deiner Zustimmung</span></div>
+          <div class="legal-row"><span class="legal-row-label">In-App-Benachrichtigungen</span><span class="legal-row-value">Interne IDs (keine Klarnamen)</span></div>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">Wer sieht deine Daten?</div>
+          <p style="font-weight:600;color:#1A1530;margin-bottom:8px;">Dein Profil</p>
+          <div class="legal-row"><span class="legal-row-label">Vorname + Nachname</span><span class="legal-row-value">Nur für bestätigte Kontakte</span></div>
+          <div class="legal-row"><span class="legal-row-label">Telefonnummer</span><span class="legal-row-value">Nur für bestätigte Kontakte</span></div>
+          <div class="legal-row"><span class="legal-row-label">E-Mail-Adresse</span><span class="legal-row-value" style="color:#7C3AED;font-weight:600;">Nie für andere sichtbar</span></div>
+          <p style="font-weight:600;color:#1A1530;margin:12px 0 8px;">Kinder-Daten</p>
+          <div class="legal-row"><span class="legal-row-label">Primäres Elternteil</span><span class="legal-row-value">Voller Zugriff</span></div>
+          <div class="legal-row"><span class="legal-row-label">Bezugsperson (akzeptiert)</span><span class="legal-row-value">Name + Status sichtbar</span></div>
+          <div class="legal-row"><span class="legal-row-label">Andere Kontakte</span><span class="legal-row-value">Nur bei aktivem Status, wenn freigegeben</span></div>
+          <div class="legal-row"><span class="legal-row-label">Alle anderen Nutzer</span><span class="legal-row-value" style="color:#7C3AED;font-weight:600;">Kein Zugriff</span></div>
+          <div class="legal-box" style="margin-top:10px;"><strong>Technische Garantie:</strong> Diese Regeln sind serverseitig in der Datenbank erzwungen (Row Level Security). Kein Frontend-Code kann sie umgehen.</div>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">Sicherheitsmassnahmen</div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>HTTPS / TLS 1.2+ für alle Verbindungen</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>AES-256 Verschlüsselung der Datenbank</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Passwörter als bcrypt-Hash gespeichert</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Einladungscodes laufen nach 48 Stunden ab</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Serverseitige Zugangskontrolle (PostgreSQL RLS)</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Konto-Löschung erfordert Passwort-Bestätigung</span></div>
+          <div class="legal-box" style="margin-top:10px;background:#F0FDF4;border-color:#BBF7D0;color:#15803d;">PLAYO nutzt <strong>Supabase</strong> als Backend-Infrastruktur (EU-Region Frankfurt, SOC 2 Type II zertifiziert, Data Processing Agreement vorhanden).</div>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">⚠ Besonderer Schutz von Kinderdaten</div>
+          <div class="legal-box orange" style="margin-bottom:12px;">PLAYO verarbeitet Daten minderjähriger Kinder. Diese Daten geniessen besonderen Schutz.</div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Kinder haben kein eigenes Konto — nur Elternteile nutzen die App</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Minimale Datenspeicherung: ausschliesslich Name und Status</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Kind-Teilen erfordert explizite Einwilligung (3-Schritt-Dialog)</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Bezugsperson muss Einladung aktiv annehmen</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Zugriff jederzeit entziehbar (sofort wirksam)</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Konto-Löschung entfernt alle Kinder-Daten cascadierend</span></div>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">Deine Rechte (revDSG · DSGVO)</div>
+          <p style="font-weight:600;color:#1A1530;font-size:13px;margin-bottom:4px;">Auskunftsrecht</p>
+          <p style="color:#6b7280;font-size:13px;margin-bottom:10px;">Alle deine Daten sind im Profil einsehbar. Vollständiger Datenexport auf Anfrage.</p>
+          <p style="font-weight:600;color:#1A1530;font-size:13px;margin-bottom:4px;">Recht auf Berichtigung</p>
+          <p style="color:#6b7280;font-size:13px;margin-bottom:10px;">Name und Telefonnummer jederzeit im Profil bearbeitbar.</p>
+          <p style="font-weight:600;color:#1A1530;font-size:13px;margin-bottom:4px;">Recht auf Löschung (vollständig umgesetzt)</p>
+          <p style="color:#6b7280;font-size:13px;margin-bottom:10px;">Profil → «Konto löschen» → alle deine Daten werden sofort und vollständig entfernt.</p>
+          <p style="font-weight:600;color:#1A1530;font-size:13px;margin-bottom:4px;">Recht auf Einschränkung</p>
+          <p style="color:#6b7280;font-size:13px;margin-bottom:10px;">Verbindungen und Kind-Zugänge können jederzeit getrennt / entzogen werden.</p>
+          <p style="font-weight:600;color:#1A1530;font-size:13px;margin-bottom:4px;">Recht auf Beschwerde</p>
+          <p style="color:#6b7280;font-size:13px;margin-bottom:10px;">Beim EDÖB (Eidg. Datenschutz- und Öffentlichkeitsbeauftragter): <strong>www.edoeb.admin.ch</strong></p>
+          <div class="legal-box">
+            <p style="font-weight:600;margin-bottom:4px;">Kontakt für Datenschutzanfragen</p>
+            BOFF GmbH · Sickingerstrasse 10, 3014 Bern<br>
+            <a href="mailto:info@playo.ch" style="color:#7C3AED;font-weight:600;">info@playo.ch</a>
+          </div>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">Einwilligung &amp; Widerruf</div>
+          <p style="color:#6b7280;font-size:13px;margin-bottom:10px;">Du hast der Datenverarbeitung beim Onboarding explizit zugestimmt. Diese Einwilligung kann jederzeit widerrufen werden.</p>
+          <div class="legal-row"><span class="legal-row-label">Verbindung zu Kontakt</span><span class="legal-row-value">Kontakt-Seite → trennen</span></div>
+          <div class="legal-row"><span class="legal-row-label">Kind-Zugang entziehen</span><span class="legal-row-value">Profil → Kind → Verwalten</span></div>
+          <div class="legal-row"><span class="legal-row-label">Bezugsperson verlassen</span><span class="legal-row-value">Profil → betreutes Kind → Verlassen</span></div>
+          <div class="legal-row"><span class="legal-row-label">Konto löschen (komplett)</span><span class="legal-row-value" style="color:#7C3AED;font-weight:600;">Profil → Konto löschen</span></div>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">Datenspeicherung &amp; Löschung</div>
+          <div class="legal-row"><span class="legal-row-label">Profil- und Kinderdaten</span><span class="legal-row-value">Bis zur Konto-Löschung</span></div>
+          <div class="legal-row"><span class="legal-row-label">Einladungscodes</span><span class="legal-row-value">48 Stunden (danach automatisch)</span></div>
+          <div class="legal-row"><span class="legal-row-label">Auth-Logs (Supabase)</span><span class="legal-row-value">30 Tage (automatisch)</span></div>
+          <div class="legal-box" style="margin-top:10px;">Wenn du dein Konto löschst, werden <strong>alle</strong> deine Daten sofort cascadierend gelöscht — Profil, Kinder, Verbindungen, Zeitpläne, Benachrichtigungen.</div>
+        </div>
+
+        <div class="legal-footer-note">PLAYO App Datenschutzrichtlinie · Version 1.0 · Stand 01.03.2026 · BOFF GmbH · Urheber: Yves Farine · revDSG · DSGVO</div>
+      </div>
+    </div>
+  </div>
+
   <!-- IMPRESSUM -->
   <div class="legal-overlay" id="modal-impressum" role="dialog" aria-modal="true" aria-label="Impressum">
     <div class="legal-panel">
@@ -3783,6 +3958,7 @@
       if (!overlay) return;
       overlay.classList.add('open');
       document.body.style.overflow = 'hidden';
+      history.replaceState(null, '', '#' + id);
       // Trap focus / ESC
       overlay._escHandler = (e) => { if (e.key === 'Escape') closeModal(id); };
       document.addEventListener('keydown', overlay._escHandler);
@@ -3796,9 +3972,20 @@
       if (!overlay) return;
       overlay.classList.remove('open');
       document.body.style.overflow = '';
+      history.replaceState(null, '', window.location.pathname);
       if (overlay._escHandler) document.removeEventListener('keydown', overlay._escHandler);
       if (overlay._clickHandler) overlay.removeEventListener('click', overlay._clickHandler);
     }
+
+    // Hash-Routing: Modal direkt öffnen wenn URL #datenschutz-app o.ä. enthält
+    (function() {
+      const hash = window.location.hash.replace('#', '');
+      const modals = ['datenschutz', 'datenschutz-app', 'impressum', 'kontakt', 'faq'];
+      if (modals.includes(hash)) {
+        document.addEventListener('DOMContentLoaded', function() { openModal(hash); });
+        if (document.readyState !== 'loading') openModal(hash);
+      }
+    })();
 
     function toggleFaq(btn) {
       const item = btn.closest('.legal-faq-item');
