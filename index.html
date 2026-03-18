@@ -2489,7 +2489,7 @@
         <div class="showcase-phones reveal">
           <div class="showcase-phone-1">
             <div class="showcase-frame-lg">
-              <video id="showcase-profil-video" class="showcase-screen-img showcase-video-desktop" src="assets/profil-scroll.mp4?v=3" muted playsinline preload="none" aria-hidden="true"></video>
+              <video id="showcase-profil-video" class="showcase-screen-img showcase-video-desktop" src="assets/profil-scroll.mp4?v=3" muted playsinline preload="auto" aria-hidden="true"></video>
             <img class="showcase-screen-img showcase-video-mobile" src="assets/screenshots/hero-login.webp" alt="PLAYO App" loading="lazy" width="390" height="844" />
               <img class="iphone-frame" src="assets/iphone-frame.avif" alt="" aria-hidden="true" loading="lazy" width="1302" height="2649" />
             </div>
@@ -2656,6 +2656,7 @@
           <li><a href="#" onclick="openModal('impressum');return false;" data-t="footerLink2">Impressum</a></li>
           <li><a href="#" onclick="openModal('kontakt');return false;" data-t="footerLink3">Kontakt</a></li>
           <li><a href="#" onclick="openModal('faq');return false;" data-t="footerLink4">FAQ</a></li>
+          <li><a href="#" onclick="openModal('support');return false;" data-t="footerLink6">Support</a></li>
         </ul>
         <div class="footer-divider"></div>
         <p class="footer-copy" data-t="footerCopy">© 2026 PLAYO · Alle Rechte vorbehalten</p>
@@ -3977,6 +3978,58 @@
     </div>
   </div>
 
+  <!-- SUPPORT -->
+  <div class="legal-overlay" id="modal-support" role="dialog" aria-modal="true" aria-label="Support">
+    <div class="legal-panel">
+      <div class="legal-header">
+        <div class="legal-header-left">
+          <div class="legal-header-icon orange">
+            <i class="ph-duotone ph-headset"></i>
+          </div>
+          <div>
+            <div class="legal-title">Support</div>
+            <div class="legal-subtitle">Wir helfen dir gerne weiter</div>
+          </div>
+        </div>
+        <button class="legal-close" onclick="closeModal('support')" aria-label="Schliessen">✕</button>
+      </div>
+      <div class="legal-body">
+
+        <div class="legal-section">
+          <div class="legal-contact-card">
+            <strong>PLAYO Support</strong>
+            <p>BOFF GmbH · Sickingerstrasse 10, 3014 Bern</p>
+            <p style="margin-top:10px;"><a href="mailto:info@playo.ch">info@playo.ch</a></p>
+          </div>
+        </div>
+
+        <div class="legal-box green" style="margin-bottom:20px;">
+          Wir antworten in der Regel innert 2 Werktagen.
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">Wobei können wir helfen?</div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Technische Probleme oder Fehler in der App</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Fragen zu deinem Konto oder Abonnement</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Datenschutzanfragen und Auskunftsersuchen</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Konto löschen oder Daten exportieren</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Allgemeine Fragen zur App</span></div>
+          <div class="legal-check"><span class="legal-check-icon">✓</span><span>Presse- und Partneranfragen</span></div>
+        </div>
+
+        <div class="legal-section">
+          <div class="legal-section-title">Häufige Probleme</div>
+          <div class="legal-row"><span class="legal-row-label">Bestätigungs-E-Mail nicht erhalten</span><span class="legal-row-value">Spam-Ordner prüfen</span></div>
+          <div class="legal-row"><span class="legal-row-label">Passwort vergessen</span><span class="legal-row-value">Login → «Passwort vergessen»</span></div>
+          <div class="legal-row"><span class="legal-row-label">Verbindung trennen</span><span class="legal-row-value">Kontakte → Person → Trennen</span></div>
+          <div class="legal-row"><span class="legal-row-label">Konto löschen</span><span class="legal-row-value">Profil → Konto löschen</span></div>
+        </div>
+
+        <div class="legal-footer-note">PLAYO · BOFF GmbH · <a href="mailto:info@playo.ch" style="color:#7C3AED;font-weight:600;">info@playo.ch</a></div>
+      </div>
+    </div>
+  </div>
+
   <script>
     /* ── Legal Modals ─────────────────────────────────────────────── */
     function openModal(id) {
@@ -4006,7 +4059,7 @@
     // Hash-Routing: Modal direkt öffnen wenn URL #datenschutz-app o.ä. enthält
     (function() {
       const hash = window.location.hash.replace('#', '');
-      const modals = ['datenschutz', 'datenschutz-app', 'impressum', 'kontakt', 'faq'];
+      const modals = ['datenschutz', 'datenschutz-app', 'impressum', 'kontakt', 'faq', 'support'];
       if (modals.includes(hash)) {
         document.addEventListener('DOMContentLoaded', function() { openModal(hash); });
         if (document.readyState !== 'loading') openModal(hash);
